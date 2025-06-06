@@ -1,0 +1,2 @@
+com.jrmall.pilates.common.mybatis.config.MybatisPlusConfig
+com.jrmall.pilates.common.mybatis.handler.MyMetaObjectHandler

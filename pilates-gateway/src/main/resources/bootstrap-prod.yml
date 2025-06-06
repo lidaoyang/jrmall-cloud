@@ -1,0 +1,24 @@
+server:
+  port: 9999
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: pilates-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.namespace}
+      config:
+        server-addr: http://localhost:8848
+        file-extension: yaml
+        namespace: pilates-cloud-dev
+        shared-configs[0]:
+          data-id: pilates-common.yaml
+          refresh: true
+
+nacos:
+  server-addr: http://localhost:8848
+  namespace: pilates-cloud-prod

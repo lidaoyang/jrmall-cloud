@@ -1,0 +1,60 @@
+server:
+  port: 9000
+  servlet:
+    session:
+      cookie:
+        domain: 127.0.0.1
+
+spring:
+  application:
+    name: pilates-auth
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      # 注册中心
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.namespace}
+      # 配置中心
+      config:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.namespace}
+        file-extension: yaml
+#        ext-config:
+#          - data-id: pilates-common.yaml
+#            refresh: true
+  config:
+    import:
+      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:pilates-auth.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+
+nacos:
+  server-addr: http://localhost:8848
+  namespace: pilates-cloud-dev
+
+
+  # 自定义认证配置
+custom:
+  security:
+    # 登录页面路径
+    login-url: http://127.0.0.1:9527/oauthlogin
+    # 授权确认页面路径
+    consent-page-uri: http://127.0.0.1:9527/consent
+    # 设备码验证页面
+    device-activate-uri: http://127.0.0.1:9527/activate
+    # 设备码验证成功页面
+    device-activated-uri: http://127.0.0.1:9527/activated
+    # 当前认证服务访问的路径
+    issuer-url: http://127.0.0.1:9000
+    whitelist-paths:
+      - /api/v1/auth/captcha
+      - /api/v1/auth/sms_code
+      - assets/**
+      - /webjars/**
+      - /login
+      - /error
+      - /oauth2/consent/parameters
+      - /favicon.ico
+
