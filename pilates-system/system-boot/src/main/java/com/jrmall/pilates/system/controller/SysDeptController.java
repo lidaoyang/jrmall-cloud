@@ -2,16 +2,17 @@ package com.jrmall.pilates.system.controller;
 
 import com.jrmall.pilates.common.result.Result;
 import com.jrmall.pilates.common.web.annotation.PreventDuplicateResubmit;
+import com.jrmall.pilates.system.api.DeptApi;
 import com.jrmall.pilates.system.model.form.DeptForm;
 import com.jrmall.pilates.system.model.query.DeptQuery;
 import com.jrmall.pilates.system.model.vo.DeptVO;
 import com.jrmall.pilates.common.base.Option;
-import com.jrmall.pilates.system.service.SysDeptService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,29 +31,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysDeptController {
 
-    private final SysDeptService deptService;
+    @DubboReference
+    private DeptApi deptApi;
+
     @Operation(summary = "获取部门列表")
     @GetMapping
     public Result<List<DeptVO>> listDepartments(
             @ParameterObject DeptQuery queryParams
     ) {
-        List<DeptVO> list = deptService.listDepartments(queryParams);
+        List<DeptVO> list = deptApi.listDepartments(queryParams);
         return Result.success(list);
     }
 
     @Operation(summary = "获取部门下拉选项")
     @GetMapping("/options")
-    public Result<List<Option>> listDeptOptions() {
-        List<Option> list = deptService.listDeptOptions();
+    public Result<List<Option<Long>>> listDeptOptions() {
+        List<Option<Long>> list = deptApi.listDeptOptions();
         return Result.success(list);
     }
 
     @Operation(summary = "获取部门表单数据")
     @GetMapping("/{deptId}/form")
     public Result<DeptForm> getDeptForm(
-            @Parameter(description ="部门ID") @PathVariable Long deptId
+            @Parameter(description = "部门ID") @PathVariable Long deptId
     ) {
-        DeptForm deptForm = deptService.getDeptForm(deptId);
+        DeptForm deptForm = deptApi.getDeptForm(deptId);
         return Result.success(deptForm);
     }
 
@@ -60,31 +63,31 @@ public class SysDeptController {
     @PostMapping
     @PreAuthorize("@ss.hasPerm('sys:dept:add')")
     @PreventDuplicateResubmit
-    public Result saveDept(
+    public Result<Long> saveDept(
             @Valid @RequestBody DeptForm formData
     ) {
-        Long id = deptService.saveDept(formData);
+        Long id = deptApi.saveDept(formData);
         return Result.success(id);
     }
 
     @Operation(summary = "修改部门")
     @PutMapping(value = "/{deptId}")
     @PreAuthorize("@ss.hasPerm('sys:dept:edit')")
-    public Result updateDept(
+    public Result<Long> updateDept(
             @PathVariable Long deptId,
             @Valid @RequestBody DeptForm formData
     ) {
-        deptId = deptService.updateDept(deptId, formData);
+        deptId = deptApi.updateDept(deptId, formData);
         return Result.success(deptId);
     }
 
     @Operation(summary = "删除部门")
     @DeleteMapping("/{ids}")
     @PreAuthorize("@ss.hasPerm('sys:dept:delete')")
-    public Result deleteDepartments(
-            @Parameter(description ="部门ID，多个以英文逗号(,)分割") @PathVariable("ids") String ids
+    public Result<Boolean> deleteDepartments(
+            @Parameter(description = "部门ID，多个以英文逗号(,)分割") @PathVariable("ids") String ids
     ) {
-        boolean result = deptService.deleteByIds(ids);
+        boolean result = deptApi.deleteByIds(ids);
         return Result.judge(result);
     }
 

@@ -18,12 +18,31 @@
 
     <dependencies>
 
+        <!--操作接口-->
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>system-api-boot</artifactId>
+        </dependency>
+
+        <!--基础依赖包-->
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-apidoc</artifactId>
+        </dependency>
+
         <!-- 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-
 
         <!-- Dubbo -->
         <dependency>
@@ -47,24 +66,11 @@
             <artifactId>easyexcel</artifactId>
         </dependency>
 
+        <!-- Mybatis 分页参数 -->
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>system-api-boot</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-apidoc</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- 单元测试 -->

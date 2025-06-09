@@ -12,6 +12,35 @@
     <artifactId>pilates-auth</artifactId>
 
     <dependencies>
+
+        <!--系统权限API-->
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>system-api-auth</artifactId>
+        </dependency>
+
+        <!--基础依赖-->
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-apidoc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-sms</artifactId>
+        </dependency>
+
+
         <!-- Unit Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -41,54 +70,17 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <!--<exclusions>
-                <exclusion>
-                    <artifactId>logback-adapter</artifactId>
-                    <groupId>com.alibaba.nacos</groupId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
         <!-- 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <!--<exclusions>
-                <exclusion>
-                    <artifactId>logback-adapter</artifactId>
-                    <groupId>com.alibaba.nacos</groupId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>system-api-auth</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-mybatis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-apidoc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-sms</artifactId>
         </dependency>
 
         <!-- 分布式session -->

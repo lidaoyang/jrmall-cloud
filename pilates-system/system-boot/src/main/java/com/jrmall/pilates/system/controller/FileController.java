@@ -19,7 +19,7 @@ public class FileController {
     private final OssService ossService;
 
     @PostMapping
-    @Operation(summary= "文件上传")
+    @Operation(summary = "文件上传")
     public Result<FileInfoVO> uploadFile(
             @Parameter(name = "表单文件对象") @RequestParam(value = "file") MultipartFile file
     ) {
@@ -28,8 +28,8 @@ public class FileController {
     }
 
     @DeleteMapping
-    @Operation(summary= "文件删除")
-    public Result deleteFile(
+    @Operation(summary = "文件删除")
+    public Result<Boolean> deleteFile(
             @Parameter(name = "文件路径") @RequestParam String filePath
     ) {
         boolean result = ossService.deleteFile(filePath);

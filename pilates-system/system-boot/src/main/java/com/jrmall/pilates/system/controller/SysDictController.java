@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jrmall.pilates.common.result.PageResult;
 import com.jrmall.pilates.common.result.Result;
 import com.jrmall.pilates.common.web.annotation.PreventDuplicateResubmit;
+import com.jrmall.pilates.system.api.DictApi;
 import com.jrmall.pilates.system.model.form.DictForm;
 import com.jrmall.pilates.system.model.form.DictTypeForm;
 import com.jrmall.pilates.system.model.query.DictPageQuery;
@@ -11,12 +12,11 @@ import com.jrmall.pilates.system.model.query.DictTypePageQuery;
 import com.jrmall.pilates.system.model.vo.DictPageVO;
 import com.jrmall.pilates.system.model.vo.DictTypePageVO;
 import com.jrmall.pilates.common.base.Option;
-import com.jrmall.pilates.system.service.SysDictService;
-import com.jrmall.pilates.system.service.SysDictTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,25 +35,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysDictController {
 
-    private final SysDictService dictService;
-
-    private final SysDictTypeService dictTypeService;
+    @DubboReference
+    private DictApi dictApi;
 
     @Operation(summary = "字典分页列表")
     @GetMapping("/page")
     public PageResult<DictPageVO> getDictPage(
             @ParameterObject DictPageQuery queryParams
     ) {
-        Page<DictPageVO> result = dictService.getDictPage(queryParams);
+        Page<DictPageVO> result = dictApi.getDictPage(queryParams);
         return PageResult.success(result);
     }
 
     @Operation(summary = "字典数据表单数据")
     @GetMapping("/{id}/form")
     public Result<DictForm> getDictForm(
-            @Parameter(description ="字典ID") @PathVariable Long id
+            @Parameter(description = "字典ID") @PathVariable Long id
     ) {
-        DictForm formData = dictService.getDictForm(id);
+        DictForm formData = dictApi.getDictForm(id);
         return Result.success(formData);
     }
 
@@ -64,7 +63,7 @@ public class SysDictController {
     public Result saveDict(
             @RequestBody DictForm DictForm
     ) {
-        boolean result = dictService.saveDict(DictForm);
+        boolean result = dictApi.saveDict(DictForm);
         return Result.judge(result);
     }
 
@@ -75,7 +74,7 @@ public class SysDictController {
             @PathVariable Long id,
             @RequestBody DictForm DictForm
     ) {
-        boolean status = dictService.updateDict(id, DictForm);
+        boolean status = dictApi.updateDict(id, DictForm);
         return Result.judge(status);
     }
 
@@ -83,19 +82,19 @@ public class SysDictController {
     @DeleteMapping("/{ids}")
     @PreAuthorize("@ss.hasPerm('sys:dict:delete')")
     public Result deleteDict(
-            @Parameter(description ="字典ID，多个以英文逗号(,)拼接") @PathVariable String ids
+            @Parameter(description = "字典ID，多个以英文逗号(,)拼接") @PathVariable String ids
     ) {
-        boolean result = dictService.deleteDict(ids);
+        boolean result = dictApi.deleteDict(ids);
         return Result.judge(result);
     }
 
 
     @Operation(summary = "字典下拉列表")
     @GetMapping("/options")
-    public Result<List<Option>> listDictOptions(
-            @Parameter(description ="字典类型编码") @RequestParam String typeCode
+    public Result<List<Option<String>>> listDictOptions(
+            @Parameter(description = "字典类型编码") @RequestParam String typeCode
     ) {
-        List<Option> list = dictService.listDictOptions(typeCode);
+        List<Option<String>> list = dictApi.listDictOptions(typeCode);
         return Result.success(list);
     }
 
@@ -106,16 +105,16 @@ public class SysDictController {
     public PageResult<DictTypePageVO> getDictTypePage(
             @ParameterObject DictTypePageQuery queryParams
     ) {
-        Page<DictTypePageVO> result = dictTypeService.getDictTypePage(queryParams);
+        Page<DictTypePageVO> result = dictApi.getDictTypePage(queryParams);
         return PageResult.success(result);
     }
 
     @Operation(summary = "字典类型表单数据")
     @GetMapping("/types/{id}/form")
     public Result<DictTypeForm> getDictTypeForm(
-            @Parameter(description ="字典ID") @PathVariable Long id
+            @Parameter(description = "字典ID") @PathVariable Long id
     ) {
-        DictTypeForm dictTypeForm = dictTypeService.getDictTypeForm(id);
+        DictTypeForm dictTypeForm = dictApi.getDictTypeForm(id);
         return Result.success(dictTypeForm);
     }
 
@@ -124,7 +123,7 @@ public class SysDictController {
     @PreAuthorize("@ss.hasPerm('sys:dict_type:add')")
     @PreventDuplicateResubmit
     public Result saveDictType(@RequestBody DictTypeForm dictTypeForm) {
-        boolean result = dictTypeService.saveDictType(dictTypeForm);
+        boolean result = dictApi.saveDictType(dictTypeForm);
         return Result.judge(result);
     }
 
@@ -132,7 +131,7 @@ public class SysDictController {
     @PutMapping("/types/{id}")
     @PreAuthorize("@ss.hasPerm('sys:dict_type:edit')")
     public Result updateDictType(@PathVariable Long id, @RequestBody DictTypeForm dictTypeForm) {
-        boolean status = dictTypeService.updateDictType(id, dictTypeForm);
+        boolean status = dictApi.updateDictType(id, dictTypeForm);
         return Result.judge(status);
     }
 
@@ -140,18 +139,18 @@ public class SysDictController {
     @DeleteMapping("/types/{ids}")
     @PreAuthorize("@ss.hasPerm('sys:dict_type:delete')")
     public Result deleteDictTypes(
-            @Parameter(description ="字典类型ID，多个以英文逗号(,)分割") @PathVariable String ids
+            @Parameter(description = "字典类型ID，多个以英文逗号(,)分割") @PathVariable String ids
     ) {
-        boolean result = dictTypeService.deleteDictTypes(ids);
+        boolean result = dictApi.deleteDictTypes(ids);
         return Result.judge(result);
     }
 
     @Operation(summary = "获取字典类型的数据项")
     @GetMapping("/types/{typeCode}/items")
-    public Result<List<Option>> listDictTypeItems(
-            @Parameter(description ="字典类型编码") @PathVariable String typeCode
+    public Result<List<Option<String>>> listDictTypeItems(
+            @Parameter(description = "字典类型编码") @PathVariable String typeCode
     ) {
-        List<Option> list = dictTypeService.listDictItemsByTypeCode(typeCode);
+        List<Option<String>> list = dictApi.listDictItemsByTypeCode(typeCode);
         return Result.success(list);
     }
 
