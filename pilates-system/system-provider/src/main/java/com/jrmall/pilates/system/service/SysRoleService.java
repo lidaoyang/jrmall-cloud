@@ -7,7 +7,6 @@ import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.model.entity.SysRole;
 import com.jrmall.pilates.system.model.form.RoleForm;
 import com.jrmall.pilates.system.model.query.RolePageQuery;
-import com.jrmall.pilates.common.web.model.Option;
 import com.jrmall.pilates.system.model.vo.RolePageVO;
 
 import java.util.List;

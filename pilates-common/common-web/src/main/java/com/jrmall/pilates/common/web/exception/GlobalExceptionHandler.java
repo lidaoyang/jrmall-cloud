@@ -2,6 +2,9 @@ package com.jrmall.pilates.common.web.exception;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jrmall.pilates.common.exception.BizException;
+import com.jrmall.pilates.common.exception.ProviderAccessDeniedException;
+import com.jrmall.pilates.common.exception.ProviderException;
 import com.jrmall.pilates.common.result.Result;
 import com.jrmall.pilates.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +27,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
 import java.sql.SQLSyntaxErrorException;
-import java.util.concurrent.CompletionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -164,13 +166,18 @@ public class GlobalExceptionHandler {
         }
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(CompletionException.class)
-    public <T> Result<T> processException(CompletionException e) {
-        if (e.getMessage().startsWith("feign.FeignException")) {
-            return Result.failed("微服务调用异常");
-        }
-        return handleException(e);
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ProviderAccessDeniedException.class)
+    public <T> Result<T> processException(ProviderAccessDeniedException e) {
+        log.error("provider access denied:{}", e.getMessage(), e);
+        return Result.failed(e.getResultCode(), e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ProviderException.class)
+    public <T> Result<T> processException(ProviderException e) {
+        log.error("provider exception:{}", e.getMessage(), e);
+        return Result.failed(e.getResultCode(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -3,6 +3,9 @@ package com.jrmall.pilates.system.model.vo;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 用户导入对象
  *
@@ -10,7 +13,10 @@ import lombok.Data;
  * @since 2022/4/10
  */
 @Data
-public class UserImportVO {
+public class UserImportVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @ExcelProperty(value = "用户名")
     private String username;

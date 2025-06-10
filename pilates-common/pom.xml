@@ -21,5 +21,6 @@
         <module>common-mybatis</module>
         <module>common-security</module>
         <module>common-sms</module>
+        <module>common-dubbo</module>
     </modules>
 </project>

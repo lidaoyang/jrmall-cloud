@@ -71,7 +71,7 @@ public class SecurityUtils {
      * 获取数据权限范围
      *
      * @return 数据权限范围
-     * @see com.youlai.common.mybatis.enums.DataScopeEnum
+     * @see com.jrmall.pilates.common.mybatis.enums.DataScopeEnum
      */
     public static Integer getDataScope() {
         return Convert.toInt(getTokenAttributes().get("dataScope"));

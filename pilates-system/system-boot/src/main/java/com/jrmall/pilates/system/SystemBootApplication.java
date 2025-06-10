@@ -1,18 +1,16 @@
 package com.jrmall.pilates.system;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableDubbo
-@EnableTransactionManagement // 开启事务
-@MapperScan(basePackages = {"com.jrmall.pilates.system.mapper"})
-@SpringBootApplication
-public class SystemApplication {
+@EnableDiscoveryClient
+@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+public class SystemBootApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SystemApplication.class, args);
+        SpringApplication.run(SystemBootApplication.class, args);
     }
 }

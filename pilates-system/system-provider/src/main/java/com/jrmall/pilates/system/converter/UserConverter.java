@@ -25,7 +25,7 @@ import org.mapstruct.Mappings;
 public interface UserConverter {
 
     @Mappings({
-            @Mapping(target = "genderLabel", expression = "java(com.youlai.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.youlai.common.enums.GenderEnum.class))")
+            @Mapping(target = "genderLabel", expression = "java(com.jrmall.pilates.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.jrmall.pilates.common.enums.GenderEnum.class))")
     })
     UserPageVO bo2Vo(UserBO bo);
 
@@ -46,7 +46,7 @@ public interface UserConverter {
     SysUser importVo2Entity(UserImportVO vo);
 
     @Mappings({
-            @Mapping(target = "genderLabel", expression = "java(com.youlai.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.youlai.common.enums.GenderEnum.class))")
+            @Mapping(target = "genderLabel", expression = "java(com.jrmall.pilates.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.jrmall.pilates.common.enums.GenderEnum.class))")
     })
     UserProfileVO userProfileBo2Vo(UserProfileBO bo);
 }

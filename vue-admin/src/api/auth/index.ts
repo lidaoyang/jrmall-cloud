@@ -17,7 +17,7 @@ export function loginApi(data: LoginData): AxiosPromise<LoginResult> {
     formData.append("captchaCode", data.captchaCode as string);
     formData.append("grant_type", "captcha");
     return request({
-        url: "/youlai-auth/oauth2/token",
+        url: "/pilates-auth/oauth2/token",
         method: "post",
         data: formData,
         headers: {
@@ -32,7 +32,7 @@ export function loginApi(data: LoginData): AxiosPromise<LoginResult> {
  */
 export function getCaptchaApi(): AxiosPromise<CaptchaResult> {
     return request({
-        url: "/youlai-auth/api/v1/auth/captcha",
+        url: "/pilates-auth/api/v1/auth/captcha",
         method: "get",
     });
 }
@@ -42,7 +42,7 @@ export function getCaptchaApi(): AxiosPromise<CaptchaResult> {
  */
 export function logoutApi() {
     return request({
-        url: "/youlai-system/api/v1/users/logout",
+        url: "/pilates-system-boot/api/v1/users/logout",
         method: "delete",
     });
 }
@@ -51,7 +51,7 @@ export function logoutApi() {
 export function getTokenByCode(data:any) {
 
     return request({
-        url: "/youlai-auth/oauth2/token",
+        url: "/pilates-auth/oauth2/token",
         method: "post",
         data: data,
         headers: {

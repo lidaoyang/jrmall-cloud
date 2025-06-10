@@ -8,7 +8,7 @@ RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \&& echo 'Asia/Shan
 VOLUME /tmp
 
 # 复制jar到镜像
-ADD target/youlai-auth.jar app.jar
+ADD target/pilates-auth.jar app.jar
 
 ENTRYPOINT ["java", "-Xmx128m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
 

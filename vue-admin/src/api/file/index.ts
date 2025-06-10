@@ -11,7 +11,7 @@ export function uploadFileApi(file: File): AxiosPromise<FileInfo> {
   const formData = new FormData();
   formData.append("file", file);
   return request({
-    url: "/youlai-system/api/v1/files",
+    url: "/pilates-system-boot/api/v1/files",
     method: "post",
     data: formData,
     headers: {
@@ -27,7 +27,7 @@ export function uploadFileApi(file: File): AxiosPromise<FileInfo> {
  */
 export function deleteFileApi(filePath?: string) {
   return request({
-    url: "/youlai-system/api/v1/files",
+    url: "/pilates-system-boot/api/v1/files",
     method: "delete",
     params: { filePath: filePath },
   });

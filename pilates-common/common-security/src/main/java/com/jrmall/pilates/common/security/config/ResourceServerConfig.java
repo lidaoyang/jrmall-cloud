@@ -46,25 +46,20 @@ public class ResourceServerConfig {
 
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
-
-
-    /**
-     * 白名单路径列表
-     */
-    @Value("${security.whitelist-paths}")
-    private List<String> whitelistPaths;
+    private final SecurityWhitelistConfig securityWhitelistConfig;
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   HandlerMappingIntrospector introspector) throws Exception {
 
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
-        log.info("whitelist path:{}", JSONUtil.toJsonStr(whitelistPaths));
+        log.info("whitelist path:{}", JSONUtil.toJsonStr(securityWhitelistConfig.getWhitelistPaths()));
         http.authorizeHttpRequests((requests) ->
                         {
-                            if (CollectionUtil.isNotEmpty(whitelistPaths)) {
-                                for (String whitelistPath : whitelistPaths) {
+                            if (CollectionUtil.isNotEmpty(securityWhitelistConfig.getWhitelistPaths())) {
+                                for (String whitelistPath : securityWhitelistConfig.getWhitelistPaths()) {
                                     requests.requestMatchers(mvcMatcherBuilder.pattern(whitelistPath)).permitAll();
                                 }
                             }

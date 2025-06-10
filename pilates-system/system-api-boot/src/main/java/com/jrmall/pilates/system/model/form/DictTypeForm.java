@@ -4,9 +4,15 @@ package com.jrmall.pilates.system.model.form;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Schema(description = "字典类型")
 @Data
-public class DictTypeForm {
+public class DictTypeForm implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description="字典类型ID")
     private Long id;

@@ -153,7 +153,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         List<Option<Long>> list = CollectionUtil.emptyIfNull(deptList).stream()
                 .filter(dept -> dept.getParentId().equals(parentId))
                 .map(dept -> {
-                    Option<Long> option = new Option<Long>(dept.getId(), dept.getName());
+                    Option<Long> option = new Option<>(dept.getId(), dept.getName());
                     List<Option<Long>> children = recurDeptTreeOptions(dept.getId(), deptList);
                     if (CollectionUtil.isNotEmpty(children)) {
                         option.setChildren(children);

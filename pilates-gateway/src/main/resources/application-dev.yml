@@ -1,0 +1,36 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: pilates-gateway
+  main:
+    #当遇到同样名字的时候，是否允许覆盖注册
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: ${nacos.username}
+      password: ${nacos.password}
+      # 注册中心
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.discovery.namespace}
+      # 配置中心
+      config:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.config.namespace}
+        file-extension: yaml
+  config:
+    import:
+      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:pilates-gateway.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+nacos:
+  username: nacos
+  password: nacos
+  server-addr: localhost:8848
+  spring-cloud:
+    config:
+      namespace: pilates-cloud-dev
+    discovery:
+      namespace: springcloud-dev

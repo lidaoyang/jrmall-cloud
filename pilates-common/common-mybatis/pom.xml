@@ -15,10 +15,8 @@
 
         <dependency>
             <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-security</artifactId>
-            <optional>true</optional>
+            <artifactId>common-dubbo</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

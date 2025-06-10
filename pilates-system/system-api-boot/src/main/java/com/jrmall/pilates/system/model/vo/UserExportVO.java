@@ -5,6 +5,8 @@ import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +18,10 @@ import java.time.LocalDateTime;
 
 @Data
 @ColumnWidth(20)
-public class UserExportVO {
+public class UserExportVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @ExcelProperty(value = "用户名")
     private String username;

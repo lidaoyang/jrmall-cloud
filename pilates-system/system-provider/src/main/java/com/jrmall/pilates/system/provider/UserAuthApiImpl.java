@@ -4,7 +4,6 @@ import com.jrmall.pilates.system.api.UserAuthApi;
 import com.jrmall.pilates.system.dto.UserAuthInfo;
 import com.jrmall.pilates.system.service.SysUserService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 
 /**

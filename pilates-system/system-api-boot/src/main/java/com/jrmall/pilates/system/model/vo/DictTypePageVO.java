@@ -4,9 +4,15 @@ package com.jrmall.pilates.system.model.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Schema(description ="字典类型分页对象")
 @Data
-public class DictTypePageVO {
+public class DictTypePageVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description="字典类型ID")
     private Long id;

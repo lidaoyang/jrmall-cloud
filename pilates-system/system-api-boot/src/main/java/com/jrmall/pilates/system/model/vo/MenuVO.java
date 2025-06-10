@@ -5,11 +5,16 @@ import com.jrmall.pilates.system.enums.MenuTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 @Schema(description ="菜单视图对象")
 @Data
-public class MenuVO {
+public class MenuVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "菜单ID")
     private Long id;

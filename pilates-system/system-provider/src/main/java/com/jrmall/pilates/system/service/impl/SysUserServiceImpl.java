@@ -13,8 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jrmall.pilates.common.constant.GlobalConstants;
 import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.constant.SystemConstants;
-import com.jrmall.pilates.common.security.service.PermissionService;
-import com.jrmall.pilates.common.security.util.SecurityUtils;
+import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
 import com.jrmall.pilates.system.converter.UserConverter;
@@ -31,6 +30,7 @@ import com.jrmall.pilates.system.model.vo.UserExportVO;
 import com.jrmall.pilates.system.model.vo.UserInfoVO;
 import com.jrmall.pilates.system.model.vo.UserPageVO;
 import com.jrmall.pilates.system.model.vo.UserProfileVO;
+import com.jrmall.pilates.system.service.SysRoleMenuService;
 import com.jrmall.pilates.system.service.SysRoleService;
 import com.jrmall.pilates.system.service.SysUserRoleService;
 import com.jrmall.pilates.system.service.SysUserService;
@@ -41,6 +41,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -62,9 +63,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysRoleService roleService;
 
-    private final UserConverter userConverter;
+    private final SysRoleMenuService roleMenuService;
 
-    private final PermissionService permissionService;
+    private final UserConverter userConverter;
 
     private final SmsService smsService;
 
@@ -248,7 +249,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public UserInfoVO getCurrentUserInfo() {
         // 登录用户entity
         SysUser user = this.getOne(new LambdaQueryWrapper<SysUser>()
-                .eq(SysUser::getUsername, SecurityUtils.getUsername())
+                .eq(SysUser::getUsername, RpcUtil.getUsername())
                 .select(
                         SysUser::getId,
                         SysUser::getNickname,
@@ -259,12 +260,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         UserInfoVO userInfoVO = userConverter.entity2UserInfoVo(user);
 
         // 获取用户角色集合
-        Set<String> roles = SecurityUtils.getRoles();
+        Set<String> roles = RpcUtil.getRoles();
         userInfoVO.setRoles(roles);
 
         // 获取用户权限集合
         if (CollectionUtil.isNotEmpty(roles)) {
-            Set<String> perms = permissionService.getRolePermsFormCache(roles);
+            Set<String> perms = roleMenuService.getRolePermsFormCache(roles);
             userInfoVO.setPerms(perms);
         }
 
@@ -278,16 +279,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean logout() {
-        String jti = SecurityUtils.getJti();
-        Optional<Long> expireTimeOpt = Optional.ofNullable(SecurityUtils.getExp()); // 使用Optional处理可能的null值
+        String jti = RpcUtil.getJti();
+        Optional<Instant> expireTimeOpt = Optional.ofNullable(RpcUtil.getExp()); // 使用Optional处理可能的null值
 
         long currentTimeInSeconds = System.currentTimeMillis() / 1000; // 当前时间（单位：秒）
 
         expireTimeOpt.ifPresent(expireTime -> {
-            expireTime = expireTime / 1000;
-            if (expireTime > currentTimeInSeconds) {
+            if (expireTime.getEpochSecond() > currentTimeInSeconds) {
                 // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
-                long remainingTimeInSeconds = expireTime - currentTimeInSeconds;
+                long remainingTimeInSeconds = expireTime.getEpochSecond() - currentTimeInSeconds;
                 redisTemplate.opsForValue().set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
             }
         });
@@ -377,7 +377,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public UserProfileVO getUserProfile() {
-        Long userId = SecurityUtils.getUserId();
+        Long userId = RpcUtil.getUserId();
         // 获取用户个人中心信息
         UserProfileBO userProfileBO = this.baseMapper.getUserProfile(userId);
         return userConverter.userProfileBo2Vo(userProfileBO);

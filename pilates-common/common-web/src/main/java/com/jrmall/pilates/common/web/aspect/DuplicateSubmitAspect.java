@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.jrmall.pilates.common.result.ResultCode;
 import com.jrmall.pilates.common.security.util.SecurityUtils;
 import com.jrmall.pilates.common.web.annotation.PreventDuplicateResubmit;
-import com.jrmall.pilates.common.web.exception.BizException;
+import com.jrmall.pilates.common.exception.BizException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

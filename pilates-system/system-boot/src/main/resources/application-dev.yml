@@ -4,20 +4,24 @@ server:
 
 spring:
   application:
-    name: pilates-system
+    name: pilates-system-boot
   cloud:
     nacos:
       username: ${nacos.username}
       password: ${nacos.password}
+      # 注册中心
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.discovery.namespace}
       # 配置中心
       config:
         server-addr: ${nacos.server-addr}
-        namespace: ${nacos.namespace}
+        namespace: ${nacos.spring-cloud.config.namespace}
         file-extension: yaml
   config:
     import:
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-system.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:pilates-system-boot.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 dubbo:
   application:
@@ -36,7 +40,7 @@ dubbo:
     password: ${nacos.password}
     register-mode: instance
     parameters:
-      namespace: dubbo-dev
+      namespace: ${nacos.dubbo.namespace}
       #Dubbo3.0.0版本以后，增加了是否注册消费者的参数，如果需要将消费者注册到nacos注册中心上，需要将参数(register-consumer-url)设置为true，默认是false。
       #register-consumer-url: true
   metadata-report:
@@ -44,9 +48,9 @@ dubbo:
     username: ${nacos.username}
     password: ${nacos.password}
     parameters:
-      namespace: dubbo-metadata-dev
+      namespace: ${nacos.dubbo.namespace-metadata}
   consumer:
-#    filter: consumerRpcFilter
+    filter: consumerRpcFilter
     timeout: 10000
     retries: 0
 
@@ -54,7 +58,15 @@ dubbo:
 nacos:
   username: nacos
   password: nacos
-  server-addr: http://localhost:8848
-  namespace: pilates-cloud-dev
+  server-addr: localhost:8848
+  spring-cloud:
+    config:
+      namespace: pilates-cloud-dev
+    discovery:
+      namespace: springcloud-dev
+  dubbo:
+    namespace: dubbo-dev
+    namespace-metadata: dubbo-metadata-dev
+
 
 

@@ -3,6 +3,7 @@ package com.jrmall.pilates.auth.oauth2.oidc;
 import com.jrmall.pilates.system.api.UserAuthApi;
 import com.jrmall.pilates.system.dto.UserAuthInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -17,16 +18,12 @@ import java.util.Map;
 @Slf4j
 public class CustomOidcUserInfoService {
 
-    private final UserAuthApi userFeignClient;
-
-    public CustomOidcUserInfoService(UserAuthApi userFeignClient) {
-        this.userFeignClient = userFeignClient;
-    }
-
+    @DubboReference
+    private  UserAuthApi userAuthApi;
     public CustomOidcUserInfo loadUserByUsername(String username) {
-        UserAuthInfo userAuthInfo = null;
+        UserAuthInfo userAuthInfo;
         try {
-            userAuthInfo = userFeignClient.getUserAuthInfo(username);
+            userAuthInfo = userAuthApi.getUserAuthInfo(username);
             if (userAuthInfo == null) {
                 return null;
             }

@@ -22,6 +22,10 @@
         <!--基础依赖-->
         <dependency>
             <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-web</artifactId>
         </dependency>
 
@@ -60,27 +64,15 @@
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
-        <!--Spring Cloud & Alibaba -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!-- 注册中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
         <!-- 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
         <!-- 分布式session -->

@@ -12,8 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 角色菜单业务实现类
@@ -92,7 +91,33 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         }
     }
 
+    /**
+     * 从缓存中获取角色权限列表
+     *
+     * @param roleCodes 角色编码集合
+     * @return 角色权限列表
+     */
+    public Set<String> getRolePermsFormCache(Set<String> roleCodes) {
+        // 检查输入是否为空
+        if (CollectionUtil.isEmpty(roleCodes)) {
+            return Collections.emptySet();
+        }
 
+        Set<String> perms = new HashSet<>();
+        // 从缓存中一次性获取所有角色的权限
+        Collection<Object> roleCodesAsObjects = new ArrayList<>(roleCodes);
+        List<Object> rolePermsList = redisTemplate.opsForHash().multiGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodesAsObjects);
+
+        for (Object rolePermsObj : rolePermsList) {
+            if (rolePermsObj instanceof Set) {
+                @SuppressWarnings("unchecked")
+                Set<String> rolePerms = (Set<String>) rolePermsObj;
+                perms.addAll(rolePerms);
+            }
+        }
+
+        return perms;
+    }
 
 
     /**

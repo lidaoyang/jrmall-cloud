@@ -4,9 +4,15 @@ import com.jrmall.pilates.system.enums.MenuTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Schema(description = "菜单表单对象")
 @Data
-public class MenuForm {
+public class MenuForm implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "菜单ID")
     private Long id;

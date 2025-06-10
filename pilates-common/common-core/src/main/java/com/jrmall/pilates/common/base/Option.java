@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,10 +15,13 @@ import java.util.List;
  * @author haoxr
  * @since 2022/1/22
  */
-@Schema(description ="下拉选项对象")
+@Schema(description = "下拉选项对象")
 @Data
 @NoArgsConstructor
-public class Option<T> {
+public class Option<T> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Option(T value, String label) {
         this.value = value;
@@ -26,16 +31,16 @@ public class Option<T> {
     public Option(T value, String label, List<Option<T>> children) {
         this.value = value;
         this.label = label;
-        this.children= children;
+        this.children = children;
     }
 
-    @Schema(description="选项的值")
+    @Schema(description = "选项的值")
     private T value;
 
-    @Schema(description="选项的标签")
+    @Schema(description = "选项的标签")
     private String label;
 
-    @Schema(description="子选项列表")
+    @Schema(description = "子选项列表")
     @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private List<Option<T>> children;
 

@@ -4,24 +4,30 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Schema(description = "部门表单对象")
 @Data
-public class DeptForm {
+public class DeptForm implements Serializable {
 
-    @Schema(description="部门ID")
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Schema(description = "部门ID")
     private Long id;
 
-    @Schema(description="部门名称")
+    @Schema(description = "部门名称")
     private String name;
 
-    @Schema(description="父部门ID")
+    @Schema(description = "父部门ID")
     @NotNull(message = "父部门ID不能为空")
     private Long parentId;
 
-    @Schema(description="状态(1:启用;0:禁用)")
+    @Schema(description = "状态(1:启用;0:禁用)")
     private Integer status;
 
-    @Schema(description="排序(数字越小排名越靠前)")
+    @Schema(description = "排序(数字越小排名越靠前)")
     private Integer sort;
 
 }

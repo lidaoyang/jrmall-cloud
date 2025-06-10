@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.handler.DataPermissionHandler;
 import com.jrmall.pilates.common.base.IBaseEnum;
+import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.common.mybatis.enums.DataScopeEnum;
 import com.jrmall.pilates.common.mybatis.annotation.DataPermission;
-import com.jrmall.pilates.common.security.util.SecurityUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
@@ -39,7 +39,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
                 return where;
             }
             // 超级管理员不受数据权限控制
-            if (SecurityUtils.isRoot()) {
+            if (RpcUtil.isRoot()) {
                 return where;
             }
             if (ObjectUtils.isNotEmpty(annotation)
@@ -64,7 +64,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
         String userColumnName = StrUtil.isNotBlank(userAlias) ? (userAlias + StringPool.DOT + userIdColumnName) : userIdColumnName;
 
         // 获取当前用户的数据权限
-        Integer dataScope = SecurityUtils.getDataScope();
+        Integer dataScope = RpcUtil.getDataScope();
 
         DataScopeEnum dataScopeEnum = IBaseEnum.getEnumByValue(dataScope, DataScopeEnum.class);
 
@@ -75,16 +75,16 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
                 return where;
             }
             case DEPT -> {
-                deptId = SecurityUtils.getDeptId();
+                deptId = RpcUtil.getDeptId();
                 appendSqlStr = deptColumnName + StringPool.EQUALS + deptId;
             }
             case SELF -> {
-                userId = SecurityUtils.getUserId();
+                userId = RpcUtil.getUserId();
                 appendSqlStr = userColumnName + StringPool.EQUALS + userId;
             }
             // 默认部门及子部门数据权限
             default -> {
-                deptId = SecurityUtils.getDeptId();
+                deptId = RpcUtil.getDeptId();
                 appendSqlStr = deptColumnName + " IN ( SELECT id FROM sys_dept WHERE id = " + deptId + " or find_in_set( " + deptId + " , tree_path ) )";
             }
         }

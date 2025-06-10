@@ -3,6 +3,8 @@ package com.jrmall.pilates.system.model.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -13,7 +15,10 @@ import java.util.Set;
  */
 @Schema(description ="个人中心用户视图对象")
 @Data
-public class UserProfileVO {
+public class UserProfileVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description="用户ID")
     private Long id;

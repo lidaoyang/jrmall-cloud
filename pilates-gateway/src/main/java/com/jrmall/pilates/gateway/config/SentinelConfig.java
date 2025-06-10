@@ -1,3 +1,4 @@
+/*
 package com.jrmall.pilates.gateway.config;
 
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
@@ -10,12 +11,14 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 
+*/
 /**
  * 自定义网关流控异常
  *
  * @author haoxr
  * @since 2022/7/24
- */
+ *//*
+
 @Configuration
 public class SentinelConfig {
 
@@ -32,3 +35,4 @@ public class SentinelConfig {
         );
     }
 }
+*/

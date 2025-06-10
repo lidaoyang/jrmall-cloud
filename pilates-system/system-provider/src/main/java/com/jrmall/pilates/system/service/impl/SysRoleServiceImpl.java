@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.common.constant.SystemConstants;
-import com.jrmall.pilates.common.security.util.SecurityUtils;
+import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.system.converter.RoleConverter;
 import com.jrmall.pilates.system.mapper.SysRoleMapper;
 import com.jrmall.pilates.system.model.entity.SysRole;
@@ -64,7 +64,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                                                 .or()
                                                 .like(StrUtil.isNotBlank(keywords), SysRole::getCode, keywords)
                         )
-                        .ne(!SecurityUtils.isRoot(), SysRole::getCode, SystemConstants.ROOT_ROLE_CODE) // 非超级管理员不显示超级管理员角色
+                        .ne(!RpcUtil.isRoot(), SysRole::getCode, SystemConstants.ROOT_ROLE_CODE) // 非超级管理员不显示超级管理员角色
         );
 
         // 实体转换
@@ -81,7 +81,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public List<Option<Integer>> listRoleOptions() {
         // 查询数据
         List<SysRole> roleList = this.list(new LambdaQueryWrapper<SysRole>()
-                .ne(!SecurityUtils.isRoot(), SysRole::getCode, SystemConstants.ROOT_ROLE_CODE)
+                .ne(!RpcUtil.isRoot(), SysRole::getCode, SystemConstants.ROOT_ROLE_CODE)
                 .select(SysRole::getId, SysRole::getName)
                 .orderByAsc(SysRole::getSort)
         );
@@ -245,8 +245,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      */
     @Override
     public Integer getMaxDataRangeDataScope(Set<String> roles) {
-        Integer dataScope = this.baseMapper.getMaxDataRangeDataScope(roles);
-        return dataScope;
+        return this.baseMapper.getMaxDataRangeDataScope(roles);
     }
 
 }

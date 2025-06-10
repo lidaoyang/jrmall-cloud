@@ -1,0 +1,2 @@
+providerRpcFilter=com.jrmall.pilates.common.dubbo.filter.ProviderRpcFilter
+consumerRpcFilter=com.jrmall.pilates.common.dubbo.filter.ConsumerRpcFilter

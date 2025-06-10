@@ -2,6 +2,8 @@ package com.jrmall.pilates.system.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -11,7 +13,10 @@ import java.util.Set;
  * @since 2021/9/27
  */
 @Data
-public class UserAuthInfo {
+public class UserAuthInfo implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户ID

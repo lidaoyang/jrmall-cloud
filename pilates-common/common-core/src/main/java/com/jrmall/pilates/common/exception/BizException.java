@@ -1,4 +1,4 @@
-package com.jrmall.pilates.common.web.exception;
+package com.jrmall.pilates.common.exception;
 
 import com.jrmall.pilates.common.result.IResultCode;
 import lombok.Getter;

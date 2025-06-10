@@ -3,6 +3,7 @@ package com.jrmall.pilates.common.base;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,8 +13,10 @@ import java.io.Serializable;
  * @since 2021/2/28
  */
 @Data
-@Schema 
 public class BasePageQuery implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "页码", example = "1")
     private int pageNum = 1;

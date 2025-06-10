@@ -7,6 +7,7 @@ import com.jrmall.pilates.common.enums.StatusEnum;
 import com.jrmall.pilates.system.api.UserAuthApi;
 import com.jrmall.pilates.system.dto.UserAuthInfo;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +23,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysUserDetailsService implements UserDetailsService {
 
-    private final UserAuthApi userFeignClient;
+    @DubboReference
+    private UserAuthApi userAuthApi;
 
     /**
      * 根据用户名获取用户信息(用户名、密码和角色权限)
@@ -34,7 +36,7 @@ public class SysUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserAuthInfo userAuthInfo = userFeignClient.getUserAuthInfo(username);
+        UserAuthInfo userAuthInfo = userAuthApi.getUserAuthInfo(username);
 
         Assert.isTrue(userAuthInfo != null, "用户不存在");
 

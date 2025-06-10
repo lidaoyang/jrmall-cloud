@@ -93,6 +93,12 @@
 
             <dependency>
                 <groupId>com.jrmall.pilates</groupId>
+                <artifactId>common-dubbo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jrmall.pilates</groupId>
                 <artifactId>common-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>

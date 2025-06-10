@@ -37,7 +37,7 @@ jre
 .project
 test/resources/projects/**/.vscode
 test/resources/projects/maven/salut/testGradle
-
+.run
 
 
 *.local

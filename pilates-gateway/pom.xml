@@ -18,10 +18,15 @@
     </properties>
 
     <dependencies>
-        <!--Spring Cloud & Alibaba-->
+        <!-- 公共依赖 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -34,7 +39,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
+        <!--负载均衡器,解析lb://服务名(Spring Cloud 2021 版本中，Ribbon被完全移除,需要引入 Spring Cloud LoadBalancer 作为 Ribbon 的替代品)-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
@@ -53,7 +58,7 @@
         </dependency>
 
         <!-- Sentinel -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
         </dependency>
@@ -66,7 +71,7 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Api文档 -->
         <dependency>
@@ -78,17 +83,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
-
-        <!-- 公共依赖 -->
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-redis</artifactId>
         </dependency>
 
     </dependencies>
