@@ -22,6 +22,8 @@ spring:
         file-extension: yaml
   config:
     import:
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
+      - nacos:knife4j-gateway-config.yml?group=DEFAULT_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
       - nacos:pilates-gateway.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 

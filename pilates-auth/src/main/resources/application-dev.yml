@@ -20,43 +20,15 @@ spring:
       config:
         server-addr: ${nacos.server-addr}
         namespace: ${nacos.spring-cloud.config.namespace}
-        file-extension: yaml
   config:
     import:
+      - nacos:mysql-auth-config.yml?group=DEFAULT_GROUP
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
+      - nacos:aliyun-sms.yml?group=DEFAULT_GROUP
+      - nacos:swagger-config.yml?group=DEFAULT_GROUP
+      - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
       - nacos:pilates-auth.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-
-dubbo:
-  application:
-    qos-enable: false
-    metadata-type: remote
-    shutwait: 16000 # 停止服务等待时间，单位：毫秒
-  protocol:
-    name: dubbo
-    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: -1
-  scan:
-    base-packages: com.jrmall.pilates.auth  #dubbo中包扫描
-  registry:
-    address: nacos://${nacos.server-addr}
-    username: ${nacos.username}
-    password: ${nacos.password}
-    register-mode: instance
-    parameters:
-      namespace: ${nacos.dubbo.namespace}
-      #Dubbo3.0.0版本以后，增加了是否注册消费者的参数，如果需要将消费者注册到nacos注册中心上，需要将参数(register-consumer-url)设置为true，默认是false。
-      #register-consumer-url: true
-  metadata-report:
-    address: nacos://${nacos.server-addr}
-    username: ${nacos.username}
-    password: ${nacos.password}
-    parameters:
-      namespace: ${nacos.dubbo.namespace-metadata}
-  consumer:
-    filter: consumerRpcFilter
-    timeout: 10000
-    retries: 0
-
 
 nacos:
   username: nacos

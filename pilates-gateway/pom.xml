@@ -12,11 +12,6 @@
     <artifactId>pilates-gateway</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <service.port>9999</service.port>
-        <service.nodeport>32006</service.nodeport>
-    </properties>
-
     <dependencies>
         <!-- 公共依赖 -->
         <dependency>

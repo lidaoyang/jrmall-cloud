@@ -11,11 +11,6 @@
 
     <artifactId>system-boot</artifactId>
 
-    <properties>
-        <service.port>8800</service.port>
-        <service.nodeport>32004</service.nodeport>
-    </properties>
-
     <dependencies>
 
         <!--操作接口-->
@@ -53,6 +48,18 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+
+        <!-- Sentinel流量控制、熔断降级 -->
+        <!--<dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        &lt;!&ndash; Sentinel规则持久化至Nacos配置 &ndash;&gt;
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>-->
 
         <!-- 分布式对象存储 -->
         <dependency>

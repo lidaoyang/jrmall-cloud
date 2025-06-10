@@ -13,40 +13,12 @@ spring:
       config:
         server-addr: ${nacos.server-addr}
         namespace: ${nacos.spring-cloud.config.namespace}
-        file-extension: yaml
   config:
     import:
+      - nacos:mysql-system-config.yml?group=DEFAULT_GROUP
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
+      - nacos:dubbo-provider.yml?group=DEFAULT_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-system.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-
-dubbo:
-  application:
-    qos-enable: false
-    metadata-type: remote
-    shutwait: 16000 # 停止服务等待时间，单位：毫秒
-  protocol:
-    name: dubbo
-    # dubbo 协议端口（ -1 表示自增端口，从 20880 开始）
-    port: -1
-  scan:
-    base-packages: com.jrmall.pilates.system.provider  #dubbo中包扫描
-  registry:
-    address: nacos://${nacos.server-addr}
-    username: ${nacos.username}
-    password: ${nacos.password}
-    # Dubbo3 默认采用 “应用级服务发现 + 接口级服务发现” 的双注册模式，因此会发现应用级服务（应用名）和接口级服务（接口名）同时出现在 Nacos 控制台，可以通过配置 dubbo.registry.register-mode=instance/interface/all 来改变注册行为。
-    register-mode: instance
-    parameters:
-      namespace: ${nacos.dubbo.namespace}
-  metadata-report:
-    address: nacos://${nacos.server-addr}
-    username: ${nacos.username}
-    password: ${nacos.password}
-    parameters:
-      namespace: ${nacos.dubbo.namespace-metadata}
-  provider:
-    filter: providerRpcFilter #,dubboExceptionFilter,-exception
-    timeout: 10000
 
 nacos:
   username: nacos
@@ -58,6 +30,3 @@ nacos:
   dubbo:
     namespace: dubbo-dev
     namespace-metadata: dubbo-metadata-dev
-
-
-
