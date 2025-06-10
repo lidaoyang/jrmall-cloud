@@ -109,7 +109,8 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
         String captchaId = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_ID);
         String captchaCode = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_CODE);
 
-        String cacheCaptchaCode = redisUtil.get(RedisConstants.CAPTCHA_CODE_PREFIX + captchaId);
+        String captchaRedisKey = RedisConstants.CAPTCHA_CODE_PREFIX + captchaId;
+        String cacheCaptchaCode = redisUtil.get(captchaRedisKey);
 
         if (cacheCaptchaCode == null) {
             throw new OAuth2AuthenticationException("验证码已过期");
@@ -233,6 +234,8 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
         // 持久化令牌发放记录到数据库
         OAuth2Authorization authorization = authorizationBuilder.build();
         this.authorizationService.save(authorization);
+        //  删除验证码
+        redisUtil.remove(captchaRedisKey);
 
         additionalParameters = (idToken != null)
                 ? Collections.singletonMap(OidcParameterNames.ID_TOKEN, idToken.getTokenValue())
