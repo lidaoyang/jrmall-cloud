@@ -2,6 +2,7 @@ package com.jrmall.pilates.gateway.filter;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWTPayload;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.nimbusds.jose.JWSObject;
 import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.result.ResultCode;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -32,7 +32,7 @@ import java.text.ParseException;
 @Slf4j
 public class TokenValidationGlobalFilter implements GlobalFilter, Ordered {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisUtil redisUtil;
 
     private static final String BEARER_PREFIX = "Bearer ";
 
@@ -52,7 +52,7 @@ public class TokenValidationGlobalFilter implements GlobalFilter, Ordered {
             String token = authorization.substring(BEARER_PREFIX.length());
             JWSObject jwsObject = JWSObject.parse(token);
             String jti = (String) jwsObject.getPayload().toJSONObject().get(JWTPayload.JWT_ID);
-            Boolean isBlackToken = redisTemplate.hasKey(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti);
+            Boolean isBlackToken = redisUtil.exists(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti);
             if (isBlackToken) {
                 return WebFluxUtils.writeErrorResponse(response, ResultCode.TOKEN_ACCESS_FORBIDDEN);
             }

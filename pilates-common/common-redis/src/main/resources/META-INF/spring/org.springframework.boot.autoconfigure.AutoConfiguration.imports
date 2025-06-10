@@ -1,3 +1,4 @@
-com.jrmall.pilates.common.redis.RedisCacheConfig
-com.jrmall.pilates.common.redis.RedisConfig
-com.jrmall.pilates.common.redis.BusinessSnGenerator
+com.jrmall.pilates.common.redis.config.RedisCacheConfig
+com.jrmall.pilates.common.redis.config.RedisConfig
+com.jrmall.pilates.common.redis.config.BusinessSnGenerator
+com.jrmall.pilates.common.redis.config.RedisHealthCheck

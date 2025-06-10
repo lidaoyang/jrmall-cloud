@@ -1,9 +1,12 @@
-package com.jrmall.pilates.common.redis;
+package com.jrmall.pilates.common.redis.config;
 
+import com.jrmall.pilates.common.redis.util.RedisUtil;
+import com.jrmall.pilates.common.redis.util.RedisUtilO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 
@@ -41,5 +44,14 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    @Bean(name = "redisUtilO")
+    public RedisUtilO redisUtilO(RedisTemplate<String, Object> redisTemplate) {
+        return new RedisUtilO(redisTemplate);
+    }
+
+    @Bean(name = "redisUtil")
+    public RedisUtil redisUtil(StringRedisTemplate redisTemplate) {
+        return new RedisUtil(redisTemplate);
+    }
 
 }

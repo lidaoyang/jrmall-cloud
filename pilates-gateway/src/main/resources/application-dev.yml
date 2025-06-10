@@ -1,5 +1,6 @@
 server:
   port: 9999
+  shutdown: graceful #graceful:开启优雅停机，默认IMMEDIATE是立即关机
 
 spring:
   application:

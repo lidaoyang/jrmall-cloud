@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jrmall.pilates.auth.oauth2.handler.*;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -30,7 +31,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
@@ -90,7 +90,7 @@ public class AuthorizationServerConfig {
 
     private final OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer;
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedisUtil redisUtil;
 
     private final CodeGenerator codeGenerator;
 
@@ -157,9 +157,9 @@ public class AuthorizationServerConfig {
                                     // 添加自定义授权模式提供者(Provider)
                                     authenticationProviders.addAll(
                                             List.of(
-                                                    new CaptchaAuthenticationProvider(authenticationManager, authorizationService, tokenGenerator, redisTemplate, codeGenerator),
+                                                    new CaptchaAuthenticationProvider(authenticationManager, authorizationService, tokenGenerator, redisUtil, codeGenerator),
                                                     new PasswordAuthenticationProvider(authenticationManager, authorizationService, tokenGenerator),
-                                                    new CustomRefreshTokenAuthenticationProvider(authorizationService, tokenGenerator, redisTemplate)
+                                                    new CustomRefreshTokenAuthenticationProvider(authorizationService, tokenGenerator, redisUtil)
                                             )
                                     );
                                 }
@@ -189,7 +189,7 @@ public class AuthorizationServerConfig {
     public JWKSource<SecurityContext> jwkSource() {
 
         // 尝试从Redis中获取JWKSet(JWT密钥对，包含非对称加密的公钥和私钥)
-        String jwkSetStr = redisTemplate.opsForValue().get(RedisConstants.JWK_SET_KEY);
+        String jwkSetStr = redisUtil.get(RedisConstants.JWK_SET_KEY);
         if (StrUtil.isNotBlank(jwkSetStr)) {
             // 如果存在，解析JWKSet并返回
             JWKSet jwkSet = JWKSet.parse(jwkSetStr);
@@ -210,7 +210,7 @@ public class AuthorizationServerConfig {
             JWKSet jwkSet = new JWKSet(rsaKey);
 
             // 将JWKSet存储在Redis中
-            redisTemplate.opsForValue().set(RedisConstants.JWK_SET_KEY, jwkSet.toString(Boolean.FALSE));
+            redisUtil.set(RedisConstants.JWK_SET_KEY, jwkSet.toString(Boolean.FALSE));
             return new ImmutableJWKSet<>(jwkSet);
         }
 

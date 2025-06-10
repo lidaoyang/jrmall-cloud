@@ -1,9 +1,9 @@
 package com.jrmall.pilates.auth.oauth2.extension.refresh;
 
 import com.jrmall.pilates.common.constant.RedisConstants;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -46,7 +46,7 @@ public class CustomRefreshTokenAuthenticationProvider implements AuthenticationP
     private final Log logger = LogFactory.getLog(getClass());
     private final OAuth2AuthorizationService authorizationService;
     private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-    private final StringRedisTemplate redisTemplate;
+    private final RedisUtil redisUtil;
 
     /**
      * Constructs an {@code OAuth2RefreshTokenAuthenticationProvider} using the provided parameters.
@@ -57,13 +57,13 @@ public class CustomRefreshTokenAuthenticationProvider implements AuthenticationP
      */
     public CustomRefreshTokenAuthenticationProvider(OAuth2AuthorizationService authorizationService,
                                                     OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                                    StringRedisTemplate redisTemplate) {
+                                                    RedisUtil redisUtil) {
         Assert.notNull(authorizationService, "authorizationService cannot be null");
         Assert.notNull(tokenGenerator, "tokenGenerator cannot be null");
-        Assert.notNull(redisTemplate, "redisTemplate cannot be null");
+        Assert.notNull(redisUtil, "redisUtil cannot be null");
         this.authorizationService = authorizationService;
         this.tokenGenerator = tokenGenerator;
-        this.redisTemplate = redisTemplate;
+        this.redisUtil = redisUtil;
     }
 
     @Override
@@ -235,11 +235,11 @@ public class CustomRefreshTokenAuthenticationProvider implements AuthenticationP
             // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
             Duration between = Duration.between(Instant.now(), authorization.getAccessToken().getToken().getExpiresAt());
             long seconds = between.toSeconds();
-            redisTemplate.opsForValue().set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", seconds, TimeUnit.SECONDS);
+            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", seconds, TimeUnit.SECONDS);
         }
         if (authorization.getAccessToken().getToken().getExpiresAt() == null) {
             // token 永不过期则永久加入黑名单
-            redisTemplate.opsForValue().set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
+            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
         }
     }
 

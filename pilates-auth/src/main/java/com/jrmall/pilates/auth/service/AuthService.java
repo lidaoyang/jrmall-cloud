@@ -7,10 +7,10 @@ import cn.hutool.json.JSONUtil;
 import com.jrmall.pilates.auth.property.CaptchaProperties;
 import com.jrmall.pilates.auth.model.CaptchaResult;
 import com.jrmall.pilates.common.constant.RedisConstants;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class AuthService {
     private final AliyunSmsProperties aliyunSmsProperties;
     private final SmsService smsService;
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedisUtil redisUtil;
 
 
     /**
@@ -46,7 +46,7 @@ public class AuthService {
 
         // 验证码文本缓存至Redis，用于登录校验
         String captchaId = IdUtil.fastSimpleUUID();
-        redisTemplate.opsForValue().set(
+        redisUtil.set(
                 RedisConstants.CAPTCHA_CODE_PREFIX + captchaId,
                 captcha.getCode(),
                 captchaProperties.getExpireSeconds(),
@@ -81,7 +81,7 @@ public class AuthService {
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
             // 将验证码存入redis，有效期5分钟
-            redisTemplate.opsForValue().set(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile, code, 5, TimeUnit.MINUTES);
+            redisUtil.set(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile, code, 5L, TimeUnit.MINUTES);
 
             // TODO 考虑记录每次发送短信的详情，如发送时间、手机号和短信内容等，以便后续审核或分析短信发送效果。
         }

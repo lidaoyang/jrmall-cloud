@@ -2,10 +2,10 @@ package com.jrmall.pilates.common.web.constraint;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.StringUtils;
 
 import jakarta.validation.ConstraintValidator;
@@ -22,7 +22,7 @@ public class CityValidator implements ConstraintValidator<CheckCityValid, String
     private CityType type;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisUtil redisUtil;
 
     @Override
     public void initialize(CheckCityValid annotation) {
@@ -35,12 +35,12 @@ public class CityValidator implements ConstraintValidator<CheckCityValid, String
         if (inputValue == null) {
             return false;
         }
-        String jsonStr = redisTemplate.opsForValue().get("constant:city");
+        String jsonStr = redisUtil.get("constant:city");
         if (!StringUtils.hasText(jsonStr)) {
             ClassPathResource resource = new ClassPathResource("city.json");
             InputStream inputStream = resource.getInputStream();
             String line = IoUtil.readUtf8(inputStream);
-            redisTemplate.opsForValue().set("constant:city", line);
+            redisUtil.set("constant:city", line);
             jsonStr = line;
 
         }

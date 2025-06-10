@@ -1,4 +1,4 @@
-package com.jrmall.pilates.common.redis;
+package com.jrmall.pilates.common.redis.config;
 
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

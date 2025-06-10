@@ -5,9 +5,9 @@ import cn.hutool.captcha.generator.CodeGenerator;
 import cn.hutool.core.lang.Assert;
 import com.jrmall.pilates.auth.util.OAuth2AuthenticationProviderUtils;
 import com.jrmall.pilates.common.constant.RedisConstants;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,7 +58,7 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
     @Setter
     private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
     @Setter
-    private StringRedisTemplate redisTemplate;
+    private RedisUtil redisUtil;
     @Setter
     private CodeGenerator codeGenerator;
 
@@ -78,7 +78,7 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
     public CaptchaAuthenticationProvider(AuthenticationManager authenticationManager,
                                          OAuth2AuthorizationService authorizationService,
                                          OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                                         StringRedisTemplate redisTemplate,
+                                         RedisUtil redisUtil,
                                          CodeGenerator codeGenerator
     ) {
         Assert.notNull(authorizationService, "authorizationService cannot be null");
@@ -86,7 +86,7 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
         this.authenticationManager = authenticationManager;
         this.authorizationService = authorizationService;
         this.tokenGenerator = tokenGenerator;
-        this.redisTemplate = redisTemplate;
+        this.redisUtil = redisUtil;
         this.codeGenerator = codeGenerator;
     }
 
@@ -109,7 +109,7 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
         String captchaId = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_ID);
         String captchaCode = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_CODE);
 
-        String cacheCaptchaCode = redisTemplate.opsForValue().get(RedisConstants.CAPTCHA_CODE_PREFIX + captchaId);
+        String cacheCaptchaCode = redisUtil.get(RedisConstants.CAPTCHA_CODE_PREFIX + captchaId);
 
         if (cacheCaptchaCode == null) {
             throw new OAuth2AuthenticationException("验证码已过期");

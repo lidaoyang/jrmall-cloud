@@ -14,6 +14,7 @@ import com.jrmall.pilates.common.constant.GlobalConstants;
 import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.constant.SystemConstants;
 import com.jrmall.pilates.common.dubbo.util.RpcUtil;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
 import com.jrmall.pilates.system.converter.UserConverter;
@@ -36,7 +37,6 @@ import com.jrmall.pilates.system.service.SysUserRoleService;
 import com.jrmall.pilates.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +71,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final AliyunSmsProperties aliyunSmsProperties;
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedisUtil redisUtil;
 
     /**
      * 获取用户分页列表
@@ -288,13 +288,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             if (expireTime.getEpochSecond() > currentTimeInSeconds) {
                 // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
                 long remainingTimeInSeconds = expireTime.getEpochSecond() - currentTimeInSeconds;
-                redisTemplate.opsForValue().set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
+                redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
             }
         });
 
         if (expireTimeOpt.isEmpty()) {
             // token 永不过期则永久加入黑名单
-            redisTemplate.opsForValue().set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
+            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
         }
 
         return true;
@@ -312,13 +312,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String mobile = userRegisterForm.getMobile();
         String code = userRegisterForm.getCode();
         // 校验验证码
-        String cacheCode = redisTemplate.opsForValue().get(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile);
+        String cacheCode = redisUtil.get(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile);
         if (!StrUtil.equals(code, cacheCode)) {
             log.warn("验证码不匹配或不存在: {}", mobile);
             return false; // 验证码不匹配或不存在时返回false
         }
         // 校验通过，删除验证码
-        redisTemplate.delete(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile);
+        redisUtil.remove(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile);
 
         // 校验手机号是否已注册
         long count = this.count(new LambdaQueryWrapper<SysUser>()
@@ -362,7 +362,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
             // 将验证码存入redis，有效期5分钟
-            redisTemplate.opsForValue().set(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile, code, 5, TimeUnit.MINUTES);
+            redisUtil.set(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile, code, 5L, TimeUnit.MINUTES);
 
             // TODO 考虑记录每次发送短信的详情，如发送时间、手机号和短信内容等，以便后续审核或分析短信发送效果。
         }

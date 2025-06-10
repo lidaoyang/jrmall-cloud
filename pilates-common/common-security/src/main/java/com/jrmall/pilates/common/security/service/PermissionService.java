@@ -3,10 +3,11 @@ package com.jrmall.pilates.common.security.service;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jrmall.pilates.common.constant.RedisConstants;
+import com.jrmall.pilates.common.redis.util.RedisUtil;
+import com.jrmall.pilates.common.redis.util.RedisUtilO;
 import com.jrmall.pilates.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.PatternMatchUtils;
 
@@ -23,7 +24,7 @@ import java.util.*;
 @Slf4j
 public class PermissionService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisUtilO redisUtil;
 
     /**
      * 判断当前登录用户是否拥有操作权限
@@ -80,8 +81,7 @@ public class PermissionService {
 
         Set<String> perms = new HashSet<>();
         // 从缓存中一次性获取所有角色的权限
-        Collection<Object> roleCodesAsObjects = new ArrayList<>(roleCodes);
-        List<Object> rolePermsList = redisTemplate.opsForHash().multiGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodesAsObjects);
+        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodes);
 
         for (Object rolePermsObj : rolePermsList) {
             if (rolePermsObj instanceof Set) {

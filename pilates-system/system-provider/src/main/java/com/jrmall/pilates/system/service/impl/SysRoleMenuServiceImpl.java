@@ -3,13 +3,13 @@ package com.jrmall.pilates.system.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jrmall.pilates.common.constant.RedisConstants;
+import com.jrmall.pilates.common.redis.util.RedisUtilO;
 import com.jrmall.pilates.system.mapper.SysRoleMenuMapper;
 import com.jrmall.pilates.system.model.bo.RolePermsBO;
 import com.jrmall.pilates.system.model.entity.SysRoleMenu;
 import com.jrmall.pilates.system.service.SysRoleMenuService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,7 +22,7 @@ import java.util.*;
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisUtilO redisUtil;
 
     /**
      * 初始化权限缓存
@@ -38,14 +38,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache() {
         // 清理权限缓存
-        redisTemplate.opsForHash().delete(RedisConstants.ROLE_PERMS_PREFIX, "*");
+        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, "*");
 
         List<RolePermsBO> list = this.baseMapper.getRolePermsList(null);
         if (CollectionUtil.isNotEmpty(list)) {
             list.forEach(item -> {
                 String roleCode = item.getRoleCode();
                 Set<String> perms = item.getPerms();
-                redisTemplate.opsForHash().put(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
+                redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
             });
         }
     }
@@ -56,7 +56,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache(String roleCode) {
         // 清理权限缓存
-        redisTemplate.opsForHash().delete(RedisConstants.ROLE_PERMS_PREFIX, roleCode);
+        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, roleCode);
 
         List<RolePermsBO> list = this.baseMapper.getRolePermsList(roleCode);
         if (CollectionUtil.isNotEmpty(list)) {
@@ -66,7 +66,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             }
 
             Set<String> perms = rolePerms.getPerms();
-            redisTemplate.opsForHash().put(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
+            redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
         }
     }
 
@@ -76,10 +76,10 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache(String oldRoleCode, String newRoleCode) {
         // 清理旧角色权限缓存
-        redisTemplate.opsForHash().delete(RedisConstants.ROLE_PERMS_PREFIX, oldRoleCode);
+        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, oldRoleCode);
 
         // 添加新角色权限缓存
-        List<RolePermsBO> list =this.baseMapper.getRolePermsList(newRoleCode);
+        List<RolePermsBO> list = this.baseMapper.getRolePermsList(newRoleCode);
         if (CollectionUtil.isNotEmpty(list)) {
             RolePermsBO rolePerms = list.get(0);
             if (rolePerms == null) {
@@ -87,7 +87,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             }
 
             Set<String> perms = rolePerms.getPerms();
-            redisTemplate.opsForHash().put(RedisConstants.ROLE_PERMS_PREFIX, newRoleCode, perms);
+            redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, newRoleCode, perms);
         }
     }
 
@@ -105,8 +105,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         Set<String> perms = new HashSet<>();
         // 从缓存中一次性获取所有角色的权限
-        Collection<Object> roleCodesAsObjects = new ArrayList<>(roleCodes);
-        List<Object> rolePermsList = redisTemplate.opsForHash().multiGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodesAsObjects);
+        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodes);
 
         for (Object rolePermsObj : rolePermsList) {
             if (rolePermsObj instanceof Set) {
