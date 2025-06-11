@@ -49,6 +49,7 @@ public class SysUserController {
 
     @Operation(summary = "用户分页列表")
     @GetMapping("/page")
+    @PreAuthorize("@ss.hasPerm('sys:user:list')")
     public PageResult<UserPageVO> getUserPage(
             @ParameterObject UserPageQuery queryParams
     ) {
@@ -57,7 +58,7 @@ public class SysUserController {
     }
 
     @Operation(summary = "新增用户")
-    @PostMapping
+    @PostMapping("/save")
     @PreAuthorize("@ss.hasPerm('sys:user:add')")
     @PreventDuplicateResubmit
     public Result<Boolean> saveUser(
@@ -109,6 +110,7 @@ public class SysUserController {
 
     @Operation(summary = "修改用户状态")
     @PatchMapping(value = "/{userId}/status")
+    @PreAuthorize("@ss.hasPerm('sys:user:upstatus')")
     public Result<Boolean> updateUserStatus(
             @Parameter(description = "用户ID") @PathVariable Long userId,
             @Parameter(description = "用户状态(1:启用;0:禁用)") @RequestParam Integer status
