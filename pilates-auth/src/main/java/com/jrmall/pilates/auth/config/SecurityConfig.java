@@ -52,7 +52,6 @@ public class SecurityConfig {
         // 禁用 csrf 与 cors
         http.csrf(AbstractHttpConfigurer::disable);
 
-
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         http.authorizeHttpRequests((requests) ->
                         {
@@ -87,22 +86,6 @@ public class SecurityConfig {
                 );
 
         return http.build();
-    }
-
-
-    /**
-     * 不走过滤器链的放行配置
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(
-                AntPathRequestMatcher.antMatcher("/webjars/**"),
-                AntPathRequestMatcher.antMatcher("/assets/**"),
-                AntPathRequestMatcher.antMatcher("/doc.html"),
-                AntPathRequestMatcher.antMatcher("/swagger-resources/**"),
-                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
-                AntPathRequestMatcher.antMatcher("/swagger-ui/**")
-        );
     }
 
 
