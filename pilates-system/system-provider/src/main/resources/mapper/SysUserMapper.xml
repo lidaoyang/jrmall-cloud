@@ -35,7 +35,7 @@
                 AND u.status = #{queryParams.status}
             </if>
             <if test='queryParams.deptId!=null'>
-                AND concat(',',concat(d.tree_path,',',d.id),',') like concat('%,',#{queryParams.deptId},',%')
+                AND (d.id= #{queryParams.deptId} OR find_in_set(#{queryParams.deptId},  d.tree_path))
             </if>
         </where>
         GROUP BY u.id
