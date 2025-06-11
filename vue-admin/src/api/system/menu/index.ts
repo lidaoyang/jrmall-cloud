@@ -7,7 +7,7 @@ import { MenuQuery, MenuVO, MenuForm } from "./types";
  */
 export function listRoutes() {
   return request({
-    url: "/pilates-system-boot/api/v1/menus/routes",
+    url: "/sys-api/api/v1/menus/routes",
     method: "get",
   });
 }
@@ -19,7 +19,7 @@ export function listRoutes() {
  */
 export function listMenus(queryParams: MenuQuery): AxiosPromise<MenuVO[]> {
   return request({
-    url: "/pilates-system-boot/api/v1/menus",
+    url: "/sys-api/api/v1/menus",
     method: "get",
     params: queryParams,
   });
@@ -30,7 +30,7 @@ export function listMenus(queryParams: MenuQuery): AxiosPromise<MenuVO[]> {
  */
 export function getMenuOptions(): AxiosPromise<OptionType[]> {
   return request({
-    url: "/pilates-system-boot/api/v1/menus/options",
+    url: "/sys-api/api/v1/menus/options",
     method: "get",
   });
 }
@@ -42,7 +42,7 @@ export function getMenuOptions(): AxiosPromise<OptionType[]> {
  */
 export function getMenuForm(id: number): AxiosPromise<MenuForm> {
   return request({
-    url: "/pilates-system-boot/api/v1/menus/" + id + "/form",
+    url: "/sys-api/api/v1/menus/" + id + "/form",
     method: "get",
   });
 }
@@ -54,7 +54,7 @@ export function getMenuForm(id: number): AxiosPromise<MenuForm> {
  */
 export function addMenu(data: MenuForm) {
   return request({
-    url: "/pilates-system-boot/api/v1/menus",
+    url: "/sys-api/api/v1/menus",
     method: "post",
     data: data,
   });
@@ -68,7 +68,7 @@ export function addMenu(data: MenuForm) {
  */
 export function updateMenu(id: string, data: MenuForm) {
   return request({
-    url: "/pilates-system-boot/api/v1/menus/" + id,
+    url: "/sys-api/api/v1/menus/" + id,
     method: "put",
     data: data,
   });
@@ -81,7 +81,7 @@ export function updateMenu(id: string, data: MenuForm) {
  */
 export function deleteMenu(id: number) {
   return request({
-    url: "/pilates-system-boot/api/v1/menus/" + id,
+    url: "/sys-api/api/v1/menus/" + id,
     method: "delete",
   });
 }
