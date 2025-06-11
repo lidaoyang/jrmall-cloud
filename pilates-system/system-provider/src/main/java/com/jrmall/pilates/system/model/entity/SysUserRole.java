@@ -21,8 +21,6 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_user_role")
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class SysUserRole implements Serializable {
 
@@ -45,5 +43,11 @@ public class SysUserRole implements Serializable {
      */
     private Long roleId;
 
+    public SysUserRole() {
+    }
 
+    public SysUserRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

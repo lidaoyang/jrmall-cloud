@@ -18,8 +18,6 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_role_menu")
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class SysRoleMenu implements Serializable {
 
@@ -42,5 +40,11 @@ public class SysRoleMenu implements Serializable {
      */
     private Long menuId;
 
+    public SysRoleMenu() {
+    }
 
+    public SysRoleMenu(Long roleId, Long menuId) {
+        this.menuId = menuId;
+        this.roleId = roleId;
+    }
 }
