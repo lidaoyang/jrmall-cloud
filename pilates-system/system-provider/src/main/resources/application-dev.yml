@@ -27,6 +27,3 @@ nacos:
   spring-cloud:
     config:
       namespace: pilates-cloud-dev
-  dubbo:
-    namespace: dubbo-dev
-    namespace-metadata: dubbo-metadata-dev

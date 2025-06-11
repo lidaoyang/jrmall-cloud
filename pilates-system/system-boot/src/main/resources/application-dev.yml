@@ -35,9 +35,6 @@ nacos:
       namespace: pilates-cloud-dev
     discovery:
       namespace: springcloud-dev
-  dubbo:
-    namespace: dubbo-dev
-    namespace-metadata: dubbo-metadata-dev
 
 
 

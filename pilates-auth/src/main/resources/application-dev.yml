@@ -36,9 +36,6 @@ nacos:
       namespace: pilates-cloud-dev
     discovery:
       namespace: springcloud-dev
-  dubbo:
-    namespace: dubbo-dev
-    namespace-metadata: dubbo-metadata-dev
 
   # 自定义认证配置
 custom:
@@ -53,7 +50,7 @@ custom:
     device-activated-uri: http://127.0.0.1:9527/activated
     # 当前认证服务访问的路径
     issuer-url: http://127.0.0.1:9000
-    whitelist-paths:
+    app-whitelist-paths:
       - /api/v1/auth/captcha
       - /api/v1/auth/sms_code
       - /oauth2/consent/parameters

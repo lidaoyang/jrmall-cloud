@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,21 @@ public class CustomSecurityProperties {
      */
     private String issuerUrl;
 
-    private List<String> whitelistPaths;
+    /**
+     * 公共白名单路径
+     */
+    private List<String> whitelistPaths = new ArrayList<>();
+
+    public List<String> getWhitelistPaths() {
+        if (appWhitelistPaths != null && !appWhitelistPaths.isEmpty()) {
+            whitelistPaths.addAll(appWhitelistPaths);
+        }
+        return whitelistPaths;
+    }
+
+    /**
+     * 本应用的白名单路径
+     */
+    private List<String> appWhitelistPaths;
 
 }

@@ -50,6 +50,7 @@ public class SecurityConfig {
         // 禁用 csrf 与 cors
         http.csrf(AbstractHttpConfigurer::disable);
 
+        log.info("whitelist path:{}", JSONUtil.toJsonStr(customSecurityProperties.getWhitelistPaths()));
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         http.authorizeHttpRequests((requests) -> {
                             if (CollectionUtil.isNotEmpty(customSecurityProperties.getWhitelistPaths())) {
