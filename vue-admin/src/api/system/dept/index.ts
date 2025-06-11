@@ -44,7 +44,7 @@ export function getDeptForm(id: number): AxiosPromise<DeptForm> {
  */
 export function addDept(data: DeptForm) {
   return request({
-    url: "/sys-api/api/v1/dept",
+    url: "/sys-api/api/v1/dept/add",
     method: "post",
     data: data,
   });

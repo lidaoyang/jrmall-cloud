@@ -54,7 +54,7 @@ export function getMenuForm(id: number): AxiosPromise<MenuForm> {
  */
 export function addMenu(data: MenuForm) {
   return request({
-    url: "/sys-api/api/v1/menus",
+    url: "/sys-api/api/v1/menus/add",
     method: "post",
     data: data,
   });

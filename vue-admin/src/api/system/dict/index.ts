@@ -43,7 +43,7 @@ export function getDictTypeForm(id: number): AxiosPromise<DictTypeForm> {
  */
 export function addDictType(data: DictTypeForm) {
   return request({
-    url: "/sys-api/api/v1/dict/types",
+    url: "/sys-api/api/v1/dict/types/add",
     method: "post",
     data: data,
   });
@@ -117,7 +117,7 @@ export function getDictFormData(id: number): AxiosPromise<DictForm> {
  */
 export function addDict(data: DictForm) {
   return request({
-    url: "/sys-api/api/v1/dict",
+    url: "/sys-api/api/v1/dict/add",
     method: "post",
     data: data,
   });

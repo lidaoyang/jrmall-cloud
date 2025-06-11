@@ -57,10 +57,10 @@ public class SysDictController {
     }
 
     @Operation(summary = "新增字典")
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("@ss.hasPerm('sys:dict:add')")
     @PreventDuplicateResubmit
-    public Result saveDict(
+    public Result<Boolean> saveDict(
             @RequestBody DictForm DictForm
     ) {
         boolean result = dictApi.saveDict(DictForm);
@@ -70,7 +70,7 @@ public class SysDictController {
     @Operation(summary = "修改字典")
     @PutMapping("/{id}")
     @PreAuthorize("@ss.hasPerm('sys:dict:edit')")
-    public Result updateDict(
+    public Result<Boolean> updateDict(
             @PathVariable Long id,
             @RequestBody DictForm DictForm
     ) {
@@ -81,7 +81,7 @@ public class SysDictController {
     @Operation(summary = "删除字典")
     @DeleteMapping("/{ids}")
     @PreAuthorize("@ss.hasPerm('sys:dict:delete')")
-    public Result deleteDict(
+    public Result<Boolean> deleteDict(
             @Parameter(description = "字典ID，多个以英文逗号(,)拼接") @PathVariable String ids
     ) {
         boolean result = dictApi.deleteDict(ids);
@@ -119,10 +119,10 @@ public class SysDictController {
     }
 
     @Operation(summary = "新增字典类型")
-    @PostMapping("/types")
+    @PostMapping("/types/add")
     @PreAuthorize("@ss.hasPerm('sys:dict_type:add')")
     @PreventDuplicateResubmit
-    public Result saveDictType(@RequestBody DictTypeForm dictTypeForm) {
+    public Result<Boolean> saveDictType(@RequestBody DictTypeForm dictTypeForm) {
         boolean result = dictApi.saveDictType(dictTypeForm);
         return Result.judge(result);
     }
@@ -130,7 +130,7 @@ public class SysDictController {
     @Operation(summary = "修改字典类型")
     @PutMapping("/types/{id}")
     @PreAuthorize("@ss.hasPerm('sys:dict_type:edit')")
-    public Result updateDictType(@PathVariable Long id, @RequestBody DictTypeForm dictTypeForm) {
+    public Result<Boolean> updateDictType(@PathVariable Long id, @RequestBody DictTypeForm dictTypeForm) {
         boolean status = dictApi.updateDictType(id, dictTypeForm);
         return Result.judge(status);
     }
@@ -138,7 +138,7 @@ public class SysDictController {
     @Operation(summary = "删除字典类型")
     @DeleteMapping("/types/{ids}")
     @PreAuthorize("@ss.hasPerm('sys:dict_type:delete')")
-    public Result deleteDictTypes(
+    public Result<Boolean> deleteDictTypes(
             @Parameter(description = "字典类型ID，多个以英文逗号(,)分割") @PathVariable String ids
     ) {
         boolean result = dictApi.deleteDictTypes(ids);

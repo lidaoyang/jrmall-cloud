@@ -60,7 +60,7 @@ public class SysDeptController {
     }
 
     @Operation(summary = "新增部门")
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("@ss.hasPerm('sys:dept:add')")
     @PreventDuplicateResubmit
     public Result<Long> saveDept(

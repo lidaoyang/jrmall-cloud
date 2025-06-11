@@ -51,7 +51,7 @@ public class MenuApiImpl implements MenuApi {
 
     @Override
     public MenuForm getMenuForm(Long id) {
-        return null;
+        return menuService.getMenuForm(id);
     }
 
     @Override

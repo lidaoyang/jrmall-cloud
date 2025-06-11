@@ -58,7 +58,7 @@ public class SysUserController {
     }
 
     @Operation(summary = "新增用户")
-    @PostMapping("/save")
+    @PostMapping("/add")
     @PreAuthorize("@ss.hasPerm('sys:user:add')")
     @PreventDuplicateResubmit
     public Result<Boolean> saveUser(

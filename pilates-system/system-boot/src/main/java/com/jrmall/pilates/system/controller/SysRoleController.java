@@ -54,7 +54,7 @@ public class SysRoleController {
     }
 
     @Operation(summary = "新增角色")
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("@ss.hasPerm('sys:role:add')")
     @PreventDuplicateResubmit
     public Result<Boolean> addRole(@Valid @RequestBody RoleForm roleForm) {

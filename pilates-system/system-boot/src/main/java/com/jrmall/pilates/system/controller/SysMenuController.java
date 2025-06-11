@@ -68,7 +68,7 @@ public class SysMenuController {
     }
 
     @Operation(summary = "新增菜单")
-    @PostMapping
+    @PostMapping("/add")
     @PreAuthorize("@ss.hasPerm('sys:menu:add')")
     @PreventDuplicateResubmit
     @CacheEvict(cacheNames = "menu", key = "'routes'")
