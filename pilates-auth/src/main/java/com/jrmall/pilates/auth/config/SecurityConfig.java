@@ -53,8 +53,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
-        http.authorizeHttpRequests((requests) ->
-                        {
+        http.authorizeHttpRequests((requests) -> {
                             if (CollectionUtil.isNotEmpty(customSecurityProperties.getWhitelistPaths())) {
                                 for (String whitelistPath : customSecurityProperties.getWhitelistPaths()) {
                                     requests.requestMatchers(mvcMatcherBuilder.pattern(whitelistPath)).permitAll();

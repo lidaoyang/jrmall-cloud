@@ -49,8 +49,7 @@ public class ResourceServerConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         log.info("whitelist path:{}", JSONUtil.toJsonStr(securityWhitelistConfig.getWhitelistPaths()));
-        http.authorizeHttpRequests((requests) ->
-                        {
+        http.authorizeHttpRequests((requests) -> {
                             if (CollectionUtil.isNotEmpty(securityWhitelistConfig.getWhitelistPaths())) {
                                 for (String whitelistPath : securityWhitelistConfig.getWhitelistPaths()) {
                                     requests.requestMatchers(mvcMatcherBuilder.pattern(whitelistPath)).permitAll();
@@ -59,8 +58,8 @@ public class ResourceServerConfig {
                             requests.anyRequest().authenticated();
                         }
                 )
-                .csrf(AbstractHttpConfigurer::disable)
-        ;
+                .csrf(AbstractHttpConfigurer::disable);
+
         http.oauth2ResourceServer(resourceServerConfigurer ->
                 resourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtAuthenticationConverter())
