@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity {
     /**
-     *
+     * ID
      */
     @TableId(type = IdType.AUTO)
     private Long id;

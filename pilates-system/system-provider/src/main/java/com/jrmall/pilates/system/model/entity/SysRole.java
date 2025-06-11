@@ -14,8 +14,9 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_role")
 @EqualsAndHashCode(callSuper = true)
 public class SysRole extends BaseEntity {
+
     /**
-     *
+     * ID
      */
     @TableId(type = IdType.AUTO)
     private Long id;
