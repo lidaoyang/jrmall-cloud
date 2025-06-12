@@ -4,15 +4,27 @@ import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
+import com.jrmall.pilates.auth.oauth2.extension.captcha.CaptchaAuthenticationToken;
+import com.jrmall.pilates.auth.oauth2.extension.captcha.CaptchaParameterNames;
+import com.jrmall.pilates.common.web.http.CustomRequestWrapper;
+import com.jrmall.pilates.auth.model.LoginForm;
 import com.jrmall.pilates.auth.property.CaptchaProperties;
 import com.jrmall.pilates.auth.model.CaptchaResult;
 import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  * @author Ray Hao
  * @since 3.1.0
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -34,6 +47,32 @@ public class AuthService {
 
     private final RedisUtil redisUtil;
 
+
+    public void login(HttpServletRequest request, LoginForm loginForm, HttpServletResponse response) {
+        // 1. 创建自定义的RequestWrapper
+        CustomRequestWrapper requestWrapper = new CustomRequestWrapper(request);
+
+        // 2. 设置必要参数（根据OAuth2密码模式要求）
+        requestWrapper.addParameter(OAuth2ParameterNames.GRANT_TYPE, CaptchaAuthenticationToken.CAPTCHA.getValue());
+        requestWrapper.addParameter(OAuth2ParameterNames.USERNAME, loginForm.getUsername());
+        requestWrapper.addParameter(OAuth2ParameterNames.PASSWORD, loginForm.getPassword());
+        requestWrapper.addParameter(CaptchaParameterNames.CAPTCHA_ID, loginForm.getCaptchaId());
+        requestWrapper.addParameter(CaptchaParameterNames.CAPTCHA_CODE, loginForm.getCaptchaCode());
+        // requestWrapper.addParameter("scope", "read write");
+
+        // 3. 设置客户端认证头（Basic Auth方式）
+        String clientCredentials = "mall-admin:123456"; // 建议从配置读取
+        String authHeader = "Basic " + Base64.getEncoder().encodeToString(clientCredentials.getBytes());
+        requestWrapper.addHeader("Authorization", authHeader);
+        try {
+            // 4. 转发到OAuth2令牌端点
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/oauth2/token");
+            dispatcher.forward(requestWrapper, response);
+
+        } catch (IOException | ServletException e) {
+            log.error("login failed: {}", e.getMessage(), e);
+        }
+    }
 
     /**
      * 获取图形验证码
@@ -53,12 +92,10 @@ public class AuthService {
                 TimeUnit.SECONDS
         );
 
-        CaptchaResult captchaResult = CaptchaResult.builder()
+        return CaptchaResult.builder()
                 .captchaId(captchaId)
                 .captchaBase64(captcha.getImageBase64Data())
                 .build();
-
-        return captchaResult;
     }
 
     /**
@@ -87,5 +124,6 @@ public class AuthService {
         }
         return result;
     }
+
 
 }

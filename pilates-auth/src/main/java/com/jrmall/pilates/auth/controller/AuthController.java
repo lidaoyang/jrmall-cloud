@@ -1,11 +1,25 @@
 package com.jrmall.pilates.auth.controller;
 
 import com.jrmall.pilates.auth.model.CaptchaResult;
+import com.jrmall.pilates.auth.model.LoginForm;
 import com.jrmall.pilates.auth.service.AuthService;
 import com.jrmall.pilates.common.result.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.OAuth2AuthorizationContext;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,6 +38,14 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Operation(summary = "登录")
+    @PostMapping("/login")
+    public void login(HttpServletRequest request,
+                       LoginForm loginForm,
+                      HttpServletResponse response) {
+        authService.login(request,loginForm, response);
+    }
+
     @Operation(summary = "获取验证码")
     @GetMapping("/captcha")
     public Result<CaptchaResult> getCaptcha() {
@@ -33,13 +55,11 @@ public class AuthController {
 
     @Operation(summary = "发送手机短信验证码")
     @PostMapping("/sms_code")
-    public Result sendLoginSmsCode(
+    public Result<Boolean> sendLoginSmsCode(
             @Parameter(description = "手机号") @RequestParam String mobile
     ) {
         boolean result = authService.sendLoginSmsCode(mobile);
         return Result.judge(result);
     }
-
-
 
 }

@@ -48,7 +48,7 @@ public class AccessTokenSuccessHandler implements AuthenticationSuccessHandler {
      */
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2AccessTokenAuthenticationToken accessTokenAuthentication = (OAuth2AccessTokenAuthenticationToken) authentication;
 
         OAuth2AccessToken accessToken = accessTokenAuthentication.getAccessToken();
