@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单路由视图对象
@@ -63,6 +64,9 @@ public class RouteVO implements Serializable {
         @Schema(description = "【目录】只有一个子路由是否始终显示", example = "true")
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean alwaysShow;
+
+        @Schema(description = "路由参数")
+        private Map<String,String> params;
     }
 
     @Schema(description = "子路由列表")

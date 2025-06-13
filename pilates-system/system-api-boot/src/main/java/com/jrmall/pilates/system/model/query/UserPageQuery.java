@@ -1,9 +1,13 @@
 package com.jrmall.pilates.system.model.query;
 
+import cn.hutool.db.sql.Direction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jrmall.pilates.common.base.BasePageQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 用户分页查询对象
@@ -24,5 +28,24 @@ public class UserPageQuery extends BasePageQuery {
 
     @Schema(description = "部门ID")
     private Long deptId;
+
+    @Schema(description = "角色ID")
+    private List<Long> roleIds;
+
+    @Schema(description = "创建时间范围")
+    private List<String> createTime;
+
+    @Schema(description = "排序的字段")
+    private String field;
+
+    @Schema(description = "排序方式（正序:ASC；反序:DESC）")
+    private Direction direction;
+
+    /**
+     * 是否超级管理员
+     */
+    @JsonIgnore
+    @Schema(hidden = true)
+    private Boolean isRoot;
 
 }

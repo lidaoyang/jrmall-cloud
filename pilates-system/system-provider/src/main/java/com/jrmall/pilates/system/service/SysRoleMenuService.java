@@ -18,8 +18,8 @@ public interface SysRoleMenuService extends IService<SysRoleMenu> {
     /**
      * 获取角色拥有的菜单ID集合
      *
-     * @param roleId
-     * @return
+     * @param roleId 角色ID
+     * @return 菜单ID集合
      */
     List<Long> listMenuIdsByRoleId(Long roleId);
 
@@ -45,11 +45,20 @@ public interface SysRoleMenuService extends IService<SysRoleMenu> {
     void refreshRolePermsCache(String oldRoleCode, String newRoleCode);
 
     /**
-     * 从缓存中获取角色权限列表
+     * 获取角色权限集合
+     *
+     * @param roles 角色编码集合
+     * @return 权限集合
+     */
+    Set<String> getRolePermsByRoleCodes(Set<String> roles);
+
+    /**
+     * 获取角色权限集合(从缓存中获取)
      *
      * @param roleCodes 角色编码集合
-     * @return 角色权限列表
+     * @return 权限集合
      */
     Set<String> getRolePermsFormCache(Set<String> roleCodes);
+
 
 }

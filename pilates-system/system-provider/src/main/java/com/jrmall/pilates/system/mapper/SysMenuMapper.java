@@ -13,9 +13,15 @@ import com.jrmall.pilates.system.model.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    List<RouteBO> listRoutes();
+    /**
+     * 获取菜单路由列表
+     *
+     * @param roleCodes 角色编码集合
+     */
+    List<SysMenu> getMenusByRoleCodes(Set<String> roleCodes);
 }

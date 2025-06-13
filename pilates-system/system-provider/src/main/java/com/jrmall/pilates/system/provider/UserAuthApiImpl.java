@@ -23,4 +23,9 @@ public class UserAuthApiImpl implements UserAuthApi {
     public UserAuthInfo getUserAuthInfo(String username) {
         return sysUserService.getUserAuthInfo(username);
     }
+
+    @Override
+    public boolean logout() {
+        return sysUserService.logout();
+    }
 }

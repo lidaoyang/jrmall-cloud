@@ -1,64 +1,45 @@
 package com.jrmall.pilates.system.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.jrmall.pilates.common.base.BaseEntity;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
 
 /**
- * 字典数据表
+ * 字典实体
  *
- * @author haoxr
+ * @author Ray.Hao
  * @since 2022/12/17
  */
-@Data
+@EqualsAndHashCode(callSuper = false)
 @TableName("sys_dict")
-public class SysDict implements Serializable {
-    /**
-     * 主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+@Data
+public class SysDict extends BaseEntity {
 
     /**
-     * 字典类型编码
+     * 字典编码
      */
-    private String typeCode;
+    private String dictCode;
 
     /**
-     * 字典项名称
+     * 字典名称
      */
     private String name;
 
-    /**
-     * 字典项值
-     */
-    private String value;
 
     /**
-     * 排序
-     */
-    private Integer sort;
-
-    /**
-     * 状态(1:正常;0:禁用)
+     * 状态（1：启用, 0：停用）
      */
     private Integer status;
-
-    /**
-     * 是否默认(1:是;0:否)
-     */
-    private Integer defaulted;
 
     /**
      * 备注
      */
     private String remark;
 
+    /**
+     * 逻辑删除标识(0-未删除 1-已删除)
+     */
+    private Integer isDeleted;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

@@ -10,18 +10,21 @@ public interface RedisConstants {
     /**
      * 图形验证码key前缀
      */
-    String CAPTCHA_CODE_PREFIX = "captcha_code:";
+    String CAPTCHA_CODE_PREFIX = "captcha:code:";
 
     /**
      * 登录短信验证码key前缀
      */
-    String LOGIN_SMS_CODE_PREFIX = "sms_code:login";
+    String LOGIN_SMS_CODE_PREFIX = "sms:code:login";
 
     /**
      * 注册短信验证码key前缀
      */
-    String REGISTER_SMS_CODE_PREFIX = "sms_code:register";
+    String REGISTER_SMS_CODE_PREFIX = "sms:code:register:";
 
+    String MOBILE_SMS_CODE_PREFIX = "sms:code:mobile:";
+
+    String EMAIL_SMS_CODE_PREFIX = "sms:code:email:";
 
     /**
      * 角色和权限缓存前缀

@@ -46,8 +46,9 @@ public class SysMenuController {
 
     @Operation(summary = "菜单下拉列表")
     @GetMapping("/options")
-    public Result<List<Option<Long>>> listMenuOptions() {
-        List<Option<Long>> menus = menuApi.listMenuOptions();
+    public Result<List<Option<Long>>> listMenuOptions(@Parameter(description = "是否只查询父级菜单")
+                                                      @RequestParam(required = false, defaultValue = "false") boolean onlyParent) {
+        List<Option<Long>> menus = menuApi.listMenuOptions(onlyParent);
         return Result.success(menus);
     }
 
@@ -61,8 +62,7 @@ public class SysMenuController {
     @Operation(summary = "菜单表单数据")
     @GetMapping("/{id}/form")
     public Result<MenuForm> getMenuForm(
-            @Parameter(description = "菜单ID") @PathVariable Long id
-    ) {
+            @Parameter(description = "菜单ID") @PathVariable Long id) {
         MenuForm menu = menuApi.getMenuForm(id);
         return Result.success(menu);
     }
@@ -82,8 +82,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPerm('sys:menu:edit')")
     @CacheEvict(cacheNames = "menu", key = "'routes'")
     public Result<Boolean> updateMenu(
-            @RequestBody MenuForm menuForm
-    ) {
+            @RequestBody MenuForm menuForm) {
         boolean result = menuApi.saveMenu(menuForm);
         return Result.judge(result);
     }
@@ -93,8 +92,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPerm('sys:menu:delete')")
     @CacheEvict(cacheNames = "menu", key = "'routes'")
     public Result<Boolean> deleteMenu(
-            @Parameter(description = "菜单ID，多个以英文(,)分割") @PathVariable("id") Long id
-    ) {
+            @Parameter(description = "菜单ID，多个以英文(,)分割") @PathVariable("id") Long id) {
         boolean result = menuApi.deleteMenu(id);
         return Result.judge(result);
     }
@@ -103,9 +101,7 @@ public class SysMenuController {
     @PatchMapping("/{menuId}")
     public Result<Boolean> updateMenuVisible(
             @Parameter(description = "菜单ID") @PathVariable Long menuId,
-            @Parameter(description = "显示状态(1:显示;0:隐藏)") Integer visible
-
-    ) {
+            @Parameter(description = "显示状态(1:显示;0:隐藏)") Integer visible) {
         boolean result = menuApi.updateMenuVisible(menuId, visible);
         return Result.judge(result);
     }

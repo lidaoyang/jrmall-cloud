@@ -1,9 +1,7 @@
 package com.jrmall.pilates.system.model.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.io.Serial;
@@ -49,6 +47,8 @@ public class UserForm implements Serializable {
     private String email;
 
     @Schema(description = "用户状态(1:正常;0:禁用)")
+    @Min(value = 0, message = "用户状态不能小于0")
+    @Max(value = 1, message = "用户状态不能大于1")
     private Integer status;
 
     @Schema(description = "部门ID")
@@ -57,5 +57,8 @@ public class UserForm implements Serializable {
     @Schema(description = "角色ID集合")
     @NotEmpty(message = "用户角色不能为空")
     private List<Long> roleIds;
+
+    @Schema(description = "微信openId")
+    private String openId;
 
 }

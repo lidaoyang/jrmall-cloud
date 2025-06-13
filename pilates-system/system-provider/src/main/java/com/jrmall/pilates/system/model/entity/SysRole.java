@@ -16,12 +16,6 @@ import lombok.EqualsAndHashCode;
 public class SysRole extends BaseEntity {
 
     /**
-     * ID
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
-
-    /**
      * 角色名称
      */
     private String name;
@@ -37,17 +31,28 @@ public class SysRole extends BaseEntity {
     private Integer sort;
 
     /**
-     * 角色状态(1-正常；0-停用)
+     * 角色状态(1-正常 0-停用)
      */
     private Integer status;
-
-    /**
-     * 逻辑删除标识(0-未删除；1-已删除)
-     */
-    private Integer deleted;
 
     /**
      * 数据权限
      */
     private Integer dataScope;
+
+    /**
+     * 创建人 ID
+     */
+    private Long createBy;
+
+    /**
+     * 更新人 ID
+     */
+    private Long updateBy;
+
+    /**
+     * 是否删除(0-否 1-是)
+     */
+    private Integer isDeleted;
+
 }

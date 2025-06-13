@@ -26,7 +26,7 @@ public class MenuVO implements Serializable {
     private String name;
 
     @Schema(description="菜单类型")
-    private MenuTypeEnum type;
+    private Integer type;
 
     @Schema(description = "路由路径")
     private String path;

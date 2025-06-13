@@ -5,4 +5,6 @@ import com.jrmall.pilates.system.dto.UserAuthInfo;
 public interface UserAuthApi {
 
     UserAuthInfo getUserAuthInfo(String username);
+
+    boolean logout();
 }

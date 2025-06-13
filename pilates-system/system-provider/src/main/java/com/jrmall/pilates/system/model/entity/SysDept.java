@@ -14,16 +14,16 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_dept")
 @EqualsAndHashCode(callSuper = true)
 public class SysDept extends BaseEntity {
-    /**
-     * 主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
 
     /**
      * 部门名称
      */
     private String name;
+
+    /**
+     * 部门编码
+     */
+    private String code;
 
     /**
      * 父节点id
@@ -41,13 +41,24 @@ public class SysDept extends BaseEntity {
     private Integer sort;
 
     /**
-     * 状态(1:正常;0:禁用)
+     * 状态(1-正常 0-禁用)
      */
     private Integer status;
 
     /**
-     * 逻辑删除标识(1:已删除;0:未删除)
+     * 创建人 ID
      */
-    private Integer deleted;
+    private Long createBy;
+
+    /**
+     * 更新人 ID
+     */
+    private Long updateBy;
+
+    /**
+     * 是否删除(0-否 1-是)
+     */
+    private Integer isDeleted;
+
 
 }

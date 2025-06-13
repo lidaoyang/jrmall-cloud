@@ -1,12 +1,12 @@
 package com.jrmall.pilates.system.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.jrmall.pilates.common.base.BaseEntity;
 import com.jrmall.pilates.system.enums.MenuTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * 菜单实体对象
@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_menu")
 @EqualsAndHashCode(callSuper = true)
 public class SysMenu extends BaseEntity {
+
     /**
      * 菜单ID
      */
@@ -37,12 +38,17 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)
      */
-    private MenuTypeEnum type;
+    private Integer type;
 
     /**
-     * 路由路径(浏览器地址栏路径)
+     * 路由名称（Vue Router 中定义的路由名称）
      */
-    private String path;
+    private String routeName;
+
+    /**
+     * 路由路径（Vue Router 中定义的 URL 路径）
+     */
+    private String routePath;
 
     /**
      * 组件路径(vue页面完整路径，省略.vue后缀)
@@ -88,5 +94,21 @@ public class SysMenu extends BaseEntity {
      * 【目录】只有一个子路由是否始终显示(1:是 0:否)
      */
     private Integer alwaysShow;
+
+    /**
+     * 路由参数
+     */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
+    private String params;
+
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
 }

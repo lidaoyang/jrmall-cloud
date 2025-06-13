@@ -26,7 +26,8 @@ public class RoleApiImpl implements RoleApi {
 
     @Override
     public boolean assignMenusToRole(Long roleId, List<Long> menuIds) {
-        return roleService.assignMenusToRole(roleId, menuIds);
+        roleService.assignMenusToRole(roleId, menuIds);
+        return true;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class RoleApiImpl implements RoleApi {
     }
 
     @Override
-    public List<Option<Integer>> listRoleOptions() {
+    public List<Option<Long>> listRoleOptions() {
         return roleService.listRoleOptions();
     }
 
@@ -56,7 +57,8 @@ public class RoleApiImpl implements RoleApi {
 
     @Override
     public boolean deleteRoles(String ids) {
-        return roleService.deleteRoles(ids);
+        roleService.deleteRoles(ids);
+        return true;
     }
 
     @Override

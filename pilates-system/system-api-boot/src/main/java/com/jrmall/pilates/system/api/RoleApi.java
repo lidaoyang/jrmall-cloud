@@ -32,7 +32,7 @@ public interface RoleApi {
      *
      * @return {@link List<Option>} – 角色下拉列表
      */
-    List<Option<Integer>> listRoleOptions();
+    List<Option<Long>> listRoleOptions();
 
     /**
      * 保存角色

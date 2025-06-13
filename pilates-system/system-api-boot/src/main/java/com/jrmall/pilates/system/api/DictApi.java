@@ -3,11 +3,12 @@ package com.jrmall.pilates.system.api;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.model.form.DictForm;
-import com.jrmall.pilates.system.model.form.DictTypeForm;
+import com.jrmall.pilates.system.model.form.DictItemForm;
+import com.jrmall.pilates.system.model.query.DictItemPageQuery;
 import com.jrmall.pilates.system.model.query.DictPageQuery;
-import com.jrmall.pilates.system.model.query.DictTypePageQuery;
+import com.jrmall.pilates.system.model.vo.DictItemOptionVO;
+import com.jrmall.pilates.system.model.vo.DictItemPageVO;
 import com.jrmall.pilates.system.model.vo.DictPageVO;
-import com.jrmall.pilates.system.model.vo.DictTypePageVO;
 
 import java.util.List;
 
@@ -15,107 +16,107 @@ import java.util.List;
  * 字典接口
  */
 public interface DictApi {
+
     /**
-     * 字典数据项分页列表
+     * 获取字典分页列表
      *
-     * @param queryParams
-     * @return
+     * @param queryParams 分页查询对象
+     * @return 字典分页列表
      */
     Page<DictPageVO> getDictPage(DictPageQuery queryParams);
 
     /**
-     * 字典数据项表单
+     * 获取字典列表
      *
-     * @param id 字典数据项ID
-     * @return
+     * @return 字典列表
+     */
+    List<Option<String>> getDictList();
+
+    /**
+     * 获取字典表单数据
+     *
+     * @param id 字典ID
+     * @return 字典表单
      */
     DictForm getDictForm(Long id);
 
     /**
-     * 新增字典数据项
+     * 新增字典
      *
-     * @param dictForm 字典数据项表单
-     * @return
+     * @param dictForm 字典表单
+     * @return 是否成功
      */
     boolean saveDict(DictForm dictForm);
 
     /**
-     * 修改字典数据项
+     * 修改字典
      *
-     * @param id       字典数据项ID
-     * @param dictForm 字典数据项表单
-     * @return
+     * @param id       字典ID
+     * @param dictForm 字典表单
+     * @return 是否成功
      */
     boolean updateDict(Long id, DictForm dictForm);
 
     /**
-     * 删除字典数据项
+     * 删除字典
      *
-     * @param idsStr 字典数据项ID，多个以英文逗号(,)分割
-     * @return
+     * @param ids 字典ID集合
      */
-    boolean deleteDict(String idsStr);
+    void deleteDictByIds(List<String> ids);
 
     /**
-     * 获取字典下拉列表
+     * 根据字典ID列表获取字典编码列表
      *
-     * @param typeCode
-     * @return
+     * @param ids 字典ID列表
+     * @return 字典编码列表
      */
-    List<Option<String>> listDictOptions(String typeCode);
-
-    /*-----------------------------↓字典类型接口----------------------------*/
-    /**
-     * 字典类型分页列表
-     *
-     * @param queryParams 分页查询对象
-     * @return
-     */
-    Page<DictTypePageVO> getDictTypePage(DictTypePageQuery queryParams);
-
+    List<String> getDictCodesByIds(List<String> ids);
 
     /**
-     * 获取字典类型表单详情
+     * 字典项分页列表
      *
-     * @param id 字典类型ID
-     * @return
+     * @param queryParams 查询参数
+     * @return 字典项分页列表
      */
-    DictTypeForm getDictTypeForm(Long id);
-
+    Page<DictItemPageVO> getDictItemPage(DictItemPageQuery queryParams);
 
     /**
-     * 新增字典类型
+     * 获取字典项列表
      *
-     * @param dictTypeForm 字典类型表单
-     * @return
+     * @param dictCode 字典编码
+     * @return 字典项列表
      */
-    boolean saveDictType(DictTypeForm dictTypeForm);
-
+    List<DictItemOptionVO> getDictItems(String dictCode);
 
     /**
-     * 修改字典类型
+     * 获取字典项表单
      *
-     * @param id
-     * @param dictTypeForm 字典类型表单
-     * @return
+     * @param itemId 字典项ID
+     * @return 字典项表单
      */
-    boolean updateDictType(Long id, DictTypeForm dictTypeForm);
+    DictItemForm getDictItemForm(Long itemId);
 
     /**
-     * 删除字典类型
+     * 保存字典项
      *
-     * @param idsStr 字典类型ID，多个以英文逗号(,)分割
-     * @return
+     * @param formData 字典项表单
+     * @return 是否成功
      */
-    boolean deleteDictTypes(String idsStr);
-
+    boolean saveDictItem(DictItemForm formData);
 
     /**
-     * 获取字典类型的数据项
+     * 更新字典项
      *
-     * @param typeCode
-     * @return
+     * @param formData 字典项表单
+     * @return 是否成功
      */
-    List<Option<String>> listDictItemsByTypeCode(String typeCode);
+    boolean updateDictItem(DictItemForm formData);
+
+    /**
+     * 删除字典项
+     *
+     * @param ids 字典项ID,多个逗号分隔
+     */
+    void deleteDictItemByIds(String ids);
 
 }

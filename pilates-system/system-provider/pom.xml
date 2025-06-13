@@ -49,6 +49,11 @@
 
         <dependency>
             <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-email</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-sms</artifactId>
         </dependency>
 

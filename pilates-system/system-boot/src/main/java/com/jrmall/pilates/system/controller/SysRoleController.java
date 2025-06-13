@@ -48,8 +48,8 @@ public class SysRoleController {
 
     @Operation(summary = "角色下拉列表")
     @GetMapping("/options")
-    public Result<List<Option<Integer>>> listRoleOptions() {
-        List<Option<Integer>> list = roleApi.listRoleOptions();
+    public Result<List<Option<Long>>> listRoleOptions() {
+        List<Option<Long>> list = roleApi.listRoleOptions();
         return Result.success(list);
     }
 

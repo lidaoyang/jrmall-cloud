@@ -24,9 +24,9 @@ public interface MenuApi {
     /**
      * 获取菜单下拉列表
      *
-     * @return
+     * @param onlyParent 是否只查询父级菜单
      */
-    List<Option<Long>> listMenuOptions();
+    List<Option<Long>> listMenuOptions(boolean onlyParent);
 
     /**
      * 新增菜单
@@ -45,8 +45,8 @@ public interface MenuApi {
 
     /**
      * 修改菜单显示状态
-     * 
-     * @param menuId 菜单ID
+     *
+     * @param menuId  菜单ID
      * @param visible 是否显示(1->显示；2->隐藏)
      * @return
      */

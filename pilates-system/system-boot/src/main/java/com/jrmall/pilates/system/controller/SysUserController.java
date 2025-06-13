@@ -3,12 +3,13 @@ package com.jrmall.pilates.system.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.common.result.PageResult;
 import com.jrmall.pilates.common.result.Result;
+import com.jrmall.pilates.common.security.util.SecurityUtils;
 import com.jrmall.pilates.common.web.annotation.PreventDuplicateResubmit;
 import com.jrmall.pilates.system.api.UserApi;
-import com.jrmall.pilates.system.model.form.UserForm;
-import com.jrmall.pilates.system.model.form.UserRegisterForm;
+import com.jrmall.pilates.system.model.form.*;
 import com.jrmall.pilates.system.model.query.UserPageQuery;
 import com.jrmall.pilates.system.model.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -97,17 +99,6 @@ public class SysUserController {
         return Result.judge(result);
     }
 
-    @Operation(summary = "修改用户密码")
-    @PatchMapping(value = "/{userId}/password")
-    @PreAuthorize("@ss.hasPerm('sys:user:reset_pwd')")
-    public Result<Boolean> updatePassword(
-            @Parameter(description = "用户ID") @PathVariable Long userId,
-            @RequestParam String password
-    ) {
-        boolean result = userApi.updatePassword(userId, password);
-        return Result.judge(result);
-    }
-
     @Operation(summary = "修改用户状态")
     @PatchMapping(value = "/{userId}/status")
     @PreAuthorize("@ss.hasPerm('sys:user:upstatus')")
@@ -115,14 +106,14 @@ public class SysUserController {
             @Parameter(description = "用户ID") @PathVariable Long userId,
             @Parameter(description = "用户状态(1:启用;0:禁用)") @RequestParam Integer status
     ) {
-        boolean result = userApi.updateStatus(userId, status);
+        boolean result = userApi.updateUserStatus(userId, status);
         return Result.judge(result);
     }
 
     @Operation(summary = "获取登录用户信息")
     @GetMapping("/me")
-    public Result<UserInfoVO> getCurrentUserInfo() {
-        UserInfoVO userInfoVO = userApi.getCurrentUserInfo();
+    public Result<CurrentUserVO> getCurrentUserInfo() {
+        CurrentUserVO userInfoVO = userApi.getCurrentUserInfo();
         return Result.success(userInfoVO);
     }
 
@@ -163,15 +154,6 @@ public class SysUserController {
         return Result.judge(result);
     }
 
-    @Operation(summary = "发送注册短信验证码")
-    @PostMapping("/register/sms_code")
-    public Result<Boolean> sendRegistrationSmsCode(
-            @Parameter(description = "手机号") @RequestParam String mobile
-    ) {
-        boolean result = userApi.sendRegistrationSmsCode(mobile);
-        return Result.judge(result);
-    }
-
     @Operation(summary = "获取用户个人中心信息")
     @GetMapping("/profile")
     public Result<UserProfileVO> getUserProfile() {
@@ -179,5 +161,74 @@ public class SysUserController {
         return Result.success(userProfile);
     }
 
+    @Operation(summary = "个人中心修改用户信息")
+    @PutMapping("/profile")
+    public Result<?> updateUserProfile(@RequestBody UserProfileForm formData) {
+        boolean result = userApi.updateUserProfile(formData);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "重置用户密码")
+    @PutMapping(value = "/{userId}/password/reset")
+    @PreAuthorize("@ss.hasPerm('sys:user:reset-password')")
+    public Result<?> resetPassword(
+            @Parameter(description = "用户ID") @PathVariable Long userId,
+            @RequestParam String password) {
+        boolean result = userApi.resetPassword(userId, password);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "修改密码")
+    @PutMapping(value = "/password")
+    public Result<?> changePassword(
+            @RequestBody PasswordUpdateForm data
+    ) {
+        Long currUserId = SecurityUtils.getUserId();
+        boolean result = userApi.changePassword(currUserId, data);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "发送短信验证码", description = "注册,绑定,更换手机号发送短信验证码")
+    @PostMapping(value = "/mobile/code")
+    public Result<?> sendMobileCode(
+            @Parameter(description = "手机号码", required = true) @RequestParam String mobile
+    ) {
+        boolean result = userApi.sendMobileCode(mobile);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "绑定或更换手机号")
+    @PutMapping(value = "/mobile")
+    public Result<?> bindOrChangeMobile(
+            @RequestBody @Validated MobileUpdateForm data
+    ) {
+        boolean result = userApi.bindOrChangeMobile(data);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "发送邮箱验证码（绑定或更换邮箱）")
+    @PostMapping(value = "/email/code")
+    public Result<Void> sendEmailCode(
+            @Parameter(description = "邮箱地址", required = true) @RequestParam String email
+    ) {
+        userApi.sendEmailCode(email);
+        return Result.success();
+    }
+
+    @Operation(summary = "绑定或更换邮箱")
+    @PutMapping(value = "/email")
+    public Result<?> bindOrChangeEmail(
+            @RequestBody @Validated EmailUpdateForm data
+    ) {
+        boolean result = userApi.bindOrChangeEmail(data);
+        return Result.judge(result);
+    }
+
+    @Operation(summary = "获取用户下拉选项")
+    @GetMapping("/options")
+    public Result<List<Option<String>>> listUserOptions() {
+        List<Option<String>> list = userApi.listUserOptions();
+        return Result.success(list);
+    }
 
 }

@@ -8,6 +8,7 @@ import com.jrmall.pilates.system.model.bo.UserBO;
 import com.jrmall.pilates.system.model.bo.UserFormBO;
 import com.jrmall.pilates.system.model.bo.UserProfileBO;
 import com.jrmall.pilates.system.model.entity.SysUser;
+import com.jrmall.pilates.system.model.form.UserForm;
 import com.jrmall.pilates.system.model.query.UserPageQuery;
 import com.jrmall.pilates.system.model.vo.UserExportVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,10 +29,18 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      *
      * @param page        分页参数
      * @param queryParams 查询参数
-     * @return {@link List<UserBO>}
+     * @return 用户分页列表
      */
-    @DataPermission(deptAlias = "u")
+    @DataPermission(deptAlias = "u", userAlias = "u")
     Page<UserBO> getUserPage(Page<UserBO> page, UserPageQuery queryParams);
+
+    /**
+     * 获取用户表单详情
+     *
+     * @param userId 用户ID
+     * @return 用户表单详情
+     */
+    UserForm getUserFormData(Long userId);
 
     /**
      * 获取用户表单详情
@@ -55,7 +64,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param queryParams 查询参数
      * @return {@link List<UserExportVO>}
      */
-    @DataPermission(deptAlias = "u")
+    @DataPermission(deptAlias = "u", userAlias = "u")
     List<UserExportVO> listExportUsers(UserPageQuery queryParams);
 
     /**

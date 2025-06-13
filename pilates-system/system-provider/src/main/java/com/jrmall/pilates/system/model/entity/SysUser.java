@@ -14,11 +14,6 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_user")
 @EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity {
-    /**
-     * ID
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
 
     /**
      * 用户名
@@ -31,7 +26,7 @@ public class SysUser extends BaseEntity {
     private String nickname;
 
     /**
-     * 性别((1:男;2:女))
+     * 性别((1-男 2-女 0-保密)
      */
     private Integer gender;
 
@@ -56,7 +51,7 @@ public class SysUser extends BaseEntity {
     private String mobile;
 
     /**
-     * 用户状态(1:正常;0:禁用)
+     * 状态((1-正常 0-禁用)
      */
     private Integer status;
 
@@ -66,8 +61,23 @@ public class SysUser extends BaseEntity {
     private String email;
 
     /**
-     * 逻辑删除标识(0:未删除;1:已删除)
+     * 创建人 ID
      */
-    private Integer deleted;
+    private Long createBy;
+
+    /**
+     * 更新人 ID
+     */
+    private Long updateBy;
+
+    /**
+     * 是否删除(0-否 1-是)
+     */
+    private Integer isDeleted;
+
+    /**
+     * 微信 OpenID
+     */
+    private String openid;
 
 }

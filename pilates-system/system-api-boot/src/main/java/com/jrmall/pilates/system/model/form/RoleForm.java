@@ -1,6 +1,7 @@
 package com.jrmall.pilates.system.model.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -29,6 +30,8 @@ public class RoleForm implements Serializable {
     private Integer sort;
 
     @Schema(description = "角色状态(1-正常；0-停用)")
+    @Min(value = 0, message = "角色状态(1-正常；0-停用)不能小于0")
+    @Min(value = 1, message = "角色状态(1-正常；0-停用)不能小于1")
     private Integer status;
 
     @Schema(description = "数据权限")

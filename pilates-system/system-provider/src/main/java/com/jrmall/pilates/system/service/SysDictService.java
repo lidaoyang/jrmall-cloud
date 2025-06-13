@@ -11,59 +11,65 @@ import com.jrmall.pilates.system.model.vo.DictPageVO;
 import java.util.List;
 
 /**
- * 字典接口
+ * 字典业务接口
  *
  * @author haoxr
- * @since 2023/3/4
+ * @since 2022/10/12
  */
 public interface SysDictService extends IService<SysDict> {
+
     /**
-     * 字典数据项分页列表
+     * 获取字典分页列表
      *
-     * @param queryParams
-     * @return
+     * @param queryParams 分页查询对象
+     * @return 字典分页列表
      */
     Page<DictPageVO> getDictPage(DictPageQuery queryParams);
 
     /**
-     * 字典数据项表单
+     * 获取字典列表
      *
-     * @param id 字典数据项ID
-     * @return
+     * @return 字典列表
+     */
+    List<Option<String>> getDictList();
+
+    /**
+     * 获取字典表单数据
+     *
+     * @param id 字典ID
+     * @return 字典表单
      */
     DictForm getDictForm(Long id);
 
     /**
-     * 新增字典数据项
+     * 新增字典
      *
-     * @param dictForm 字典数据项表单
-     * @return
+     * @param dictForm 字典表单
+     * @return 是否成功
      */
     boolean saveDict(DictForm dictForm);
 
     /**
-     * 修改字典数据项
+     * 修改字典
      *
-     * @param id       字典数据项ID
-     * @param dictForm 字典数据项表单
-     * @return
+     * @param id       字典ID
+     * @param dictForm 字典表单
+     * @return 是否成功
      */
     boolean updateDict(Long id, DictForm dictForm);
 
     /**
-     * 删除字典数据项
+     * 删除字典
      *
-     * @param idsStr 字典数据项ID，多个以英文逗号(,)分割
-     * @return
+     * @param ids 字典ID集合
      */
-    boolean deleteDict(String idsStr);
+    void deleteDictByIds(List<String> ids);
 
     /**
-     * 获取字典下拉列表
+     * 根据字典ID列表获取字典编码列表
      *
-     * @param typeCode
-     * @return
+     * @param ids 字典ID列表
+     * @return 字典编码列表
      */
-    List<Option<String>> listDictOptions(String typeCode);
-
+    List<String> getDictCodesByIds(List<String> ids);
 }

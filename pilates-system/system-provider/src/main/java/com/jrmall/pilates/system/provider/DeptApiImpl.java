@@ -30,7 +30,7 @@ public class DeptApiImpl implements DeptApi {
 
     @Override
     public List<DeptVO> listDepartments(DeptQuery queryParams) {
-        return deptService.listDepartments(queryParams);
+        return deptService.getDeptList(queryParams);
     }
 
     @Override

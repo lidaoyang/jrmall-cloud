@@ -14,6 +14,4 @@ public class DictPageQuery extends BasePageQuery {
     @Schema(description="关键字(字典项名称)")
     private String keywords;
 
-    @Schema(description="字典类型编码")
-    private String typeCode;
 }

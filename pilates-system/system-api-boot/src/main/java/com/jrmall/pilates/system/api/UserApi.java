@@ -1,13 +1,10 @@
 package com.jrmall.pilates.system.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.jrmall.pilates.system.model.form.UserForm;
-import com.jrmall.pilates.system.model.form.UserRegisterForm;
+import com.jrmall.pilates.common.base.Option;
+import com.jrmall.pilates.system.model.form.*;
 import com.jrmall.pilates.system.model.query.UserPageQuery;
-import com.jrmall.pilates.system.model.vo.UserExportVO;
-import com.jrmall.pilates.system.model.vo.UserInfoVO;
-import com.jrmall.pilates.system.model.vo.UserPageVO;
-import com.jrmall.pilates.system.model.vo.UserProfileVO;
+import com.jrmall.pilates.system.model.vo.*;
 
 import java.util.List;
 
@@ -16,10 +13,11 @@ import java.util.List;
  */
 public interface UserApi {
 
+
     /**
      * 用户分页列表
      *
-     * @return {@link IPage <UserPageVO>}
+     * @return {@link IPage<UserPageVO>} 用户分页列表
      */
     IPage<UserPageVO> getUserPage(UserPageQuery queryParams);
 
@@ -27,15 +25,16 @@ public interface UserApi {
      * 获取用户表单数据
      *
      * @param userId 用户ID
-     * @return {@link UserForm}
+     * @return {@link UserForm} 用户表单数据
      */
     UserForm getUserFormData(Long userId);
+
 
     /**
      * 新增用户
      *
      * @param userForm 用户表单对象
-     * @return {@link Boolean}
+     * @return {@link Boolean} 是否新增成功
      */
     boolean saveUser(UserForm userForm);
 
@@ -44,7 +43,7 @@ public interface UserApi {
      *
      * @param userId   用户ID
      * @param userForm 用户表单对象
-     * @return {@link Boolean}
+     * @return {@link Boolean} 是否修改成功
      */
     boolean updateUser(Long userId, UserForm userForm);
 
@@ -52,64 +51,111 @@ public interface UserApi {
      * 删除用户
      *
      * @param idsStr 用户ID，多个以英文逗号(,)分割
-     * @return {@link Boolean}
+     * @return {@link Boolean} 是否删除成功
      */
     boolean deleteUsers(String idsStr);
 
     /**
-     * 修改用户密码
-     *
-     * @param userId   用户ID
-     * @param password 用户密码
-     * @return {@link Boolean}
-     */
-    boolean updatePassword(Long userId, String password);
-
-    /**
      * 修改用户状态
      *
-     * @param userId 用户ID
-     * @param status 用户状态(1:启用;0:禁用)
-     * @return {@link Boolean}
+     * @param userId   用户ID
+     * @param status 用户状态
+     * @return {@link Boolean} 是否修改成功
      */
-    boolean updateStatus(Long userId, Integer status);
+    boolean updateUserStatus(Long userId, Integer status);
 
     /**
      * 获取登录用户信息
      *
-     * @return {@link UserInfoVO}
+     * @return {@link CurrentUserVO} 登录用户信息
      */
-    UserInfoVO getCurrentUserInfo();
+    CurrentUserVO getCurrentUserInfo();
 
     /**
      * 获取导出用户列表
      *
      * @param queryParams 查询参数
-     * @return {@link List < UserExportVO >}
+     * @return {@link List<UserExportVO>} 导出用户列表
      */
     List<UserExportVO> listExportUsers(UserPageQuery queryParams);
 
     /**
      * 注册用户
      *
-     * @param userRegisterForm 用户注册表单对象
-     * @return {@link Boolean}
+     * @param userRegisterForm 注册表单数据
+     * @return {@link Boolean} 是否注册成功
      */
     boolean registerUser(UserRegisterForm userRegisterForm);
 
     /**
-     * 发送注册短信验证码
+     * 获取个人中心用户信息
+     *
+     * @return {@link UserProfileVO} 个人中心用户信息
+     */
+    UserProfileVO getUserProfile();
+
+    /**
+     * 修改个人中心用户信息
+     *
+     * @param formData 表单数据
+     * @return {@link Boolean} 是否修改成功
+     */
+    boolean updateUserProfile(UserProfileForm formData);
+
+    /**
+     * 修改用户密码
+     *
+     * @param userId 用户ID
+     * @param data   修改密码表单数据
+     * @return {@link Boolean} 是否修改成功
+     */
+    boolean changePassword(Long userId, PasswordUpdateForm data);
+
+    /**
+     * 重置用户密码
+     *
+     * @param userId   用户ID
+     * @param password 重置后的密码
+     * @return {@link Boolean} 是否重置成功
+     */
+    boolean resetPassword(Long userId, String password);
+
+    /**
+     * 发送短信验证码(绑定或更换手机号)
      *
      * @param mobile 手机号
      * @return {@link Boolean} 是否发送成功
      */
-    boolean sendRegistrationSmsCode(String mobile);
+    boolean sendMobileCode(String mobile);
 
     /**
-     * 获取用户个人中心信息
+     * 修改当前用户手机号
      *
-     * @return {@link UserProfileVO}
+     * @param data 表单数据
+     * @return {@link Boolean} 是否修改成功
      */
-    UserProfileVO getUserProfile();
+    boolean bindOrChangeMobile(MobileUpdateForm data);
+
+    /**
+     * 发送邮箱验证码(绑定或更换邮箱)
+     *
+     * @param email 邮箱
+     */
+    void sendEmailCode(String email);
+
+    /**
+     * 绑定或更换邮箱
+     *
+     * @param data 表单数据
+     * @return {@link Boolean} 是否绑定成功
+     */
+    boolean bindOrChangeEmail(EmailUpdateForm data);
+
+    /**
+     * 获取用户选项列表
+     *
+     * @return {@link List< Option <String>>} 用户选项列表
+     */
+    List<Option<String>> listUserOptions();
 
 }

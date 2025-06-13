@@ -32,7 +32,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         List<Long> userRoleIds = this.list(new LambdaQueryWrapper<SysUserRole>()
                         .eq(SysUserRole::getUserId, userId))
                 .stream()
-                .map(item -> item.getRoleId())
+                .map(SysUserRole::getRoleId)
                 .collect(Collectors.toList());
 
         // 新增用户角色

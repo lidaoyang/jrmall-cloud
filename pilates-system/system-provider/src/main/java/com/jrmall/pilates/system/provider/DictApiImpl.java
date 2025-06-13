@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.api.DictApi;
 import com.jrmall.pilates.system.model.form.DictForm;
-import com.jrmall.pilates.system.model.form.DictTypeForm;
+import com.jrmall.pilates.system.model.form.DictItemForm;
+import com.jrmall.pilates.system.model.query.DictItemPageQuery;
 import com.jrmall.pilates.system.model.query.DictPageQuery;
-import com.jrmall.pilates.system.model.query.DictTypePageQuery;
+import com.jrmall.pilates.system.model.vo.DictItemOptionVO;
+import com.jrmall.pilates.system.model.vo.DictItemPageVO;
 import com.jrmall.pilates.system.model.vo.DictPageVO;
-import com.jrmall.pilates.system.model.vo.DictTypePageVO;
+import com.jrmall.pilates.system.service.SysDictItemService;
 import com.jrmall.pilates.system.service.SysDictService;
-import com.jrmall.pilates.system.service.SysDictTypeService;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
 
@@ -29,11 +30,16 @@ public class DictApiImpl implements DictApi {
     private SysDictService dictService;
 
     @Resource
-    private SysDictTypeService dictTypeService;
+    private SysDictItemService dictItemService;
 
     @Override
     public Page<DictPageVO> getDictPage(DictPageQuery queryParams) {
         return dictService.getDictPage(queryParams);
+    }
+
+    @Override
+    public List<Option<String>> getDictList() {
+        return dictService.getDictList();
     }
 
     @Override
@@ -52,42 +58,43 @@ public class DictApiImpl implements DictApi {
     }
 
     @Override
-    public boolean deleteDict(String idsStr) {
-        return dictService.deleteDict(idsStr);
+    public void deleteDictByIds(List<String> ids) {
+        dictService.deleteDictByIds(ids);
     }
 
     @Override
-    public List<Option<String>> listDictOptions(String typeCode) {
-        return dictService.listDictOptions(typeCode);
+    public List<String> getDictCodesByIds(List<String> ids) {
+        return dictService.getDictCodesByIds(ids);
     }
 
     @Override
-    public Page<DictTypePageVO> getDictTypePage(DictTypePageQuery queryParams) {
-        return dictTypeService.getDictTypePage(queryParams);
+    public Page<DictItemPageVO> getDictItemPage(DictItemPageQuery queryParams) {
+        return dictItemService.getDictItemPage(queryParams);
     }
 
     @Override
-    public DictTypeForm getDictTypeForm(Long id) {
-        return dictTypeService.getDictTypeForm(id);
+    public List<DictItemOptionVO> getDictItems(String dictCode) {
+        return dictItemService.getDictItems(dictCode);
     }
 
     @Override
-    public boolean saveDictType(DictTypeForm dictTypeForm) {
-        return dictTypeService.saveDictType(dictTypeForm);
+    public DictItemForm getDictItemForm(Long itemId) {
+        return dictItemService.getDictItemForm(itemId);
     }
 
     @Override
-    public boolean updateDictType(Long id, DictTypeForm dictTypeForm) {
-        return dictTypeService.updateDictType(id, dictTypeForm);
+    public boolean saveDictItem(DictItemForm formData) {
+        return dictItemService.saveDictItem(formData);
     }
 
     @Override
-    public boolean deleteDictTypes(String idsStr) {
-        return dictTypeService.deleteDictTypes(idsStr);
+    public boolean updateDictItem(DictItemForm formData) {
+        return dictItemService.updateDictItem(formData);
     }
 
     @Override
-    public List<Option<String>> listDictItemsByTypeCode(String typeCode) {
-        return dictTypeService.listDictItemsByTypeCode(typeCode);
+    public void deleteDictItemByIds(String ids) {
+        dictItemService.deleteDictItemByIds(ids);
     }
+
 }

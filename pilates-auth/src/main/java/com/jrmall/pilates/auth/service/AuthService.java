@@ -15,12 +15,14 @@ import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.redis.util.RedisUtil;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
+import com.jrmall.pilates.system.api.UserAuthApi;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +43,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+
+    @DubboReference
+    private UserAuthApi userAuthApi;
 
     private final CaptchaProperties captchaProperties;
     private final CaptchaService captchaService;
@@ -78,25 +83,7 @@ public class AuthService {
     }
 
     public boolean logout() {
-        String jti = RpcUtil.getJti();
-        Optional<Instant> expireTimeOpt = Optional.ofNullable(RpcUtil.getExp()); // 使用Optional处理可能的null值
-
-        long currentTimeInSeconds = System.currentTimeMillis() / 1000; // 当前时间（单位：秒）
-
-        expireTimeOpt.ifPresent(expireTime -> {
-            if (expireTime.getEpochSecond() > currentTimeInSeconds) {
-                // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
-                long remainingTimeInSeconds = expireTime.getEpochSecond() - currentTimeInSeconds;
-                redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
-            }
-        });
-
-        if (expireTimeOpt.isEmpty()) {
-            // token 永不过期则永久加入黑名单
-            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
-        }
-
-        return true;
+        return userAuthApi.logout();
     }
 
     /**

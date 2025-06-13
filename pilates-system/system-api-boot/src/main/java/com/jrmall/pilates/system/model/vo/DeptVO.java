@@ -25,6 +25,9 @@ public class DeptVO implements Serializable {
     @Schema(description = "部门名称")
     private String name;
 
+    @Schema(description = "部门编号")
+    private String code;
+
     @Schema(description = "排序")
     private Integer sort;
 

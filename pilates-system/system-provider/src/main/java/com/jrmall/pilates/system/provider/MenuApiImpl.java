@@ -30,8 +30,8 @@ public class MenuApiImpl implements MenuApi {
     }
 
     @Override
-    public List<Option<Long>> listMenuOptions() {
-        return menuService.listMenuOptions();
+    public List<Option<Long>> listMenuOptions(boolean onlyParent) {
+        return menuService.listMenuOptions(onlyParent);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MenuApiImpl implements MenuApi {
 
     @Override
     public List<RouteVO> listRoutes() {
-        return menuService.listRoutes();
+        return menuService.getCurrentUserRoutes();
     }
 
     @Override

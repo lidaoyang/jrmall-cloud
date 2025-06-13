@@ -1,19 +1,20 @@
 package com.jrmall.pilates.system.converter;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.model.bo.UserBO;
 import com.jrmall.pilates.system.model.bo.UserFormBO;
 import com.jrmall.pilates.system.model.bo.UserProfileBO;
 import com.jrmall.pilates.system.model.entity.SysUser;
 import com.jrmall.pilates.system.model.form.UserForm;
-import com.jrmall.pilates.system.model.vo.UserImportVO;
-import com.jrmall.pilates.system.model.vo.UserInfoVO;
-import com.jrmall.pilates.system.model.vo.UserPageVO;
-import com.jrmall.pilates.system.model.vo.UserProfileVO;
+import com.jrmall.pilates.system.model.form.UserProfileForm;
+import com.jrmall.pilates.system.model.vo.*;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+
+import java.util.List;
 
 /**
  * 用户对象转换器
@@ -24,29 +25,32 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface UserConverter {
 
-    @Mappings({
-            @Mapping(target = "genderLabel", expression = "java(com.jrmall.pilates.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.jrmall.pilates.common.enums.GenderEnum.class))")
-    })
-    UserPageVO bo2Vo(UserBO bo);
+    UserPageVO toPageVo(UserBO bo);
 
-    Page<UserPageVO> bo2Vo(Page<UserBO> bo);
+    Page<UserPageVO> toPageVo(Page<UserBO> bo);
+
+    UserForm toForm(SysUser entity);
 
     UserForm bo2Form(UserFormBO bo);
 
-    UserForm entity2Form(SysUser entity);
-
-    @InheritInverseConfiguration(name = "entity2Form")
-    SysUser form2Entity(UserForm entity);
+    @InheritInverseConfiguration(name = "toForm")
+    SysUser toEntity(UserForm entity);
 
     @Mappings({
             @Mapping(target = "userId", source = "id")
     })
-    UserInfoVO entity2UserInfoVo(SysUser entity);
+    CurrentUserVO toCurrentUserVo(SysUser entity);
 
-    SysUser importVo2Entity(UserImportVO vo);
+
+    UserProfileVO toProfileVo(UserProfileBO bo);
+
+    SysUser toEntity(UserProfileForm formData);
 
     @Mappings({
-            @Mapping(target = "genderLabel", expression = "java(com.jrmall.pilates.common.base.IBaseEnum.getLabelByValue(bo.getGender(), com.jrmall.pilates.common.enums.GenderEnum.class))")
+            @Mapping(target = "label", source = "nickname"),
+            @Mapping(target = "value", source = "id")
     })
-    UserProfileVO userProfileBo2Vo(UserProfileBO bo);
+    Option<String> toOption(SysUser entity);
+
+    List<Option<String>> toOptions(List<SysUser> list);
 }

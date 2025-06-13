@@ -1,14 +1,13 @@
 package com.jrmall.pilates.system.provider;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.api.UserApi;
-import com.jrmall.pilates.system.model.form.UserForm;
-import com.jrmall.pilates.system.model.form.UserRegisterForm;
+import com.jrmall.pilates.system.model.entity.SysUser;
+import com.jrmall.pilates.system.model.form.*;
 import com.jrmall.pilates.system.model.query.UserPageQuery;
-import com.jrmall.pilates.system.model.vo.UserExportVO;
-import com.jrmall.pilates.system.model.vo.UserInfoVO;
-import com.jrmall.pilates.system.model.vo.UserPageVO;
-import com.jrmall.pilates.system.model.vo.UserProfileVO;
+import com.jrmall.pilates.system.model.vo.*;
 import com.jrmall.pilates.system.service.SysUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ public class UserApiImpl implements UserApi {
 
     @Resource
     private SysUserService userService;
-
 
     @Override
     public IPage<UserPageVO> getUserPage(UserPageQuery queryParams) {
@@ -55,17 +53,12 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public boolean updatePassword(Long userId, String password) {
-        return userService.updatePassword(userId, password);
+    public boolean updateUserStatus(Long userId, Integer status) {
+        return userService.updateUserStatus(userId, status);
     }
 
     @Override
-    public boolean updateStatus(Long userId, Integer status) {
-        return userService.updateStatus(userId, status);
-    }
-
-    @Override
-    public UserInfoVO getCurrentUserInfo() {
+    public CurrentUserVO getCurrentUserInfo() {
         return userService.getCurrentUserInfo();
     }
 
@@ -80,13 +73,47 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public boolean sendRegistrationSmsCode(String mobile) {
-        return userService.sendRegistrationSmsCode(mobile);
-    }
-
-    @Override
     public UserProfileVO getUserProfile() {
         return userService.getUserProfile();
     }
 
+    @Override
+    public boolean updateUserProfile(UserProfileForm formData) {
+        return userService.updateUserProfile(formData);
+    }
+
+    @Override
+    public boolean changePassword(Long userId, PasswordUpdateForm data) {
+        return userService.changePassword(userId, data);
+    }
+
+    @Override
+    public boolean resetPassword(Long userId, String password) {
+        return userService.resetPassword(userId, password);
+    }
+
+    @Override
+    public boolean sendMobileCode(String mobile) {
+        return userService.sendMobileCode(mobile);
+    }
+
+    @Override
+    public boolean bindOrChangeMobile(MobileUpdateForm data) {
+        return userService.bindOrChangeMobile(data);
+    }
+
+    @Override
+    public void sendEmailCode(String email) {
+        userService.sendEmailCode(email);
+    }
+
+    @Override
+    public boolean bindOrChangeEmail(EmailUpdateForm data) {
+        return userService.bindOrChangeEmail(data);
+    }
+
+    @Override
+    public List<Option<String>> listUserOptions() {
+        return userService.listUserOptions();
+    }
 }

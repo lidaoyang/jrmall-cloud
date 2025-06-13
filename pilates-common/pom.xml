@@ -22,5 +22,6 @@
         <module>common-security</module>
         <module>common-sms</module>
         <module>common-dubbo</module>
+        <module>common-email</module>
     </modules>
 </project>

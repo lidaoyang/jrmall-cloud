@@ -4,6 +4,7 @@ import com.jrmall.pilates.system.model.entity.SysMenu;
 import com.jrmall.pilates.system.model.form.MenuForm;
 import com.jrmall.pilates.system.model.vo.MenuVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * 菜单对象转换器
@@ -16,9 +17,10 @@ public interface MenuConverter {
 
     MenuVO entity2Vo(SysMenu entity);
 
+    @Mapping(target = "params", ignore = true)
+    MenuForm toForm(SysMenu entity);
 
-    MenuForm entity2Form(SysMenu entity);
-
+    @Mapping(target = "params", ignore = true)
     SysMenu form2Entity(MenuForm menuForm);
 
 }

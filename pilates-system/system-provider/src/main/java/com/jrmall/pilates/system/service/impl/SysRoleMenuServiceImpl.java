@@ -10,6 +10,7 @@ import com.jrmall.pilates.system.model.entity.SysRoleMenu;
 import com.jrmall.pilates.system.service.SysRoleMenuService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,6 +18,7 @@ import java.util.*;
 /**
  * 角色菜单业务实现类
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
@@ -29,6 +31,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
      */
     @PostConstruct
     public void initRolePermsCache() {
+        log.info("初始化权限缓存... ");
         refreshRolePermsCache();
     }
 
@@ -92,11 +95,34 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     }
 
     /**
+     * 获取角色权限集合
+     *
+     * @param roles 角色编码集合
+     * @return 权限集合
+     */
+    @Override
+    public Set<String> getRolePermsByRoleCodes(Set<String> roles) {
+        return this.baseMapper.listRolePerms(roles);
+    }
+
+    /**
+     * 获取角色拥有的菜单ID集合
+     *
+     * @param roleId 角色ID
+     * @return 菜单ID集合
+     */
+    @Override
+    public List<Long> listMenuIdsByRoleId(Long roleId) {
+        return this.baseMapper.listMenuIdsByRoleId(roleId);
+    }
+
+    /**
      * 从缓存中获取角色权限列表
      *
      * @param roleCodes 角色编码集合
      * @return 角色权限列表
      */
+    @Override
     public Set<String> getRolePermsFormCache(Set<String> roleCodes) {
         // 检查输入是否为空
         if (CollectionUtil.isEmpty(roleCodes)) {
@@ -117,17 +143,4 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         return perms;
     }
-
-
-    /**
-     * 获取角色拥有的菜单ID集合
-     *
-     * @param roleId 角色ID
-     * @return 菜单ID集合
-     */
-    @Override
-    public List<Long> listMenuIdsByRoleId(Long roleId) {
-        return this.baseMapper.listMenuIdsByRoleId(roleId);
-    }
-
 }

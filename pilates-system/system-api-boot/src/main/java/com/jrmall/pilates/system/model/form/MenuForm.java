@@ -1,11 +1,15 @@
 package com.jrmall.pilates.system.model.form;
 
+import com.jrmall.pilates.common.base.KeyValue;
 import com.jrmall.pilates.system.enums.MenuTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Schema(description = "菜单表单对象")
 @Data
@@ -23,11 +27,14 @@ public class MenuForm implements Serializable {
     @Schema(description = "菜单名称")
     private String name;
 
-    @Schema(description = "菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)")
-    private MenuTypeEnum type;
+    @Schema(description = "菜单类型（1-菜单 2-目录 3-外链 4-按钮）")
+    private Integer type;
+
+    @Schema(description = "路由名称")
+    private String routeName;
 
     @Schema(description = "路由路径")
-    private String path;
+    private String routePath;
 
     @Schema(description = "组件路径(vue页面完整路径，省略.vue后缀)")
     private String component;
@@ -36,6 +43,8 @@ public class MenuForm implements Serializable {
     private String perm;
 
     @Schema(description = "显示状态(1:显示;0:隐藏)")
+    @Min(value = 0, message = "排序值不能小于0")
+    @Max(value = 1, message = "排序值不能小于1")
     private Integer visible;
 
     @Schema(description = "排序(数字越小排名越靠前)")
@@ -53,4 +62,6 @@ public class MenuForm implements Serializable {
     @Schema(description = "【目录】只有一个子路由是否始终显示", example = "1")
     private Integer alwaysShow;
 
+    @Schema(description = "路由参数")
+    private List<KeyValue> params;
 }

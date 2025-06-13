@@ -13,7 +13,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 获取最大范围的数据权限
      *
-     * @param roles
+     * @param roles 角色编码集合
      * @return
      */
     Integer getMaxDataRangeDataScope(Set<String> roles);
