@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Tag(name = "02.角色接口")
 @RestController
-@RequestMapping("/api/v1/roles")
+@RequestMapping("/api/v1/role")
 @RequiredArgsConstructor
 public class SysRoleController {
 

@@ -1,7 +1,6 @@
 package com.jrmall.pilates.auth.service;
 
 import cn.hutool.core.lang.Assert;
-import com.jrmall.pilates.auth.model.LoginUserInfo;
 import com.jrmall.pilates.auth.model.SysUserDetails;
 import com.jrmall.pilates.common.enums.StatusEnum;
 import com.jrmall.pilates.system.api.UserAuthApi;
@@ -47,10 +46,4 @@ public class SysUserDetailsService implements UserDetailsService {
         return new SysUserDetails(userAuthInfo);
     }
 
-
-    public LoginUserInfo getLoginUserInfo() {
-        LoginUserInfo loginUserInfo = new LoginUserInfo();
-        loginUserInfo.setId(123L);
-        return loginUserInfo;
-    }
 }

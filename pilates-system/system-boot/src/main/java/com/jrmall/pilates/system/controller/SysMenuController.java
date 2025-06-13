@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Tag(name = "03.菜单接口")
 @RestController
-@RequestMapping("/api/v1/menus")
+@RequestMapping("/api/v1/menu")
 @RequiredArgsConstructor
 @Slf4j
 public class SysMenuController {
@@ -38,7 +38,7 @@ public class SysMenuController {
     private MenuApi menuApi;
 
     @Operation(summary = "菜单列表")
-    @GetMapping
+    @GetMapping("/list")
     public Result<List<MenuVO>> listMenus(@ParameterObject MenuQuery queryParams) {
         List<MenuVO> menuList = menuApi.listMenus(queryParams);
         return Result.success(menuList);

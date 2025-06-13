@@ -35,7 +35,7 @@ public class SysDeptController {
     private DeptApi deptApi;
 
     @Operation(summary = "获取部门列表")
-    @GetMapping
+    @GetMapping("/list")
     public Result<List<DeptVO>> listDepartments(
             @ParameterObject DeptQuery queryParams
     ) {

@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "06.文件接口")
 @RestController
-@RequestMapping("/api/v1/files")
+@RequestMapping("/api/v1/file")
 @RequiredArgsConstructor
 public class FileController {
 
