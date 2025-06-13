@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.jrmall.pilates.auth.oauth2.extension.captcha.CaptchaAuthenticationToken;
 import com.jrmall.pilates.auth.oauth2.extension.captcha.CaptchaParameterNames;
+import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.common.web.http.CustomRequestWrapper;
 import com.jrmall.pilates.auth.model.LoginForm;
 import com.jrmall.pilates.auth.property.CaptchaProperties;
@@ -24,8 +25,10 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -72,6 +75,28 @@ public class AuthService {
         } catch (IOException | ServletException e) {
             log.error("login failed: {}", e.getMessage(), e);
         }
+    }
+
+    public boolean logout() {
+        String jti = RpcUtil.getJti();
+        Optional<Instant> expireTimeOpt = Optional.ofNullable(RpcUtil.getExp()); // 使用Optional处理可能的null值
+
+        long currentTimeInSeconds = System.currentTimeMillis() / 1000; // 当前时间（单位：秒）
+
+        expireTimeOpt.ifPresent(expireTime -> {
+            if (expireTime.getEpochSecond() > currentTimeInSeconds) {
+                // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
+                long remainingTimeInSeconds = expireTime.getEpochSecond() - currentTimeInSeconds;
+                redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
+            }
+        });
+
+        if (expireTimeOpt.isEmpty()) {
+            // token 永不过期则永久加入黑名单
+            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
+        }
+
+        return true;
     }
 
     /**
@@ -124,6 +149,5 @@ public class AuthService {
         }
         return result;
     }
-
 
 }

@@ -89,8 +89,4 @@ public class UserApiImpl implements UserApi {
         return userService.getUserProfile();
     }
 
-    @Override
-    public boolean logout() {
-        return userService.logout();
-    }
 }

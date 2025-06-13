@@ -46,6 +46,13 @@ public class AuthController {
         authService.login(request,loginForm, response);
     }
 
+    @Operation(summary = "登出")
+    @DeleteMapping("/logout")
+    public Result<Boolean> logout() {
+        boolean result = authService.logout();
+        return Result.judge(result);
+    }
+
     @Operation(summary = "获取验证码")
     @GetMapping("/captcha")
     public Result<CaptchaResult> getCaptcha() {

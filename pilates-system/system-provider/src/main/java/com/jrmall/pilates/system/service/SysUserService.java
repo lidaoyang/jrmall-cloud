@@ -112,13 +112,6 @@ public interface SysUserService extends IService<SysUser> {
     UserInfoVO getCurrentUserInfo();
 
     /**
-     * 注销登出
-     *
-     * @return {@link Boolean}
-     */
-    boolean logout();
-
-    /**
      * 注册用户
      *
      * @param userRegisterForm 用户注册表单对象

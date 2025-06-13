@@ -126,13 +126,6 @@ public class SysUserController {
         return Result.success(userInfoVO);
     }
 
-    @Operation(summary = "注销登出")
-    @DeleteMapping("/logout")
-    public Result<Boolean> logout() {
-        boolean result = userApi.logout();
-        return Result.judge(result);
-    }
-
     @Operation(summary = "用户导入模板下载")
     @GetMapping("/template")
     public void downloadTemplate(HttpServletResponse response) throws IOException {

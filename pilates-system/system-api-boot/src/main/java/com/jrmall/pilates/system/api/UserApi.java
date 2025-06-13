@@ -112,10 +112,4 @@ public interface UserApi {
      */
     UserProfileVO getUserProfile();
 
-    /**
-     * 退出登录
-     *
-     * @return {@link Boolean}
-     */
-    boolean logout();
 }
