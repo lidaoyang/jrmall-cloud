@@ -113,7 +113,7 @@ public class SysDictController {
     }
 
     @Operation(summary = "字典项列表")
-    @GetMapping("/{dictCode}/item")
+    @GetMapping("/{dictCode}/item/list")
     public Result<List<DictItemOptionVO>> getDictItems(
             @Parameter(description = "字典编码") @PathVariable String dictCode) {
         List<DictItemOptionVO> list = dictApi.getDictItems(dictCode);
@@ -121,7 +121,7 @@ public class SysDictController {
     }
 
     @Operation(summary = "新增字典项")
-    @PostMapping("/{dictCode}/item")
+    @PostMapping("/{dictCode}/item/add")
     @PreAuthorize("@ss.hasPerm('sys:dict-item:add')")
     @PreventDuplicateResubmit
     public Result<Void> saveDictItem(
