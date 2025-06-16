@@ -202,7 +202,6 @@ async function handleLoginSubmit() {
     // - 未选中"记住我": token存储在sessionStorage中，浏览器关闭后失效
   } catch (error) {
     // 6. 统一错误处理
-    getCaptcha(); // 刷新验证码
     console.error("登录失败:", error);
   } finally {
     loading.value = false;
