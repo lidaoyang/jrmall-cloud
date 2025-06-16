@@ -20,7 +20,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://127.0.0.1:9527");
+        configuration.addAllowedOrigin("*"); // TODO http://127.0.0.1:9527
 
         // 设置跨域访问可以携带cookie
         configuration.setAllowCredentials(true);
