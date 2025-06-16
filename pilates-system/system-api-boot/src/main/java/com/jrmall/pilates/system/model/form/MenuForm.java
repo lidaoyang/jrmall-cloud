@@ -43,8 +43,8 @@ public class MenuForm implements Serializable {
     private String perm;
 
     @Schema(description = "显示状态(1:显示;0:隐藏)")
-    @Min(value = 0, message = "排序值不能小于0")
-    @Max(value = 1, message = "排序值不能小于1")
+    @Min(value = 0, message = "显示状态不能小于0")
+    @Max(value = 1, message = "显示状态不能大于1")
     private Integer visible;
 
     @Schema(description = "排序(数字越小排名越靠前)")
