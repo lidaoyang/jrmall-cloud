@@ -1,6 +1,5 @@
-package com.jrmall.pilates.auth.config;
+package com.jrmall.pilates.common.security.config;
 
-import com.jrmall.pilates.auth.property.CustomSecurityProperties;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +18,13 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
 
     @Resource
-    private CustomSecurityProperties customSecurityProperties;
+    private SecurityWhitelistConfig securityWhitelistConfig;
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin(customSecurityProperties.getCorsOrigin());
+        configuration.addAllowedOrigin(securityWhitelistConfig.getCorsOrigin());
 
         // 设置跨域访问可以携带cookie //当allowCredentials为true时，allowdOrigins不能包含特殊值“*”，因为无法在“访问控制允许Origin”响应标头上设置该值
         configuration.setAllowCredentials(true);

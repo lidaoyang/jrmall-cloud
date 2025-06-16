@@ -96,7 +96,7 @@ public class AuthorizationServerConfig {
 
     private final CustomSecurityProperties customSecurityProperties;
 
-    private final CorsFilter corsFilter;
+    // private final CorsFilter corsFilter;
 
     /**
      * 授权服务器端点配置
@@ -112,7 +112,7 @@ public class AuthorizationServerConfig {
 
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
-        http.addFilter(corsFilter);
+        // http.addFilter(corsFilter);
         http.csrf(AbstractHttpConfigurer::disable);
 
         http

@@ -25,8 +25,7 @@ import java.util.Set;
  */
 class SysUserDeserializer extends JsonDeserializer<SysUserDetails> {
 
-    private static final TypeReference<Set<SimpleGrantedAuthority>> SIMPLE_GRANTED_AUTHORITY_SET = new TypeReference<Set<SimpleGrantedAuthority>>() {
-    };
+    private static final TypeReference<Set<SimpleGrantedAuthority>> SIMPLE_GRANTED_AUTHORITY_SET = new TypeReference<>() { };
 
     /**
      * This method will create {@link User} object. It will ensure successful object

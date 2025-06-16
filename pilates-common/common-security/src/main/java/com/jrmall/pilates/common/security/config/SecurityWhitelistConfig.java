@@ -20,6 +20,12 @@ import java.util.List;
 public class SecurityWhitelistConfig {
 
     /**
+     * 跨域允许访问的域名 http://127.0.0.1:9527
+     */
+    private String corsOrigin;
+
+
+    /**
      * 全局白名单路径
      */
     private List<String> whitelistPaths = new ArrayList<>();

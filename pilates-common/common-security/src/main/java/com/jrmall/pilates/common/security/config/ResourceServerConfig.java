@@ -22,6 +22,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
@@ -41,11 +42,14 @@ public class ResourceServerConfig {
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final SecurityWhitelistConfig securityWhitelistConfig;
 
+    private final CorsFilter corsFilter;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    HandlerMappingIntrospector introspector) throws Exception {
 
+        http.addFilter(corsFilter);
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         log.info("whitelist path:{}", JSONUtil.toJsonStr(securityWhitelistConfig.getWhitelistPaths()));

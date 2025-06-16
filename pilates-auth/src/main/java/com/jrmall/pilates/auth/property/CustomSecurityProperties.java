@@ -55,6 +55,11 @@ public class CustomSecurityProperties {
     private String issuerUrl;
 
     /**
+     * 跨域允许访问的域名 http://127.0.0.1:9527
+     */
+    private String corsOrigin;
+
+    /**
      * 公共白名单路径
      */
     private List<String> whitelistPaths = new ArrayList<>();
