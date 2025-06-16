@@ -292,7 +292,7 @@ public class RedisUtilO {
      * @param key Redis键名
      * @return 哈希Map
      */
-    public Map<String, Object> hashMapGet(String key) {
+    public Map<String, Object> hGetAll(String key) {
         HashOperations<String, String, Object> hash = redisTemplate.opsForHash();
         return hash.entries(key);
     }
@@ -303,7 +303,7 @@ public class RedisUtilO {
      * @param key Redis键名
      * @param map 哈希Map
      */
-    public void hashMapSet(String key, Map<String, Object> map) {
+    public void hPutAll(String key, Map<String, Object> map) {
         HashOperations<String, String, Object> hash = redisTemplate.opsForHash();
         hash.putAll(key, map);
     }

@@ -52,7 +52,7 @@ public class TokenValidationGlobalFilter implements GlobalFilter, Ordered {
             String token = authorization.substring(BEARER_PREFIX.length());
             JWSObject jwsObject = JWSObject.parse(token);
             String jti = (String) jwsObject.getPayload().toJSONObject().get(JWTPayload.JWT_ID);
-            Boolean isBlackToken = redisUtil.exists(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti);
+            Boolean isBlackToken = redisUtil.exists(RedisConstants.Auth.BLACKLIST_TOKEN + jti);
             if (isBlackToken) {
                 return WebFluxUtils.writeErrorResponse(response, ResultCode.TOKEN_ACCESS_FORBIDDEN);
             }

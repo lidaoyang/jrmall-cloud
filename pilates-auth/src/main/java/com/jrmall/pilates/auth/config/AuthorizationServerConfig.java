@@ -189,7 +189,7 @@ public class AuthorizationServerConfig {
     public JWKSource<SecurityContext> jwkSource() {
 
         // 尝试从Redis中获取JWKSet(JWT密钥对，包含非对称加密的公钥和私钥)
-        String jwkSetStr = redisUtil.get(RedisConstants.JWK_SET_KEY);
+        String jwkSetStr = redisUtil.get(RedisConstants.System.JWK_SET);
         if (StrUtil.isNotBlank(jwkSetStr)) {
             // 如果存在，解析JWKSet并返回
             JWKSet jwkSet = JWKSet.parse(jwkSetStr);
@@ -210,7 +210,7 @@ public class AuthorizationServerConfig {
             JWKSet jwkSet = new JWKSet(rsaKey);
 
             // 将JWKSet存储在Redis中
-            redisUtil.set(RedisConstants.JWK_SET_KEY, jwkSet.toString(Boolean.FALSE));
+            redisUtil.set(RedisConstants.System.JWK_SET, jwkSet.toString(Boolean.FALSE));
             return new ImmutableJWKSet<>(jwkSet);
         }
 

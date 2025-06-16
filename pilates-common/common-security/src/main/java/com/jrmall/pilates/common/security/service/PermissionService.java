@@ -81,7 +81,7 @@ public class PermissionService {
 
         Set<String> perms = new HashSet<>();
         // 从缓存中一次性获取所有角色的权限
-        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodes);
+        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.System.ROLE_PERMS, roleCodes);
 
         for (Object rolePermsObj : rolePermsList) {
             if (rolePermsObj instanceof Set) {

@@ -109,7 +109,7 @@ public class CaptchaAuthenticationProvider implements AuthenticationProvider {
         String captchaId = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_ID);
         String captchaCode = (String) additionalParameters.get(CaptchaParameterNames.CAPTCHA_CODE);
 
-        String captchaRedisKey = RedisConstants.CAPTCHA_CODE_PREFIX + captchaId;
+        String captchaRedisKey = RedisConstants.Captcha.IMAGE_CODE + captchaId;
         String cacheCaptchaCode = redisUtil.get(captchaRedisKey);
 
         if (cacheCaptchaCode == null) {

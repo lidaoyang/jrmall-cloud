@@ -275,13 +275,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String mobile = userRegisterForm.getMobile();
         String code = userRegisterForm.getCode();
         // 校验验证码
-        String cacheCode = redisUtil.get(RedisConstants.MOBILE_SMS_CODE_PREFIX + mobile);
+        String cacheCode = redisUtil.get(RedisConstants.Captcha.MOBILE_CODE + mobile);
         if (!StrUtil.equals(code, cacheCode)) {
             log.warn("验证码不匹配或不存在: {}", mobile);
             return false; // 验证码不匹配或不存在时返回false
         }
         // 校验通过，删除验证码
-        redisUtil.remove(RedisConstants.MOBILE_SMS_CODE_PREFIX + mobile);
+        redisUtil.remove(RedisConstants.Captcha.MOBILE_CODE + mobile);
 
         // 校验手机号是否已注册
         long count = this.count(new LambdaQueryWrapper<SysUser>()
@@ -406,7 +406,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
             // 将验证码存入redis，有效期5分钟
-            redisUtil.set(RedisConstants.MOBILE_SMS_CODE_PREFIX + mobile, code, 5L, TimeUnit.MINUTES);
+            redisUtil.set(RedisConstants.Captcha.MOBILE_CODE + mobile, code, 5L, TimeUnit.MINUTES);
 
             // TODO 考虑记录每次发送短信的详情，如发送时间、手机号和短信内容等，以便后续审核或分析短信发送效果。
         }
@@ -433,7 +433,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String inputVerifyCode = form.getCode();
         String mobile = form.getMobile();
 
-        String cacheKey = RedisConstants.MOBILE_SMS_CODE_PREFIX + mobile;
+        String cacheKey = RedisConstants.Captcha.MOBILE_CODE + mobile;
 
         String cachedVerifyCode = redisUtil.get(cacheKey);
 
@@ -468,7 +468,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         mailService.sendMail(email, "邮箱验证码", "您的验证码为：" + code + "，请在5分钟内使用");
         // 缓存验证码，5分钟有效，用于更换邮箱校验
-        String redisCacheKey = RedisConstants.EMAIL_SMS_CODE_PREFIX + email;
+        String redisCacheKey = RedisConstants.Captcha.EMAIL_CODE + email;
         redisUtil.set(redisCacheKey, code, 5L, TimeUnit.MINUTES);
     }
 
@@ -493,7 +493,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 获取缓存的验证码
         String email = form.getEmail();
-        String redisCacheKey = RedisConstants.EMAIL_SMS_CODE_PREFIX + email;
+        String redisCacheKey = RedisConstants.Captcha.EMAIL_CODE + email;
         String cachedVerifyCode = redisUtil.get(redisCacheKey);
 
         if (StrUtil.isBlank(cachedVerifyCode)) {
@@ -564,13 +564,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             if (expireTime.getEpochSecond() > currentTimeInSeconds) {
                 // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
                 long remainingTimeInSeconds = expireTime.getEpochSecond() - currentTimeInSeconds;
-                redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
+                redisUtil.set(RedisConstants.Auth.BLACKLIST_TOKEN + jti, "", remainingTimeInSeconds, TimeUnit.SECONDS);
             }
         });
 
         if (expireTimeOpt.isEmpty()) {
             // token 永不过期则永久加入黑名单
-            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
+            redisUtil.set(RedisConstants.Auth.BLACKLIST_TOKEN + jti, "");
         }
     }
 }

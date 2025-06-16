@@ -41,14 +41,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache() {
         // 清理权限缓存
-        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, "*");
+        redisUtil.hmRemove(RedisConstants.System.ROLE_PERMS, "*");
 
         List<RolePermsBO> list = this.baseMapper.getRolePermsList(null);
         if (CollectionUtil.isNotEmpty(list)) {
             list.forEach(item -> {
                 String roleCode = item.getRoleCode();
                 Set<String> perms = item.getPerms();
-                redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
+                redisUtil.hPut(RedisConstants.System.ROLE_PERMS, roleCode, perms);
             });
         }
     }
@@ -59,7 +59,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache(String roleCode) {
         // 清理权限缓存
-        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, roleCode);
+        redisUtil.hmRemove(RedisConstants.System.ROLE_PERMS, roleCode);
 
         List<RolePermsBO> list = this.baseMapper.getRolePermsList(roleCode);
         if (CollectionUtil.isNotEmpty(list)) {
@@ -69,7 +69,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             }
 
             Set<String> perms = rolePerms.getPerms();
-            redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, roleCode, perms);
+            redisUtil.hPut(RedisConstants.System.ROLE_PERMS, roleCode, perms);
         }
     }
 
@@ -79,7 +79,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     public void refreshRolePermsCache(String oldRoleCode, String newRoleCode) {
         // 清理旧角色权限缓存
-        redisUtil.hmRemove(RedisConstants.ROLE_PERMS_PREFIX, oldRoleCode);
+        redisUtil.hmRemove(RedisConstants.System.ROLE_PERMS, oldRoleCode);
 
         // 添加新角色权限缓存
         List<RolePermsBO> list = this.baseMapper.getRolePermsList(newRoleCode);
@@ -90,7 +90,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             }
 
             Set<String> perms = rolePerms.getPerms();
-            redisUtil.hPut(RedisConstants.ROLE_PERMS_PREFIX, newRoleCode, perms);
+            redisUtil.hPut(RedisConstants.System.ROLE_PERMS, newRoleCode, perms);
         }
     }
 
@@ -131,7 +131,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         Set<String> perms = new HashSet<>();
         // 从缓存中一次性获取所有角色的权限
-        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.ROLE_PERMS_PREFIX, roleCodes);
+        List<Object> rolePermsList = redisUtil.hmGet(RedisConstants.System.ROLE_PERMS, roleCodes);
 
         for (Object rolePermsObj : rolePermsList) {
             if (rolePermsObj instanceof Set) {

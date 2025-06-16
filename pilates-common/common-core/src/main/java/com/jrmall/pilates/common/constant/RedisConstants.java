@@ -2,39 +2,54 @@ package com.jrmall.pilates.common.constant;
 
 public interface RedisConstants {
 
-    /**
-     * 黑名单TOKEN Key前缀
-     */
-    String TOKEN_BLACKLIST_PREFIX = "token:blacklist:";
 
     /**
-     * 图形验证码key前缀
+     * 限流相关键
      */
-    String CAPTCHA_CODE_PREFIX = "captcha:code:";
+    interface RateLimiter {
+        String IP = "rate_limiter:ip:"; // IP限流（示例：rate_limiter:ip:192.168.1.1）
+    }
 
     /**
-     * 登录短信验证码key前缀
+     * 分布式锁相关键
      */
-    String LOGIN_SMS_CODE_PREFIX = "sms:code:login";
+    interface Lock {
+        String RESUBMIT = "lock:resubmit::"; // 防重复提交（示例：lock:resubmit:userIdentifier:requestIdentifier）
+    }
 
     /**
-     * 注册短信验证码key前缀
+     * 认证模块
      */
-    String REGISTER_SMS_CODE_PREFIX = "sms:code:register:";
-
-    String MOBILE_SMS_CODE_PREFIX = "sms:code:mobile:";
-
-    String EMAIL_SMS_CODE_PREFIX = "sms:code:email:";
+    interface Auth {
+        // 存储访问令牌对应的用户信息（accessToken -> OnlineUser）
+        String ACCESS_TOKEN_USER = "auth:token:access:";
+        // 存储刷新令牌对应的用户信息（refreshToken -> OnlineUser）
+        String REFRESH_TOKEN_USER = "auth:token:refresh:";
+        // 用户与访问令牌的映射（userId -> accessToken）
+        String USER_ACCESS_TOKEN = "auth:user:access:";
+        // 用户与刷新令牌的映射（userId -> refreshToken
+        String USER_REFRESH_TOKEN = "auth:user:refresh:";
+        // 黑名单 Token（用于退出登录或注销）
+        String BLACKLIST_TOKEN = "auth:token:blacklist:";
+    }
 
     /**
-     * 角色和权限缓存前缀
+     * 验证码模块
      */
-    String ROLE_PERMS_PREFIX = "role_perms:";
-
+    interface Captcha {
+        String IMAGE_CODE = "captcha:image:";              // 图形验证码
+        String SMS_LOGIN_CODE = "captcha:sms_login:";      // 登录短信验证码
+        String SMS_REGISTER_CODE = "captcha:sms_register:";// 注册短信验证码
+        String MOBILE_CODE = "captcha:mobile:";            // 绑定、更换手机验证码
+        String EMAIL_CODE = "captcha:email:";              // 邮箱验证码
+    }
 
     /**
-     * JWT 密钥对(包含公钥和私钥)
+     * 系统模块
      */
-    String JWK_SET_KEY = "jwk_set";
-
+    interface System {
+        String CONFIG = "system:config";                 // 系统配置
+        String ROLE_PERMS = "system:role:perms"; // 系统角色和权限映射
+        String JWK_SET = "system:jwk_set";
+    }
 }

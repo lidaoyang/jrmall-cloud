@@ -235,11 +235,11 @@ public class CustomRefreshTokenAuthenticationProvider implements AuthenticationP
             // token未过期，添加至缓存作为黑名单，缓存时间为token剩余的有效时间
             Duration between = Duration.between(Instant.now(), authorization.getAccessToken().getToken().getExpiresAt());
             long seconds = between.toSeconds();
-            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "", seconds, TimeUnit.SECONDS);
+            redisUtil.set(RedisConstants.Auth.BLACKLIST_TOKEN + jti, "", seconds, TimeUnit.SECONDS);
         }
         if (authorization.getAccessToken().getToken().getExpiresAt() == null) {
             // token 永不过期则永久加入黑名单
-            redisUtil.set(RedisConstants.TOKEN_BLACKLIST_PREFIX + jti, "");
+            redisUtil.set(RedisConstants.Auth.BLACKLIST_TOKEN + jti, "");
         }
     }
 

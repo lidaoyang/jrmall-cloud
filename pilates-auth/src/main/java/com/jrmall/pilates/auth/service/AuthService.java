@@ -98,7 +98,7 @@ public class AuthService {
         // 验证码文本缓存至Redis，用于登录校验
         String captchaId = IdUtil.fastSimpleUUID();
         redisUtil.set(
-                RedisConstants.CAPTCHA_CODE_PREFIX + captchaId,
+                RedisConstants.Captcha.IMAGE_CODE + captchaId,
                 captcha.getCode(),
                 captchaProperties.getExpireSeconds(),
                 TimeUnit.SECONDS
@@ -130,7 +130,7 @@ public class AuthService {
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
             // 将验证码存入redis，有效期5分钟
-            redisUtil.set(RedisConstants.REGISTER_SMS_CODE_PREFIX + mobile, code, 5L, TimeUnit.MINUTES);
+            redisUtil.set(RedisConstants.Captcha.SMS_LOGIN_CODE + mobile, code, 5L, TimeUnit.MINUTES);
 
             // TODO 考虑记录每次发送短信的详情，如发送时间、手机号和短信内容等，以便后续审核或分析短信发送效果。
         }
