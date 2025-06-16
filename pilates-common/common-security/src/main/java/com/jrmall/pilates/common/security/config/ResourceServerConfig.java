@@ -50,6 +50,10 @@ public class ResourceServerConfig {
                                                    HandlerMappingIntrospector introspector) throws Exception {
 
         http.addFilter(corsFilter);
+
+        // 禁用 csrf 与 cors
+        http.csrf(AbstractHttpConfigurer::disable);
+
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         log.info("whitelist path:{}", JSONUtil.toJsonStr(securityWhitelistConfig.getWhitelistPaths()));

@@ -556,6 +556,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private void invalidateToke() {
         String jti = RpcUtil.getJti();
+        if (jti == null) {
+            return;
+        }
         Optional<Instant> expireTimeOpt = Optional.ofNullable(RpcUtil.getExp()); // 使用Optional处理可能的null值
 
         long currentTimeInSeconds = System.currentTimeMillis() / 1000; // 当前时间（单位：秒）

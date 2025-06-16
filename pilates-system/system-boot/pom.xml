@@ -24,10 +24,6 @@
             <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-security</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.jrmall.pilates</groupId>
