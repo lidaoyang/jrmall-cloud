@@ -15,10 +15,10 @@ public enum StatusEnum implements IBaseEnum<Integer> {
     DISABLE (0, "禁用");
 
     @Getter
-    private Integer value;
+    private final Integer value;
 
     @Getter
-    private String label;
+    private final String label;
 
     StatusEnum(Integer value, String label) {
         this.value = value;

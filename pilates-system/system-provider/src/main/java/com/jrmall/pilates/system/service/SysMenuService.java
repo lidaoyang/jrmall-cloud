@@ -3,6 +3,7 @@ package com.jrmall.pilates.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.model.entity.SysMenu;
+import com.jrmall.pilates.system.model.form.MenuGenConfigForm;
 import com.jrmall.pilates.system.model.form.MenuForm;
 import com.jrmall.pilates.system.model.query.MenuQuery;
 import com.jrmall.pilates.system.model.vo.MenuVO;
@@ -64,5 +65,12 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     boolean deleteMenu(Long id);
 
+    /**
+     * 代码生成时添加菜单
+     *
+     * @param parentMenuId 父菜单ID
+     * @param genConfig    实体名
+     */
+    void addMenuForCodegen(Long parentMenuId, MenuGenConfigForm genConfig);
 
 }

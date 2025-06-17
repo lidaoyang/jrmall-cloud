@@ -20,6 +20,10 @@
             <groupId>com.jrmall.pilates</groupId>
             <artifactId>system-api-auth</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>system-api-genmenu</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.jrmall.pilates</groupId>

@@ -18,8 +18,8 @@ import com.jrmall.pilates.system.enums.MenuTypeEnum;
 import com.jrmall.pilates.common.enums.StatusEnum;
 import com.jrmall.pilates.system.converter.MenuConverter;
 import com.jrmall.pilates.system.mapper.SysMenuMapper;
-import com.jrmall.pilates.system.model.bo.RouteBO;
 import com.jrmall.pilates.system.model.entity.SysMenu;
+import com.jrmall.pilates.system.model.form.MenuGenConfigForm;
 import com.jrmall.pilates.system.model.form.MenuForm;
 import com.jrmall.pilates.system.model.query.MenuQuery;
 import com.jrmall.pilates.system.model.vo.MenuVO;
@@ -29,10 +29,8 @@ import com.jrmall.pilates.system.service.SysRoleMenuService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -398,5 +396,64 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return result;
     }
 
+    @Override
+    public void addMenuForCodegen(Long parentMenuId, MenuGenConfigForm genConfig) {
+        SysMenu parentMenu = this.getById(parentMenuId);
+        Assert.notNull(parentMenu, "上级菜单不存在");
 
+        String entityName = genConfig.getEntityName();
+
+        long count = this.count(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getRouteName, entityName));
+        if (count > 0) {
+            return;
+        }
+
+        // 获取父级菜单子菜单最带的排序
+        SysMenu maxSortMenu = this.getOne(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getParentId, parentMenuId)
+                .orderByDesc(SysMenu::getSort)
+                .last("limit 1")
+        );
+        int sort = 1;
+        if (maxSortMenu != null) {
+            sort = maxSortMenu.getSort() + 1;
+        }
+
+        SysMenu menu = new SysMenu();
+        menu.setParentId(parentMenuId);
+        menu.setName(genConfig.getBusinessName());
+
+        menu.setRouteName(entityName);
+        menu.setRoutePath(StrUtil.toSymbolCase(entityName, '-'));
+        menu.setComponent(genConfig.getModuleName() + "/" + StrUtil.toSymbolCase(entityName, '-') + "/index");
+        menu.setType(MenuTypeEnum.MENU.getValue());
+        menu.setSort(sort);
+        menu.setVisible(1);
+        boolean result = this.save(menu);
+
+        if (result) {
+            // 生成treePath
+            String treePath = generateMenuTreePath(parentMenuId);
+            menu.setTreePath(treePath);
+            this.updateById(menu);
+
+            // 生成CURD按钮权限
+            String permPrefix = genConfig.getModuleName() + ":" + StrUtil.lowerFirst(entityName) + ":";
+            String[] actions = {"查询", "新增", "编辑", "删除"};
+            String[] perms = {"query", "add", "edit", "delete"};
+
+            for (int i = 0; i < actions.length; i++) {
+                SysMenu button = new SysMenu();
+                button.setParentId(menu.getId());
+                button.setType(MenuTypeEnum.BUTTON.getValue());
+                button.setName(actions[i]);
+                button.setPerm(permPrefix + perms[i]);
+                button.setSort(i + 1);
+                this.save(button);
+
+                // 生成treePath
+                button.setTreePath(treePath + "," + button.getId());
+                this.updateById(button);
+            }
+        }
+    }
 }
