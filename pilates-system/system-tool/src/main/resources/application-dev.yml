@@ -1,5 +1,5 @@
 server:
-  port: 8800
+  port: 8808
   shutdown: graceful #graceful:开启优雅停机，默认IMMEDIATE是立即关机
 
 spring:
@@ -20,10 +20,12 @@ spring:
   config:
     import:
       - nacos:mysql-system-config.yml?group=DEFAULT_GROUP
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:aliyun-oss.yml?group=DEFAULT_GROUP
       - nacos:swagger-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
       - nacos:codegen-config.yml?group=DEFAULT_GROUP
+      - nacos:pilates-system-tool.yaml?group=DEFAULT_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:

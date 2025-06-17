@@ -18,7 +18,7 @@ spring:
       - nacos:mysql-system-config.yml?group=DEFAULT_GROUP
       - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-provider.yml?group=DEFAULT_GROUP
-      - nacos:mail-config.yml?group=DEFAULT_GROUP
+      - nacos:email-config.yml?group=DEFAULT_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:

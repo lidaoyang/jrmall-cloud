@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableDubbo
+@EnableDubbo(scanBasePackages = {"com.jrmall.pilates.system.provider"})
 @EnableTransactionManagement // 开启事务
 @MapperScan(basePackages = {"com.jrmall.pilates.system.mapper"})
 @SpringBootApplication
