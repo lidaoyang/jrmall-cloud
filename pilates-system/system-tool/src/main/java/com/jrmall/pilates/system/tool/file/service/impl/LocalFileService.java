@@ -4,12 +4,11 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import com.youlai.boot.shared.file.model.FileInfo;
-import com.youlai.boot.shared.file.service.FileService;
+import com.jrmall.pilates.system.tool.file.model.FileInfo;
+import com.jrmall.pilates.system.tool.file.service.FileService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LocalFileService implements FileService {
 
-    @Value("${oss.local.storage-path}")
+    // @Value("${oss.local.storage-path}")
     private String storagePath;
 
     /**

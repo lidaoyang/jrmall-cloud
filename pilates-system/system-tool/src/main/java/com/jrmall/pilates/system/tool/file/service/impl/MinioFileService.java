@@ -5,10 +5,11 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.youlai.boot.common.exception.BusinessException;
-import com.youlai.boot.common.result.ResultCode;
-import com.youlai.boot.shared.file.model.FileInfo;
-import com.youlai.boot.shared.file.service.FileService;
+import com.jrmall.pilates.common.exception.BizException;
+import com.jrmall.pilates.common.exception.ProviderException;
+import com.jrmall.pilates.common.result.ResultCode;
+import com.jrmall.pilates.system.tool.file.model.FileInfo;
+import com.jrmall.pilates.system.tool.file.service.FileService;
 import io.minio.*;
 import io.minio.http.Method;
 import jakarta.annotation.PostConstruct;
@@ -129,7 +130,7 @@ public class MinioFileService implements FileService {
             return fileInfo;
         } catch (Exception e) {
             log.error("上传文件失败", e);
-            throw new BusinessException(ResultCode.UPLOAD_FILE_EXCEPTION, e.getMessage());
+            throw new BizException(ResultCode.UPLOAD_FILE_EXCEPTION, e.getMessage());
         }
     }
 
@@ -161,7 +162,7 @@ public class MinioFileService implements FileService {
             return true;
         } catch (Exception e) {
             log.error("删除文件失败", e);
-            throw new BusinessException(ResultCode.DELETE_FILE_EXCEPTION, e.getMessage());
+            throw new BizException(ResultCode.DELETE_FILE_EXCEPTION, e.getMessage());
         }
     }
 

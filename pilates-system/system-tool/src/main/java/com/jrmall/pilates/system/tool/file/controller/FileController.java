@@ -1,8 +1,8 @@
 package com.jrmall.pilates.system.tool.file.controller;
 
-import com.youlai.boot.common.result.Result;
-import com.youlai.boot.shared.file.model.FileInfo;
-import com.youlai.boot.shared.file.service.FileService;
+import com.jrmall.pilates.common.result.Result;
+import com.jrmall.pilates.system.tool.file.model.FileInfo;
+import com.jrmall.pilates.system.tool.file.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

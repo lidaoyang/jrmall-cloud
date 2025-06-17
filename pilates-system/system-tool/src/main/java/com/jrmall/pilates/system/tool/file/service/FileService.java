@@ -1,6 +1,6 @@
 package com.jrmall.pilates.system.tool.file.service;
 
-import com.youlai.boot.shared.file.model.FileInfo;
+import com.jrmall.pilates.system.tool.file.model.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

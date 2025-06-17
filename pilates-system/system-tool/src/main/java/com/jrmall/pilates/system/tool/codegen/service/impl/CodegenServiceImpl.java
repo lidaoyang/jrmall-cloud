@@ -10,7 +10,7 @@ import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jrmall.pilates.common.exception.ProviderException;
+import com.jrmall.pilates.common.exception.BizException;
 import com.jrmall.pilates.system.tool.codegen.enums.JavaTypeEnum;
 import com.jrmall.pilates.system.tool.codegen.mapper.DatabaseMapper;
 import com.jrmall.pilates.system.tool.codegen.model.entity.GenConfig;
@@ -80,7 +80,7 @@ public class CodegenServiceImpl implements CodegenService {
                 .eq(GenConfig::getTableName, tableName)
         );
         if (genConfig == null) {
-            throw new ProviderException("未找到表生成配置");
+            throw new BizException("未找到表生成配置");
         }
 
         List<GenFieldConfig> fieldConfigs = genFieldConfigService.list(new LambdaQueryWrapper<GenFieldConfig>()
@@ -89,7 +89,7 @@ public class CodegenServiceImpl implements CodegenService {
 
         );
         if (CollectionUtil.isEmpty(fieldConfigs)) {
-            throw new ProviderException("未找到字段生成配置");
+            throw new BizException("未找到字段生成配置");
         }
 
         // 遍历模板配置

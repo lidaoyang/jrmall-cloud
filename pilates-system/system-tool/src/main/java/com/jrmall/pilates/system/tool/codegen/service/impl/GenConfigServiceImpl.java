@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jrmall.pilates.common.enums.EnvEnum;
-import com.jrmall.pilates.common.exception.ProviderException;
+import com.jrmall.pilates.common.exception.BizException;
 import com.jrmall.pilates.system.api.MenuGenApi;
 import com.jrmall.pilates.system.model.form.MenuGenConfigForm;
 import com.jrmall.pilates.system.tool.SystemToolApplication;
@@ -192,7 +192,7 @@ public class GenConfigServiceImpl extends ServiceImpl<GenConfigMapper, GenConfig
         List<GenFieldConfig> genFieldConfigs = codegenConverter.toGenFieldConfig(formData.getFieldConfigs());
 
         if (CollectionUtil.isEmpty(genFieldConfigs)) {
-            throw new ProviderException("字段配置不能为空");
+            throw new BizException("字段配置不能为空");
         }
         genFieldConfigs.forEach(genFieldConfig -> {
             genFieldConfig.setConfigId(genConfig.getId());
