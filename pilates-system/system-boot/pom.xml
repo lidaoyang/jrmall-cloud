@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>system-boot</artifactId>
+    <description>系统 RESTFul API 模块</description>
 
     <dependencies>
 

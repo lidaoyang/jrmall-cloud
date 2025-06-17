@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-dubbo</artifactId>
+    <description>通用-Dubbo服务模块</description>
 
     <dependencies>
 

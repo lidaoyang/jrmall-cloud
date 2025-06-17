@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>common-email</artifactId>
+    <description>通用-邮件服务模块</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

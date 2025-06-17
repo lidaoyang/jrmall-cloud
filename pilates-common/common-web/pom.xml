@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-web</artifactId>
+    <description>通用-web模块</description>
 
     <dependencies>
 

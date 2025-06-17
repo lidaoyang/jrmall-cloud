@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>common-apidoc</artifactId>
+    <description>通用-接口文档</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
