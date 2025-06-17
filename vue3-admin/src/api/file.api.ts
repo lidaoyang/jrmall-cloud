@@ -1,5 +1,7 @@
 import request from "@/utils/request";
 
+const FILE_BASE_URL = "/systool-api/api/v1/files";
+
 const FileAPI = {
   /**
    * 上传文件
@@ -8,7 +10,7 @@ const FileAPI = {
    */
   upload(formData: FormData) {
     return request<any, FileInfo>({
-      url: "/api/v1/files",
+      url: `${FILE_BASE_URL}`,
       method: "post",
       data: formData,
       headers: {
@@ -24,7 +26,7 @@ const FileAPI = {
     const formData = new FormData();
     formData.append("file", file);
     return request<any, FileInfo>({
-      url: "/api/v1/files",
+      url: `${FILE_BASE_URL}`,
       method: "post",
       data: formData,
       headers: {
@@ -40,7 +42,7 @@ const FileAPI = {
    */
   delete(filePath?: string) {
     return request({
-      url: "/api/v1/files",
+      url: `${FILE_BASE_URL}`,
       method: "delete",
       params: { filePath: filePath },
     });
