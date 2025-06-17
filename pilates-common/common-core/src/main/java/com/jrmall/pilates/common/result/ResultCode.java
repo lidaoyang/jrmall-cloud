@@ -39,10 +39,16 @@ public enum ResultCode implements IResultCode, Serializable {
     RESOURCE_NOT_FOUND("A0401", "请求资源不存在"),
     PARAM_IS_NULL("A0410", "请求必填参数为空"),
 
-    USER_UPLOAD_FILE_ERROR("A0700", "用户上传文件异常"),
-    USER_UPLOAD_FILE_TYPE_NOT_MATCH("A0701", "用户上传文件类型不匹配"),
-    USER_UPLOAD_FILE_SIZE_EXCEEDS("A0702", "用户上传文件太大"),
-    USER_UPLOAD_IMAGE_SIZE_EXCEEDS("A0703", "用户上传图片太大"),
+    /** 二级宏观错误码  */
+    UPLOAD_FILE_EXCEPTION("A0700", "上传文件异常"),
+    UPLOAD_FILE_TYPE_MISMATCH("A0701", "上传文件类型不匹配"),
+    UPLOAD_FILE_TOO_LARGE("A0702", "上传文件太大"),
+    UPLOAD_IMAGE_TOO_LARGE("A0703", "上传图片太大"),
+    UPLOAD_VIDEO_TOO_LARGE("A0704", "上传视频太大"),
+    UPLOAD_COMPRESSED_FILE_TOO_LARGE("A0705", "上传压缩文件太大"),
+
+    DELETE_FILE_EXCEPTION("A0710", "删除文件异常"),
+
 
     SYSTEM_EXECUTION_ERROR("B0001", "系统执行出错"),
     SYSTEM_EXECUTION_TIMEOUT("B0100", "系统执行超时"),
@@ -72,7 +78,10 @@ public enum ResultCode implements IResultCode, Serializable {
     DATABASE_COLUMN_NOT_EXIST("C0312", "列不存在"),
     DATABASE_DUPLICATE_COLUMN_NAME("C0321", "多表关联中存在多个相同名称的列"),
     DATABASE_DEADLOCK("C0331", "数据库死锁"),
-    DATABASE_PRIMARY_KEY_CONFLICT("C0341", "主键冲突");
+    DATABASE_PRIMARY_KEY_CONFLICT("C0341", "主键冲突"),
+
+    ;
+
 
     @Override
     public String getCode() {

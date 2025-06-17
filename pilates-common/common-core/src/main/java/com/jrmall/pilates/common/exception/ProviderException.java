@@ -16,6 +16,11 @@ public class ProviderException extends RuntimeException {
         this.resultCode = errorCode;
     }
 
+    public ProviderException(IResultCode errorCode,String message) {
+        super(message);
+        this.resultCode = errorCode;
+    }
+
     public ProviderException(String message){
         super(message);
     }
