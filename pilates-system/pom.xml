@@ -15,8 +15,10 @@
     <modules>
         <module>system-api-auth</module>
         <module>system-api-boot</module>
+        <module>system-api-genmenu</module>
         <module>system-provider</module>
         <module>system-boot</module>
+        <module>system-tool</module>
     </modules>
 
 </project>
