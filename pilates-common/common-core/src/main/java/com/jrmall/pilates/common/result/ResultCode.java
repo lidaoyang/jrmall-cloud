@@ -3,6 +3,7 @@ package com.jrmall.pilates.common.result;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -83,6 +84,13 @@ public enum ResultCode implements IResultCode, Serializable {
     ;
 
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private String code;
+
+    private String msg;
+
     @Override
     public String getCode() {
         return code;
@@ -92,11 +100,6 @@ public enum ResultCode implements IResultCode, Serializable {
     public String getMsg() {
         return msg;
     }
-
-    private String code;
-
-    private String msg;
-
     @Override
     public String toString() {
         return "{" +

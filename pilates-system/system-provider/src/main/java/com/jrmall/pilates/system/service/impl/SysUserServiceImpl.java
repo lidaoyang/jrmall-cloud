@@ -16,8 +16,10 @@ import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.constant.SystemConstants;
 import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.common.email.service.MailService;
+import com.jrmall.pilates.common.exception.ProviderAccessDeniedException;
 import com.jrmall.pilates.common.exception.ProviderException;
 import com.jrmall.pilates.common.redis.util.RedisUtil;
+import com.jrmall.pilates.common.result.ResultCode;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
 import com.jrmall.pilates.system.converter.UserConverter;
@@ -94,7 +96,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 查询数据
         Page<UserBO> userPage = this.baseMapper.getUserPage(page, queryParams);
-
+        if (userPage.getTotal() == 0) {
+            throw new ProviderException(ResultCode.USER_NOT_EXIST);
+        }
+        if (userPage.getTotal() ==1){
+            throw new ProviderAccessDeniedException(ResultCode.PARAM_ERROR);
+        }
         // 实体转换
         return userConverter.toPageVo(userPage);
     }

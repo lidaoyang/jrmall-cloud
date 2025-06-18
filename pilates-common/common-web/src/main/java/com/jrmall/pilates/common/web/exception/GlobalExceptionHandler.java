@@ -173,7 +173,7 @@ public class GlobalExceptionHandler {
         return Result.failed(e.getResultCode(), e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ProviderException.class)
     public <T> Result<T> processException(ProviderException e) {
         log.error("provider exception:{}", e.getMessage(), e);

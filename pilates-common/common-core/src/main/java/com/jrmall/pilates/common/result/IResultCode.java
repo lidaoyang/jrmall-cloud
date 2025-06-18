@@ -1,5 +1,7 @@
 package com.jrmall.pilates.common.result;
 
+import java.io.Serializable;
+
 /**
  * @author haoxr
  **/

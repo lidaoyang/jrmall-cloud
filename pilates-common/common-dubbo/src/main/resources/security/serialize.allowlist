@@ -1,3 +1,4 @@
 com.jrmall.pilates.common.exception.ProviderAccessDeniedException
 com.jrmall.pilates.common.exception.ProviderException
 com.jrmall.pilates.common.dubbo.model.LoginUser
+com.jrmall.pilates.common.result.ResultCode
