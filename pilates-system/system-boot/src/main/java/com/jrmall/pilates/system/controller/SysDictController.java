@@ -53,7 +53,7 @@ public class SysDictController {
 
 
     @Operation(summary = "字典列表")
-    @GetMapping
+    @GetMapping("/list")
     public Result<List<Option<String>>> getDictList() {
         List<Option<String>> list = dictApi.getDictList();
         return Result.success(list);
