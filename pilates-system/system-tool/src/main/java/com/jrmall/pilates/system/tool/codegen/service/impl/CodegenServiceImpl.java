@@ -112,7 +112,7 @@ public class CodegenServiceImpl implements CodegenService {
             previewVO.setFileName(fileName);
 
             /* 2. 生成文件路径 */
-            // 包名：com.youlai.boot
+            // 包名：com.jrmall.pilates
             String packageName = genConfig.getPackageName();
             // 模块名：system
             String moduleName = genConfig.getModuleName();
@@ -158,7 +158,7 @@ public class CodegenServiceImpl implements CodegenService {
      *
      * @param templateName   模板名 Entity
      * @param moduleName     模块名 system
-     * @param packageName    包名 com.youlai
+     * @param packageName    包名 com.jrmall.pilates
      * @param subPackageName 子包名 controller
      * @param entityName     实体类名 UserController
      * @return 文件路径 src/main/java/com/youlai/system/controller

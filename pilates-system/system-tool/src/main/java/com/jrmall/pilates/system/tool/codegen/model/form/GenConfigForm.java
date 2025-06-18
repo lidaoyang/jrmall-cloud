@@ -34,7 +34,7 @@ public class GenConfigForm implements Serializable {
     @Schema(description = "模块名",example = "system")
     private String moduleName;
 
-    @Schema(description = "包名",example = "com.youlai")
+    @Schema(description = "包名",example = "com.jrmall.pilates")
     private String packageName;
 
     @Schema(description = "实体名",example = "User")
