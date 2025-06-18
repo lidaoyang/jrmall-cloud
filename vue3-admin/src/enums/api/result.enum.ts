@@ -17,7 +17,7 @@ export const enum ResultEnum {
   ACCESS_TOKEN_INVALID = "A0230",
 
   /**
-   * 刷新令牌无效或过期
+   * token已被禁止访问
    */
-  REFRESH_TOKEN_INVALID = "A0231",
+  TOKEN_ACCESS_FORBIDDEN = "A0231",
 }

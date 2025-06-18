@@ -43,14 +43,15 @@ service.interceptors.response.use(
   },
   async (error) => {
     console.error("request error", error); // for debug
-    const { config, response } = error;
+    const response = error;
     if (response) {
       const { code, msg } = response.data;
       if (code === ResultEnum.ACCESS_TOKEN_INVALID) {
-        // Token 过期，刷新 Token
-        return handleTokenRefresh(config);
-      } else if (code === ResultEnum.REFRESH_TOKEN_INVALID) {
-        // 刷新 Token 过期，跳转登录页
+        // Token 过期，跳转登录页
+        await handleSessionExpired();
+        return Promise.reject(new Error(msg || "Error"));
+      } else if (code === ResultEnum.TOKEN_ACCESS_FORBIDDEN) {
+        // token已被禁止访问，跳转登录页
         await handleSessionExpired();
         return Promise.reject(new Error(msg || "Error"));
       } else {
@@ -65,6 +66,7 @@ export default service;
 let isRefreshing = false;
 // 因 Token 过期导致的请求等待队列
 const waitingQueue: Array<() => void> = [];
+
 // 刷新 Token 处理
 async function handleTokenRefresh(config: InternalAxiosRequestConfig) {
   return new Promise((resolve) => {
@@ -94,6 +96,7 @@ async function handleTokenRefresh(config: InternalAxiosRequestConfig) {
     }
   });
 }
+
 // 处理会话过期
 async function handleSessionExpired() {
   ElNotification({
