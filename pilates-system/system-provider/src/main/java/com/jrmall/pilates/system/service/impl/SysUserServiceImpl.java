@@ -96,12 +96,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 查询数据
         Page<UserBO> userPage = this.baseMapper.getUserPage(page, queryParams);
-        if (userPage.getTotal() == 0) {
-            throw new ProviderException(ResultCode.USER_NOT_EXIST);
-        }
-        if (userPage.getTotal() ==1){
-            throw new ProviderAccessDeniedException(ResultCode.PARAM_ERROR);
-        }
         // 实体转换
         return userConverter.toPageVo(userPage);
     }
