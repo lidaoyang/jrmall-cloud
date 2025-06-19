@@ -30,7 +30,7 @@ spring:
 nacos:
   username: nacos
   password: nacos
-  server-addr: localhost:8848
+  server-addr: 172.16.85.108:8848
   spring-cloud:
     config:
       namespace: pilates-cloud-dev
