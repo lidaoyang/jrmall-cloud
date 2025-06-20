@@ -43,7 +43,7 @@ service.interceptors.response.use(
   },
   async (error) => {
     console.error("request error", error); // for debug
-    const response = error;
+    const response = error.response;
     if (response) {
       const { code, msg } = response.data;
       if (code === ResultEnum.ACCESS_TOKEN_INVALID) {
@@ -55,6 +55,7 @@ service.interceptors.response.use(
         await handleSessionExpired();
         return Promise.reject(new Error(msg || "Error"));
       } else {
+        console.error("error.response", response);
         ElMessage.error(msg || "系统出错");
       }
     }
