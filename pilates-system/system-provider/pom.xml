@@ -60,6 +60,11 @@
             <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-sms</artifactId>
         </dependency>
+        <!--Seata 分布式事务-->
+        <!--<dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-seata</artifactId>
+        </dependency>-->
 
         <!-- 配置中心 -->
         <dependency>

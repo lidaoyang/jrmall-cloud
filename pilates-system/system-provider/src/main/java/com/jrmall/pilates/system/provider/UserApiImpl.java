@@ -1,16 +1,13 @@
 package com.jrmall.pilates.system.provider;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jrmall.pilates.common.base.Option;
 import com.jrmall.pilates.system.api.UserApi;
-import com.jrmall.pilates.system.model.entity.SysUser;
 import com.jrmall.pilates.system.model.form.*;
 import com.jrmall.pilates.system.model.query.UserPageQuery;
 import com.jrmall.pilates.system.model.vo.*;
 import com.jrmall.pilates.system.service.SysUserService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.List;

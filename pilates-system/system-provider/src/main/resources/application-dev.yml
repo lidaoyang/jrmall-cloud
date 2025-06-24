@@ -19,6 +19,7 @@ spring:
       - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-provider.yml?group=DEFAULT_GROUP
       - nacos:email-config.yml?group=DEFAULT_GROUP
+#      - nacos:seata-client-config.yml?group=SEATA_GROUP
       - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
@@ -28,3 +29,4 @@ nacos:
   spring-cloud:
     config:
       namespace: pilates-cloud-dev
+
