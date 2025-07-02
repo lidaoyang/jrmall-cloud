@@ -11,6 +11,7 @@
 
     <artifactId>pilates-system</artifactId>
     <packaging>pom</packaging>
+    <description>系统服务模块</description>
 
     <modules>
         <module>system-api-auth</module>
