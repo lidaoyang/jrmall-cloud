@@ -21,6 +21,26 @@
     </properties>
 
     <dependencies>
+
+        <!--基础依赖-->
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-dubbo</artifactId>
+        </dependency>
+
+        <!-- xxl-job-core -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>3.1.2-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!-- spring-boot-starter-web (spring-webmvc + tomcat) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -30,13 +50,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- xxl-job-core -->
-        <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>3.1.2-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
