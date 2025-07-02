@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xuxueli</groupId>
+        <artifactId>xxl-job</artifactId>
+        <version>3.1.2-SNAPSHOT</version>
+    </parent>
+    <artifactId>xxl-job-executors</artifactId>
+    <packaging>pom</packaging>
+    <description>调度任务执行器模块</description>
+
+    <modules>
+        <module>xxl-job-executor-common</module>
+    </modules>
+
+</project>

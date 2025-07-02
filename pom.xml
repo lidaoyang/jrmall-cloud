@@ -15,7 +15,7 @@
         <module>pilates-gateway</module>
         <module>pilates-system</module>
         <module>pilates-auth</module>
-
+        <module>xxl-job</module>
 
     </modules>
 
