@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,10 +16,8 @@ import com.jrmall.pilates.common.constant.RedisConstants;
 import com.jrmall.pilates.common.constant.SystemConstants;
 import com.jrmall.pilates.common.dubbo.util.RpcUtil;
 import com.jrmall.pilates.common.email.service.MailService;
-import com.jrmall.pilates.common.exception.ProviderAccessDeniedException;
 import com.jrmall.pilates.common.exception.ProviderException;
 import com.jrmall.pilates.common.redis.util.RedisUtil;
-import com.jrmall.pilates.common.result.ResultCode;
 import com.jrmall.pilates.common.sms.property.AliyunSmsProperties;
 import com.jrmall.pilates.common.sms.service.SmsService;
 import com.jrmall.pilates.system.converter.UserConverter;
@@ -402,7 +400,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 短信模板: 您的验证码：${code}，该验证码5分钟内有效，请勿泄漏于他人。
         // 其中 ${code} 是模板参数，使用时需要替换为实际值。
-        String templateParams = JSONUtil.toJsonStr(Collections.singletonMap("code", code));
+        String templateParams = JSON.toJSONString(Collections.singletonMap("code", code));
 
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {

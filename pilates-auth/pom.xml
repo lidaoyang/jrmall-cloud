@@ -38,6 +38,10 @@
             <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-sms</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-captcha</artifactId>
+        </dependency>
 
 
         <!-- Unit Test -->

@@ -24,7 +24,7 @@ h2.mv.db
 
 # https://raw.githubusercontent.com/redhat-developer/vscode-java/master/.gitignore
 # vscode
-server
+
 node_modules
 *.vsix
 .DS_Store

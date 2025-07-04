@@ -17,6 +17,10 @@
             <groupId>com.jrmall.pilates</groupId>
             <artifactId>common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-db</artifactId>
+        </dependency>
 
         <!-- Mybatis 分页参数 -->
         <dependency>

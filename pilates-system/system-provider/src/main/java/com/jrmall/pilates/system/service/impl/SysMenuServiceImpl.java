@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -258,7 +258,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<KeyValue> params = menuForm.getParams();
         // 路由参数 [{key:"id",value:"1"}，{key:"name",value:"张三"}] 转换为 [{"id":"1"},{"name":"张三"}]
         if (CollectionUtil.isNotEmpty(params)) {
-            entity.setParams(JSONUtil.toJsonStr(params.stream()
+            entity.setParams(JSON.toJSONString(params.stream()
                     .collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue))));
         } else {
             entity.setParams(null);
