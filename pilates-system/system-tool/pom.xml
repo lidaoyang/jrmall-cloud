@@ -41,6 +41,11 @@
             <artifactId>common-mybatis</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+
         <!-- 编译时代码生成(getter/setter) -->
         <dependency>
             <groupId>org.mapstruct</groupId>

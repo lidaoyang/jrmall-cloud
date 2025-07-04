@@ -1,6 +1,6 @@
 package com.jrmall.pilates.gateway.util;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.jrmall.pilates.common.result.Result;
 import com.jrmall.pilates.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +28,7 @@ public class WebFluxUtils {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.getHeaders().setAccessControlAllowOrigin("*");
         response.getHeaders().setCacheControl("no-cache");
-
-        String responseBody = JSONUtil.toJsonStr(Result.failed(resultCode));
+        String responseBody = JSON.toJSONString(Result.failed(resultCode));
         DataBuffer buffer = response.bufferFactory().wrap(responseBody.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer))
                 .doOnError(error -> {
