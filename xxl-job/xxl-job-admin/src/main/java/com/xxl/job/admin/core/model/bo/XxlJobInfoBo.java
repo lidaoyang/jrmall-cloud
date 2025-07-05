@@ -1,9 +1,7 @@
 package com.xxl.job.admin.core.model.bo;
 
-import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.scheduler.ScheduleTypeEnum;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**
