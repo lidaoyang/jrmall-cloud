@@ -9,10 +9,7 @@ import com.xxl.job.core.biz.model.RegistryParam;
 import com.xxl.job.core.biz.model.ReturnT;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,34 +19,33 @@ import java.util.List;
  * @author: Dao-yang.
  * @date: Created in 2025/6/30 11:07
  */
-@Controller
+@RestController
 @RequestMapping("/api/job")
 public class JobApiController {
 
     @Resource
     private XxlJobApiService jobApiService;
 
-    @RequestMapping("/add")
-    @ResponseBody
+    @PostMapping("/add")
     @PermissionLimit(limit = false)
     public ReturnT<String> add(@RequestBody XxlJobInfoBo jobInfo) {
         return jobApiService.add(jobInfo);
     }
 
-    @RequestMapping("/remove")
-    @ResponseBody
+    @PostMapping("/remove")
+    @PermissionLimit(limit = false)
     public ReturnT<String> remove(@RequestParam("id") int id) {
         return jobApiService.remove(id);
     }
 
-    @RequestMapping("/stop")
-    @ResponseBody
+    @PostMapping("/stop")
+    @PermissionLimit(limit = false)
     public ReturnT<String> pause(@RequestParam("id") int id) {
         return jobApiService.stop(id);
     }
 
-    @RequestMapping("/start")
-    @ResponseBody
+    @PostMapping("/start")
+    @PermissionLimit(limit = false)
     public ReturnT<String> start(@RequestParam("id") int id) {
         return jobApiService.start(id);
     }
