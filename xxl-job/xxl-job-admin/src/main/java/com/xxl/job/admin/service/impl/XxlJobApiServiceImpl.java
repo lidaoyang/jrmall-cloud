@@ -45,15 +45,40 @@ public class XxlJobApiServiceImpl implements XxlJobApiService {
                 throw new XxlJobException("任务结束时间小于当前时间");
             }
         }
+        XxlJobInfo xxlJobInfo = getNewXxlJobInfo(jobInfo);
 
         XxlJobUser xxlJobUser = new XxlJobUser();
         xxlJobUser.setRole(1); // 1-管理员,不需权限控制
-        ReturnT<String> added = xxlJobService.add(jobInfo, xxlJobUser);
+
+        ReturnT<String> added = xxlJobService.add(xxlJobInfo, xxlJobUser);
         if (added.getCode() == ReturnT.SUCCESS_CODE && jobInfo.getEndTime() != null) {
-            logger.info("添加定时删除任务,jobId:{},jobName:{}", jobInfo.getId(), jobInfo.getJobDesc());
+            logger.info("添加定时删除任务,jobId:{},jobName:{}", xxlJobInfo.getId(), xxlJobInfo.getJobDesc());
             addEndXxlJobInfo(jobInfo, added, xxlJobUser);
         }
         return added;
+    }
+
+    private XxlJobInfo getNewXxlJobInfo(XxlJobInfoBo jobInfo) {
+        XxlJobInfo xxlJobInfo = new XxlJobInfo();
+        xxlJobInfo.setJobGroup(jobInfo.getJobGroup());// 任务组(任务执行器ID)
+        xxlJobInfo.setJobDesc(jobInfo.getJobDesc());
+        xxlJobInfo.setScheduleType(jobInfo.getScheduleType());// 固定频率
+        xxlJobInfo.setScheduleConf(jobInfo.getScheduleConf());// 间隔30秒
+        xxlJobInfo.setExecutorHandler(jobInfo.getExecutorHandler());// 执行handler
+        xxlJobInfo.setExecutorParam(jobInfo.getExecutorParam());// 执行参数(被结束的任务id)
+        xxlJobInfo.setTriggerNextTime(jobInfo.getTriggerNextTime());
+        xxlJobInfo.setAlarmType(jobInfo.getAlarmType());
+        xxlJobInfo.setAlarmUrl(jobInfo.getAlarmUrl());
+        xxlJobInfo.setExecutorFailStop(jobInfo.getExecutorFailStop());
+        xxlJobInfo.setTriggerStatus(jobInfo.getTriggerStatus());// 触发状态:启动
+        xxlJobInfo.setAuthor("SYSTEM");
+        xxlJobInfo.setExecutorTimeout(0); // 执行超时时间
+        xxlJobInfo.setExecutorFailRetryCount(1);// 失败重试次数
+        xxlJobInfo.setGlueType(GlueTypeEnum.BEAN.getDesc());
+        xxlJobInfo.setExecutorRouteStrategy(ExecutorRouteStrategyEnum.LEAST_FREQUENTLY_USED.name());
+        xxlJobInfo.setMisfireStrategy(MisfireStrategyEnum.DO_NOTHING.name());
+        xxlJobInfo.setExecutorBlockStrategy(ExecutorBlockStrategyEnum.SERIAL_EXECUTION.name());
+        return xxlJobInfo;
     }
 
     private void addEndXxlJobInfo(XxlJobInfoBo jobInfo, ReturnT<String> added, XxlJobUser xxlJobUser) {
@@ -68,7 +93,7 @@ public class XxlJobApiServiceImpl implements XxlJobApiService {
         String jobId = added.getContent();
         XxlJobInfo xxlJobInfo = new XxlJobInfo();
         xxlJobInfo.setJobDesc("定时删除-" + jobId + "-" + jobInfo.getJobDesc());
-        xxlJobInfo.setAuthor("System");
+        xxlJobInfo.setAuthor("SYSTEM");
         xxlJobInfo.setScheduleType(ScheduleTypeEnum.FIX_RATE.name());// 固定频率
         xxlJobInfo.setScheduleConf("30");// 间隔30秒
         xxlJobInfo.setExecutorHandler(jobInfo.getEndExecutorHandler());// 执行handler
