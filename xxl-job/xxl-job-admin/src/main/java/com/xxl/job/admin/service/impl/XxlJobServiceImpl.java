@@ -351,7 +351,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 		}
 
 		xxlJobInfo.setTriggerStatus(1);
-		xxlJobInfo.setTriggerLastTime(0);
+		// xxlJobInfo.setTriggerLastTime(0);
 		xxlJobInfo.setTriggerNextTime(nextTriggerTime);
 
 		xxlJobInfo.setUpdateTime(new Date());

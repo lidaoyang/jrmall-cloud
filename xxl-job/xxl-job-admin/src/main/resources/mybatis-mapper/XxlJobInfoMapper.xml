@@ -228,7 +228,6 @@
     <update id="stop" parameterType="java.util.HashMap">
         UPDATE xxl_job_info AS t
         SET trigger_status    = 0,
-            trigger_last_time = 0,
             trigger_next_time = 0,
             update_time       = NOW()
         WHERE t.id = #{id}
