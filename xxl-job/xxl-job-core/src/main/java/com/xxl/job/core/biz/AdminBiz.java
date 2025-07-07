@@ -41,6 +41,8 @@ public interface AdminBiz {
      */
     public ReturnT<String> registryRemove(RegistryParam registryParam);
 
+    public ReturnT<String> removeJob(String jobId);
+
 
     // ---------------------- biz (custome) ----------------------
     // group、job ... manage

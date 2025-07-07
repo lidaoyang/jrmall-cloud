@@ -1,7 +1,10 @@
 package com.xxl.job.admin.service.impl;
 
+import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
+import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.thread.JobCompleteHelper;
 import com.xxl.job.admin.core.thread.JobRegistryHelper;
+import com.xxl.job.admin.dao.XxlJobInfoDao;
 import com.xxl.job.core.biz.AdminBiz;
 import com.xxl.job.core.biz.model.HandleCallbackParam;
 import com.xxl.job.core.biz.model.RegistryParam;
@@ -32,4 +35,17 @@ public class AdminBizImpl implements AdminBiz {
         return JobRegistryHelper.getInstance().registryRemove(registryParam);
     }
 
+    @Override
+    public ReturnT<String> removeJob(String jobId) {
+        int id = Integer.parseInt(jobId);
+        XxlJobInfoDao xxlJobInfoDao = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao();
+        XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(id);
+        if (xxlJobInfo == null) {
+            return ReturnT.SUCCESS;
+        }
+
+        xxlJobInfoDao.delete(id);
+        XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().delete(id);
+        return ReturnT.SUCCESS;
+    }
 }

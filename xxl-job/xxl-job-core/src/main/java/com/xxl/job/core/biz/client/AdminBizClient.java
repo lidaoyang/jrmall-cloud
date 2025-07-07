@@ -51,4 +51,8 @@ public class AdminBizClient implements AdminBiz {
         return XxlJobRemotingUtil.postBody(addressUrl + "api/registryRemove", accessToken, timeout, registryParam, String.class);
     }
 
+    @Override
+    public ReturnT<String> removeJob(String jobId) {
+        return XxlJobRemotingUtil.postBody(addressUrl + "api/job/remove?id="+jobId, accessToken, timeout, null, String.class);
+    }
 }
