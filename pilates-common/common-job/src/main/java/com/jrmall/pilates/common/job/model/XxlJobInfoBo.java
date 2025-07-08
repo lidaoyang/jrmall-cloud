@@ -73,10 +73,5 @@ public class XxlJobInfoBo {
      */
     private Date endTime;
 
-    /**
-     * 结束任务的执行器 handler, 指定任务结束时间后,该字段必传
-     */
-    private String endExecutorHandler;
-
 }
 
