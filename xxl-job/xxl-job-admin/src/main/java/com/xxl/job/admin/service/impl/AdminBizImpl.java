@@ -36,16 +36,8 @@ public class AdminBizImpl implements AdminBiz {
     }
 
     @Override
-    public ReturnT<String> removeJob(String jobId) {
-        int id = Integer.parseInt(jobId);
-        XxlJobInfoDao xxlJobInfoDao = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao();
-        XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(id);
-        if (xxlJobInfo == null) {
-            return ReturnT.SUCCESS;
-        }
-
-        xxlJobInfoDao.delete(id);
-        XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().delete(id);
+    public ReturnT<String> stopJob(int jobId) {
+        XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().stop(jobId);
         return ReturnT.SUCCESS;
     }
 }

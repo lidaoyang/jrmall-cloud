@@ -52,7 +52,7 @@ public class AdminBizClient implements AdminBiz {
     }
 
     @Override
-    public ReturnT<String> removeJob(String jobId) {
-        return XxlJobRemotingUtil.postBody(addressUrl + "api/job/remove?id="+jobId, accessToken, timeout, null, String.class);
+    public ReturnT<String> stopJob(int jobId) {
+        return XxlJobRemotingUtil.postBody(addressUrl + "api/job/stop?id="+jobId, accessToken, timeout, null, String.class);
     }
 }
