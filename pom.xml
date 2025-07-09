@@ -137,6 +137,12 @@
 
             <dependency>
                 <groupId>com.jrmall.pilates</groupId>
+                <artifactId>common-job</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jrmall.pilates</groupId>
                 <artifactId>common-sms</artifactId>
                 <version>${project.version}</version>
             </dependency>
