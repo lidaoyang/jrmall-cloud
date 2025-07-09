@@ -19,7 +19,7 @@ spring:
         namespace: ${nacos.spring-cloud.config.namespace}
   config:
     import:
-      - nacos:mysql-auth-config.yml?group=DEFAULT_GROUP
+      - nacos:mysql-config.yml?group=DEFAULT_GROUP
       - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:aliyun-sms.yml?group=DEFAULT_GROUP
       - nacos:swagger-config.yml?group=DEFAULT_GROUP

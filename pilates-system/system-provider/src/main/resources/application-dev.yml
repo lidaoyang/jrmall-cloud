@@ -15,7 +15,7 @@ spring:
         namespace: ${nacos.spring-cloud.config.namespace}
   config:
     import:
-      - nacos:mysql-system-config.yml?group=DEFAULT_GROUP
+      - nacos:mysql-config.yml?group=DEFAULT_GROUP
       - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-provider.yml?group=DEFAULT_GROUP
       - nacos:email-config.yml?group=DEFAULT_GROUP
