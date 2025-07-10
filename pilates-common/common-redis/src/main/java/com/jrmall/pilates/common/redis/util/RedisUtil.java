@@ -412,6 +412,43 @@ public class RedisUtil {
     }
 
     /**
+     * 有序集合-获取集合大小
+     *
+     * @param key Redis键
+     * @return 集合大小
+     */
+    public Long zSize(String key) {
+        ZSetOperations<String, String> zset = redisTemplate.opsForZSet();
+        return zset.size(key);
+    }
+
+    /**
+     * 有序集合-删除指定范围
+     *
+     * @param key Redis键
+     * @param start 开始序号
+     * @param end 结束序号
+     * @return 删除数量
+     */
+    public Long removeRange(String key, long start, long end){
+        ZSetOperations<String, String> zset = redisTemplate.opsForZSet();
+        return zset.removeRange(key, start, end);
+    }
+
+    /**
+     * 有序集合-获取指定范围倒序
+     *
+     * @param key Redis键
+     * @param start 开始序号
+     * @param end 结束序号
+     * @return 集合
+     */
+    public Set<String> reverseRange(String key, long start, long end){
+        ZSetOperations<String, String> zset = redisTemplate.opsForZSet();
+        return zset.reverseRange(key, start, end);
+    }
+
+    /**
      * 模糊查询Redis键名
      *
      * @param pattern 键名包含字符串（如：myKey*）

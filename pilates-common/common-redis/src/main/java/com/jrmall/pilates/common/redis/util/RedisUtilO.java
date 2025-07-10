@@ -393,7 +393,7 @@ public class RedisUtilO {
      * @param value 值
      * @param score 排序号
      */
-    public void zAdd(String key, String value, double score) {
+    public void zAdd(String key, Object value, double score) {
         ZSetOperations<String, Object> zSet = redisTemplate.opsForZSet();
         zSet.add(key, value, score);
     }
@@ -409,6 +409,43 @@ public class RedisUtilO {
     public Set<Object> rangeByScore(String key, double startScore, double endScore) {
         ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
         return zset.rangeByScore(key, startScore, endScore);
+    }
+
+    /**
+     * 有序集合-获取集合大小
+     *
+     * @param key Redis键
+     * @return 集合大小
+     */
+    public Long zSize(String key) {
+        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
+        return zset.size(key);
+    }
+
+    /**
+     * 有序集合-删除指定范围
+     *
+     * @param key Redis键
+     * @param start 开始序号
+     * @param end 结束序号
+     * @return 删除数量
+     */
+    public Long removeRange(String key, long start, long end){
+        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
+        return zset.removeRange(key, start, end);
+    }
+
+    /**
+     * 有序集合-获取指定范围倒序
+     *
+     * @param key Redis键
+     * @param start 开始序号
+     * @param end 结束序号
+     * @return 集合
+     */
+    public Set<Object> reverseRange(String key, long start, long end){
+        ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
+        return zset.reverseRange(key, start, end);
     }
 
     /**
