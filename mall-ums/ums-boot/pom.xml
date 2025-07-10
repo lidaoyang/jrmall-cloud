@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.jrmall.cloud</groupId>
+        <artifactId>mall-ums</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ums-boot</artifactId>
+    <description>会员服务模块</description>
+
+    <properties>
+        <service.port>8801</service.port>
+        <service.nodeport>32003</service.nodeport>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>ums-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-job</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-dubbo</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-seata</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.pilates</groupId>
+            <artifactId>common-apidoc</artifactId>
+        </dependency>
+
+        <!-- 读取配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring Cloud & Alibaba -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- 注册中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- 编译时代码生成(getter/setter) -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

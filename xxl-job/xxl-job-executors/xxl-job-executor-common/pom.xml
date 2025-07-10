@@ -23,6 +23,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>ums-api</artifactId>
+        </dependency>
+
         <!--基础依赖-->
         <dependency>
             <groupId>com.jrmall.pilates</groupId>

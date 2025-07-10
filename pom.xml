@@ -16,6 +16,8 @@
         <module>pilates-system</module>
         <module>pilates-auth</module>
         <module>xxl-job</module>
+        <!--业务模块-->
+        <module>mall-ums</module>
 
     </modules>
 
@@ -74,7 +76,13 @@
     <dependencyManagement>
         <dependencies>
 
-            <!--  对外API -->
+            <!--  业务API -->
+            <dependency>
+                <groupId>com.jrmall.cloud</groupId>
+                <artifactId>ums-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- 系统API -->
             <dependency>
                 <groupId>com.jrmall.pilates</groupId>
