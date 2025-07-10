@@ -12,3 +12,8 @@ alter table xxl_job_info
 alter table xxl_job_log
     add executor_fail_stop tinyint(1) default 1 null comment '执行失败是否停止' after executor_fail_retry_count;
 
+alter table xxl_job_info
+    add end_time bigint default 0 not null comment '任务结束时间';
+
+create index trigger_status_trigger_next_time_index
+    on xxl_job_info (trigger_status, trigger_next_time);
