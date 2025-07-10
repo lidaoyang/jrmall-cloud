@@ -17,7 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class XxlJobUtil {
 
-    private XxlJobConfig jobConfig;
+    private static final XxlJobUtil INSTANCE = new XxlJobUtil();
+
+    public static XxlJobUtil getInstance() {
+        return INSTANCE;
+    }
+
+    private static XxlJobConfig jobConfig;
 
     public XxlJobUtil() {
         jobConfig = new XxlJobConfig();
