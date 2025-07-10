@@ -3,10 +3,12 @@ package com.jrmall.pilates.common.job.util;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
-import com.jrmall.pilates.common.job.config.XxlJobConfig;
+import com.jrmall.pilates.common.job.config.XxlJobProperties;
 import com.jrmall.pilates.common.job.constant.JobConstant;
 import com.jrmall.pilates.common.job.model.XxlJobInfoBo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * XXL Job 工具类
@@ -15,19 +17,11 @@ import lombok.extern.slf4j.Slf4j;
  * @date: Created in 2025/7/4 16:17
  */
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class XxlJobUtil {
 
-    private static final XxlJobUtil INSTANCE = new XxlJobUtil();
-
-    public static XxlJobUtil getInstance() {
-        return INSTANCE;
-    }
-
-    private static XxlJobConfig jobConfig;
-
-    public XxlJobUtil() {
-        jobConfig = new XxlJobConfig();
-    }
+    private final XxlJobProperties xxlJobProperties;
 
     /**
      * 添加任务
@@ -36,11 +30,11 @@ public class XxlJobUtil {
      * @return 添加结果
      */
     public boolean addJob(XxlJobInfoBo jobInfoBo) {
-        String url = jobConfig.getAddresses() + JobConstant.Api.ADD;
+        String url = xxlJobProperties.getAddresses() + JobConstant.Api.ADD;
         HttpResponse httpResponse = HttpRequest.post(url)
-                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, jobConfig.getAccessToken())
+                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
                 .body(JSONUtil.toJsonStr(jobInfoBo))
-                .timeout(jobConfig.getTimeout())
+                .timeout(xxlJobProperties.getTimeout())
                 .execute();
         if (!httpResponse.isOk()) {
             log.error("添加任务失败：{},jobInfoBo:{}", httpResponse.body(), jobInfoBo);
@@ -56,11 +50,11 @@ public class XxlJobUtil {
      * @return 移除结果
      */
     public boolean removeJob(int jobId) {
-        String url = jobConfig.getAddresses() + JobConstant.Api.REMOVE;
+        String url = xxlJobProperties.getAddresses() + JobConstant.Api.REMOVE;
         HttpResponse httpResponse = HttpRequest.post(url)
-                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, jobConfig.getAccessToken())
+                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
                 .form("id", jobId)
-                .timeout(jobConfig.getTimeout())
+                .timeout(xxlJobProperties.getTimeout())
                 .execute();
         if (!httpResponse.isOk()) {
             log.error("移除任务失败：{},jobId:{}", httpResponse.body(), jobId);
@@ -76,11 +70,11 @@ public class XxlJobUtil {
      * @return 停止结果
      */
     public boolean stopJob(int jobId) {
-        String url = jobConfig.getAddresses() + JobConstant.Api.STOP;
+        String url = xxlJobProperties.getAddresses() + JobConstant.Api.STOP;
         HttpResponse httpResponse = HttpRequest.post(url)
-                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, jobConfig.getAccessToken())
+                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
                 .form("id", jobId)
-                .timeout(jobConfig.getTimeout())
+                .timeout(xxlJobProperties.getTimeout())
                 .execute();
         if (!httpResponse.isOk()) {
             log.error("停止任务失败：{},jobId:{}", httpResponse.body(), jobId);
@@ -96,11 +90,11 @@ public class XxlJobUtil {
      * @return 启动结果
      */
     public boolean startJob(int jobId) {
-        String url = jobConfig.getAddresses() + JobConstant.Api.START;
+        String url = xxlJobProperties.getAddresses() + JobConstant.Api.START;
         HttpResponse httpResponse = HttpRequest.post(url)
-                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, jobConfig.getAccessToken())
+                .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
                 .form("id", jobId)
-                .timeout(jobConfig.getTimeout())
+                .timeout(xxlJobProperties.getTimeout())
                 .execute();
         if (!httpResponse.isOk()) {
             log.error("启动任务失败：{},jobId:{}", httpResponse.body(), jobId);
@@ -109,8 +103,4 @@ public class XxlJobUtil {
         return true;
     }
 
-    public XxlJobUtil setJobConfig(String addresses, String accessToken) {
-        this.jobConfig = new XxlJobConfig(addresses, accessToken);
-        return this;
-    }
 }
