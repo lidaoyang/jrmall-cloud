@@ -28,10 +28,9 @@
             <artifactId>ums-api</artifactId>
         </dependency>
 
-        <!--基础依赖-->
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
-            <artifactId>common-dubbo</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <!-- xxl-job-core -->
@@ -45,6 +44,11 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
         </dependency>
 
         <!-- spring-boot-starter-web (spring-webmvc + tomcat) -->

@@ -3,11 +3,8 @@ package com.xxl.job.executor.handler;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.jrmall.mall.ums.api.UmsMemberApi;
-import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +16,6 @@ import java.util.Objects;
  * @author: Dao-yang.
  * @date: Created in 2025/7/7 10:09
  */
-@Slf4j
 @Component
 public class MallUmsJob {
 

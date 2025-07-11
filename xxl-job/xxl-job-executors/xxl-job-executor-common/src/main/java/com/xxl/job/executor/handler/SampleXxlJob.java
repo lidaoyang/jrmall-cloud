@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class SampleXxlJob {
-    private static Logger logger = LoggerFactory.getLogger(SampleXxlJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(SampleXxlJob.class);
 
 
     /**

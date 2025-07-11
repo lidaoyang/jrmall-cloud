@@ -15,7 +15,7 @@ spring:
         namespace: ${nacos.spring-cloud.config.namespace}
   config:
     import:
-      - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
+      - nacos:dubbo-consumer-nofilter.yml?group=DEFAULT_GROUP
       - nacos:xxl-job-executor.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:

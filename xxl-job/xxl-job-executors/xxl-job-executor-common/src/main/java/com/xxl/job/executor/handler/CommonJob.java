@@ -4,7 +4,6 @@ import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -15,9 +14,9 @@ import java.util.Objects;
  * @author: Dao-yang.
  * @date: Created in 2025/7/7 10:09
  */
-@Slf4j
 @Component
 public class CommonJob {
+
     /**
      * 结束任务执行器
      */

@@ -24,7 +24,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin(securityWhitelistConfig.getCorsOrigin());
+        configuration.setAllowedOrigins(securityWhitelistConfig.getCorsOrigins());
 
         // 设置跨域访问可以携带cookie //当allowCredentials为true时，allowdOrigins不能包含特殊值“*”，因为无法在“访问控制允许Origin”响应标头上设置该值
         configuration.setAllowCredentials(true);
