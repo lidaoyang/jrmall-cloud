@@ -31,7 +31,7 @@ public class MallUmsJob {
         int jobId = (int) XxlJobHelper.getJobId();
         JSONObject paramJ = JSON.parseObject(Objects.requireNonNull(XxlJobHelper.getJobParam()));
         XxlJobHelper.log("开始执行会员状态更新任务,jobId:{},param:{}", jobId, XxlJobHelper.getJobParam());
-        Boolean ret = memberApi.updateMemberStatus(paramJ.getLong("memberId"), paramJ.getInteger("status") == 1 ? 1 : 0);
+        Boolean ret = memberApi.updateMemberStatus(paramJ.getLong("memberId"), 1);
         XxlJobHelper.handleResult(ret ? 200 : 500, "会员状态更新任务执行完成");
     }
 
