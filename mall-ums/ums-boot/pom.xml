@@ -12,11 +12,6 @@
     <artifactId>ums-boot</artifactId>
     <description>会员服务模块</description>
 
-    <properties>
-        <service.port>8801</service.port>
-        <service.nodeport>32003</service.nodeport>
-    </properties>
-
     <dependencies>
 
         <dependency>
@@ -75,12 +70,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Spring Cloud & Alibaba -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
         <!-- 注册中心 -->

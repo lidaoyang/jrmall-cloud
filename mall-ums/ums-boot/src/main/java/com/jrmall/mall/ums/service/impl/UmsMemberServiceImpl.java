@@ -160,7 +160,6 @@ public class UmsMemberServiceImpl extends ServiceImpl<UmsMemberMapper, UmsMember
 
     private void addXxlJobForUpdateStatus(Long memberId, Integer status) {
         XxlJobInfoBo jobInfo = new XxlJobInfoBo();
-        jobInfo.setJobGroup(1);
         jobInfo.setJobDesc("修改会员状态任务");
         jobInfo.setScheduleType(ScheduleTypeEnum.NONE.name());
         jobInfo.setExecutorHandler("umsMemberStatusUpdate");

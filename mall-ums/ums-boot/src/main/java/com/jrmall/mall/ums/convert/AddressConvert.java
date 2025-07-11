@@ -12,7 +12,7 @@ import java.util.List;
  * @author haoxr
  * @since 2022/6/21 23:52
  */
-@Mapper(componentModel = "META-INFO.spring")
+@Mapper(componentModel = "spring")
 public interface AddressConvert {
 
     MemberAddressDTO entity2Dto(UmsAddress entity);

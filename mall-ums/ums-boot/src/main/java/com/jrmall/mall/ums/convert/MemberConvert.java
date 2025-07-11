@@ -14,7 +14,7 @@ import org.mapstruct.Mappings;
  * @author haoxr
  * @since 2022/6/11
  */
-@Mapper(componentModel = "META-INFO.spring")
+@Mapper(componentModel = "spring")
 public interface MemberConvert {
     @Mappings({
             @Mapping(target = "username", source = "openid")

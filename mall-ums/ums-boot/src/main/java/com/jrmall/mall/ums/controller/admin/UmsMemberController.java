@@ -1,11 +1,9 @@
 package com.jrmall.mall.ums.controller.admin;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jrmall.mall.ums.model.entity.UmsMember;
 import com.jrmall.mall.ums.service.UmsMemberService;
-import com.jrmall.pilates.common.constant.GlobalConstants;
 import com.jrmall.pilates.common.result.PageResult;
 import com.jrmall.pilates.common.result.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,8 +11,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 
 
 @Tag(name = "Admin-会员管理")
@@ -49,10 +45,10 @@ public class UmsMemberController {
     @Operation(summary= "修改会员状态")
     @PatchMapping("/{memberId}/status")
     public <T> Result<T> updateMemberStatus(
-            @Parameter(name = "会员ID") @PathVariable Long memberId,
-            @RequestBody UmsMember member
+            @Parameter(description = "会员ID") @PathVariable Long memberId,
+            @Parameter(description = "会员状态(1:启用;0:禁用)") @RequestParam Integer status
     ) {
-        return Result.judge(memberService.updateMemberStatus(memberId, member.getStatus()));
+        return Result.judge(memberService.updateMemberStatus(memberId, status));
     }
 
     @Operation(summary= "删除会员")
