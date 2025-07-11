@@ -34,4 +34,13 @@ public class XxlJobProperties {
      */
     private int timeout = 3;
 
+    public int getTimeout() {
+        return timeout * 1000;
+    }
+
+    /**
+     * 执行器主键ID
+     */
+    private int jobGroup;
+
 }

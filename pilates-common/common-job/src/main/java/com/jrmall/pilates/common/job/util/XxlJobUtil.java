@@ -30,6 +30,8 @@ public class XxlJobUtil {
      * @return 添加结果
      */
     public boolean addJob(XxlJobInfoBo jobInfoBo) {
+        log.info("添加任务：{}", jobInfoBo);
+        jobInfoBo.setJobGroup(xxlJobProperties.getJobGroup());
         String url = xxlJobProperties.getAddresses() + JobConstant.Api.ADD;
         HttpResponse httpResponse = HttpRequest.post(url)
                 .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
