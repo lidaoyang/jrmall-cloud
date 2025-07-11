@@ -83,6 +83,20 @@ const UserAPI = {
   },
 
   /**
+   * 修改用户状态
+   *
+   * @param id
+   * @param status
+   */
+   updateUserStatus(id: number, status: number) {
+    return request({
+      url: `${USER_BASE_URL}/${id}/status`,
+      method: "patch",
+      params: { status: status },
+    });
+  },
+
+  /**
    * 批量删除用户，多个以英文逗号(,)分割
    *
    * @param ids 用户ID字符串，多个以英文逗号(,)分割

@@ -110,10 +110,18 @@
             <el-table-column label="邮箱" align="center" prop="email" width="160" />
             <el-table-column label="状态" align="center" prop="status" width="80">
               <template #default="scope">
+                <el-switch
+                  v-model="scope.row.status"
+                  :inactive-value="0"
+                  :active-value="1"
+                  @change="changeUserStatus(scope.row)"
+                />
+              </template>
+<!--              <template #default="scope">
                 <el-tag :type="scope.row.status == 1 ? 'success' : 'info'">
                   {{ scope.row.status == 1 ? "正常" : "禁用" }}
                 </el-tag>
-              </template>
+              </template>-->
             </el-table-column>
             <el-table-column label="创建时间" align="center" prop="createTime" width="150" />
             <el-table-column label="操作" fixed="right" width="220">
@@ -343,6 +351,24 @@ function handleResetQuery() {
 // 选中项发生变化
 function handleSelectionChange(selection: any[]) {
   selectIds.value = selection.map((item) => item.id);
+}
+
+/** 用户状态 Change*/
+function changeUserStatus(row: { [key: string]: any }) {
+  const text = row.status === 1 ? "启用" : "停用";
+  ElMessageBox.confirm("确认要" + text + row.username + "用户吗?", "警告", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    UserAPI.updateUserStatus(row.id, row.status)
+      .then(() => {
+        ElMessage.success(text + "成功");
+      })
+      .catch(() => {
+        row.status = row.status === 1 ? 0 : 1;
+      });
+  });
 }
 
 // 重置密码
