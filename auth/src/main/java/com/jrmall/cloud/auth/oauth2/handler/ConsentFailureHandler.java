@@ -1,6 +1,6 @@
 package com.jrmall.cloud.auth.oauth2.handler;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.jrmall.cloud.common.result.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +48,7 @@ public class ConsentFailureHandler implements AuthenticationFailureHandler {
         if(UrlUtils.isAbsoluteUrl(consentPageUri)){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(JSONUtil.toJsonStr(Result.failed(message)));
+            response.getWriter().write(JSON.toJSONString(Result.failed(message)));
             return;
         }
 

@@ -1,6 +1,6 @@
 package com.jrmall.cloud.auth.oauth2.handler;
 
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.jrmall.cloud.common.result.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +60,7 @@ public class ConsentSuccessHandler implements AuthenticationSuccessHandler {
         if(UrlUtils.isAbsoluteUrl(consentPageUri)) {
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(JSONUtil.toJsonStr(Result.success(redirectUri)));
+            response.getWriter().write(JSON.toJSONString(Result.success(redirectUri)));
             return;
         }
 

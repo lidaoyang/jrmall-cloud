@@ -3,7 +3,7 @@ package com.jrmall.cloud.auth.service;
 import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.jrmall.cloud.auth.oauth2.extension.captcha.CaptchaAuthenticationToken;
 import com.jrmall.cloud.auth.oauth2.extension.captcha.CaptchaParameterNames;
 import com.jrmall.cloud.common.constant.RedisConstants;
@@ -122,7 +122,7 @@ public class AuthService {
 
         // 短信模板: 您的验证码：${code}，该验证码5分钟内有效，请勿泄漏于他人。
         // 其中 ${code} 是模板参数，使用时需要替换为实际值。
-        String templateParams = JSONUtil.toJsonStr(Collections.singletonMap("code", code));
+        String templateParams = JSON.toJSONString(Collections.singletonMap("code", code));
 
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
