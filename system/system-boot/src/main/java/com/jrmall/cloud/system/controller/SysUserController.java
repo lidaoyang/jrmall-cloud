@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jrmall.cloud.common.base.Option;
+import com.jrmall.cloud.common.excel.util.EasyExcelUtil;
 import com.jrmall.cloud.common.result.PageResult;
 import com.jrmall.cloud.common.result.Result;
 import com.jrmall.cloud.common.security.util.SecurityUtils;
@@ -137,13 +138,8 @@ public class SysUserController {
     @Operation(summary = "导出用户")
     @GetMapping("/export")
     public void exportUsers(UserPageQuery queryParams, HttpServletResponse response) throws IOException {
-        String fileName = "用户列表.xlsx";
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
-
         List<UserExportVO> exportUserList = userApi.listExportUsers(queryParams);
-        EasyExcel.write(response.getOutputStream(), UserExportVO.class).sheet("用户列表")
-                .doWrite(exportUserList);
+        EasyExcelUtil.download(response, exportUserList, "用户列表");
     }
 
     @Operation(summary = "注册用户")

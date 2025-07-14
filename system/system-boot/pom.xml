@@ -28,6 +28,11 @@
 
         <dependency>
             <groupId>com.jrmall.cloud</groupId>
+            <artifactId>common-excel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-dubbo</artifactId>
         </dependency>
         <dependency>
@@ -57,11 +62,6 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>-->
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-        </dependency>
 
         <!-- Mybatis 分页参数 -->
         <dependency>

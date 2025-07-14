@@ -26,5 +26,6 @@
         <module>common-email</module>
         <module>common-seata</module>
         <module>common-job</module>
+        <module>common-excel</module>
     </modules>
 </project>

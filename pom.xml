@@ -67,6 +67,8 @@
 
         <!-- 自动代码生成 -->
         <velocity.version>2.3</velocity.version>
+        <!--json-->
+        <fastjson2.version>2.0.57</fastjson2.version>
     </properties>
 
     <dependencies>
@@ -164,6 +166,12 @@
             <dependency>
                 <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-seata</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jrmall.cloud</groupId>
+                <artifactId>common-excel</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -294,6 +302,12 @@
                 <version>${hutool.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
