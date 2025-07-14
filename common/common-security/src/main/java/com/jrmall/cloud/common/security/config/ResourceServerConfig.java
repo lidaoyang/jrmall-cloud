@@ -39,7 +39,7 @@ public class ResourceServerConfig {
 
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
-    private final SecurityWhitelistConfig securityWhitelistConfig;
+    private final SecurityWhitelistProperties securityWhitelistConfig;
 
     private final CorsFilter corsFilter;
 

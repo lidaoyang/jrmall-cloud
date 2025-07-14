@@ -1,5 +1,6 @@
 package com.jrmall.cloud.auth.property;
 
+import com.jrmall.cloud.common.security.config.SecurityWhitelistProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = CustomSecurityProperties.PREFIX)
 public class CustomSecurityProperties {
 
-    static final String PREFIX = "custom.security";
+    static final String PREFIX = "custom.security.page";
 
     /**
      * 登录页面地址
@@ -53,27 +54,5 @@ public class CustomSecurityProperties {
      * 如果需要通过ip访问这里就是ip，如果是有域名映射就填域名，通过什么方式访问该服务这里就填什么
      */
     private String issuerUrl;
-
-    /**
-     * 跨域允许访问的域名 http://127.0.0.1:9527
-     */
-    private String corsOrigin;
-
-    /**
-     * 公共白名单路径
-     */
-    private List<String> whitelistPaths = new ArrayList<>();
-
-    public List<String> getWhitelistPaths() {
-        if (appWhitelistPaths != null && !appWhitelistPaths.isEmpty()) {
-            whitelistPaths.addAll(appWhitelistPaths);
-        }
-        return whitelistPaths;
-    }
-
-    /**
-     * 本应用的白名单路径
-     */
-    private List<String> appWhitelistPaths;
 
 }

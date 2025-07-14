@@ -18,7 +18,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
 
     @Resource
-    private SecurityWhitelistConfig securityWhitelistConfig;
+    private SecurityWhitelistProperties securityWhitelistConfig;
 
     @Bean
     public CorsFilter corsFilter() {

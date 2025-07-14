@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "custom.security")
-public class SecurityWhitelistConfig {
+public class SecurityWhitelistProperties {
 
     /**
      * 跨域允许访问的域名 http://127.0.0.1:9527

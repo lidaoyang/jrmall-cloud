@@ -1,6 +1,6 @@
 com.jrmall.cloud.common.security.service.PermissionService
 com.jrmall.cloud.common.security.config.CorsConfig
-com.jrmall.cloud.common.security.config.SecurityWhitelistConfig
+com.jrmall.cloud.common.security.config.SecurityWhitelistProperties
 com.jrmall.cloud.common.security.config.ResourceServerConfig
 com.jrmall.cloud.common.security.exception.MyAccessDeniedHandler
 com.jrmall.cloud.common.security.exception.MyAuthenticationEntryPoint
