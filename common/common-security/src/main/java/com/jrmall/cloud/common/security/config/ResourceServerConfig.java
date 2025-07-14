@@ -1,7 +1,6 @@
 package com.jrmall.cloud.common.security.config;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.json.JSONUtil;
 import com.jrmall.cloud.common.constant.JwtClaimConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +55,7 @@ public class ResourceServerConfig {
 
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
-        log.info("whitelist path:{}", JSONUtil.toJsonStr(securityWhitelistConfig.getWhitelistPaths()));
+        log.info("whitelist path:{}", securityWhitelistConfig.getWhitelistPaths());
         http.authorizeHttpRequests((requests) -> {
                             if (CollectionUtil.isNotEmpty(securityWhitelistConfig.getWhitelistPaths())) {
                                 for (String whitelistPath : securityWhitelistConfig.getWhitelistPaths()) {

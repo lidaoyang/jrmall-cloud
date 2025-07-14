@@ -2,7 +2,7 @@ package com.jrmall.cloud.common.job.util;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSON;
 import com.jrmall.cloud.common.job.config.XxlJobProperties;
 import com.jrmall.cloud.common.job.constant.JobConstant;
 import com.jrmall.cloud.common.job.model.XxlJobInfoBo;
@@ -35,7 +35,7 @@ public class XxlJobUtil {
         String url = xxlJobProperties.getAddresses() + JobConstant.Api.ADD;
         HttpResponse httpResponse = HttpRequest.post(url)
                 .header(JobConstant.XXL_JOB_ACCESS_TOKEN, xxlJobProperties.getAccessToken())
-                .body(JSONUtil.toJsonStr(jobInfoBo))
+                .body(JSON.toJSONString(jobInfoBo))
                 .timeout(xxlJobProperties.getTimeout())
                 .execute();
         if (!httpResponse.isOk()) {
