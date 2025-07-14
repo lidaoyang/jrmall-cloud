@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.jrmall.cloud</groupId>
+        <artifactId>system</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>system-boot</artifactId>
+    <description>系统 RESTFul API 模块</description>
+
+    <dependencies>
+
+        <!--操作接口-->
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>system-api-boot</artifactId>
+        </dependency>
+
+        <!--基础依赖包-->
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>common-dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jrmall.cloud</groupId>
+            <artifactId>common-apidoc</artifactId>
+        </dependency>
+
+        <!-- 注册中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!-- 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- Sentinel流量控制、熔断降级 -->
+        <!--<dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        &lt;!&ndash; Sentinel规则持久化至Nacos配置 &ndash;&gt;
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
+
+        <!-- Mybatis 分页参数 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

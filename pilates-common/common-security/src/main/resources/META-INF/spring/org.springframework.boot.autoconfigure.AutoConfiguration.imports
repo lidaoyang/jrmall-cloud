@@ -1,6 +1,0 @@
-com.jrmall.pilates.common.security.service.PermissionService
-com.jrmall.pilates.common.security.config.CorsConfig
-com.jrmall.pilates.common.security.config.SecurityWhitelistConfig
-com.jrmall.pilates.common.security.config.ResourceServerConfig
-com.jrmall.pilates.common.security.exception.MyAccessDeniedHandler
-com.jrmall.pilates.common.security.exception.MyAuthenticationEntryPoint

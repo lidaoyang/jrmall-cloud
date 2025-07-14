@@ -4,7 +4,7 @@ import com.jrmall.mall.ums.model.dto.MemberAddressDTO;
 import com.jrmall.mall.ums.model.entity.UmsAddress;
 import com.jrmall.mall.ums.model.form.AddressForm;
 import com.jrmall.mall.ums.service.UmsAddressService;
-import com.jrmall.pilates.common.result.Result;
+import com.jrmall.cloud.common.result.Result;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

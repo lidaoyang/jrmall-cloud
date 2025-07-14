@@ -1,0 +1,2 @@
+com.jrmall.cloud.common.sms.property.AliyunSmsProperties
+com.jrmall.cloud.common.sms.service.impl.AliyunSmsService

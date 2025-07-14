@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jrmall.pilates</groupId>
-    <artifactId>jrmall-pilates-cloud</artifactId>
+    <groupId>com.jrmall.cloud</groupId>
+    <artifactId>jrmall-cloud</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
 
     <modules>
         <!-- 基础模块 -->
-        <module>pilates-common</module>
-        <module>pilates-gateway</module>
-        <module>pilates-system</module>
-        <module>pilates-auth</module>
+        <module>common</module>
+        <module>gateway</module>
+        <module>system</module>
+        <module>auth</module>
         <module>xxl-job</module>
         <!--业务模块-->
         <module>mall-ums</module>
@@ -85,84 +85,84 @@
 
             <!-- 系统API -->
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>system-api-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>system-api-genmenu</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>system-api-boot</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <!--项目公共包-->
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-dubbo</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-apidoc</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-job</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-sms</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-email</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jrmall.pilates</groupId>
+                <groupId>com.jrmall.cloud</groupId>
                 <artifactId>common-seata</artifactId>
                 <version>${project.version}</version>
             </dependency>

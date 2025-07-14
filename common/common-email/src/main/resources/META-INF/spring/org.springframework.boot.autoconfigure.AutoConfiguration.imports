@@ -1,0 +1,3 @@
+com.jrmall.cloud.common.email.property.MailProperties
+com.jrmall.cloud.common.email.config.MailConfig
+com.jrmall.cloud.common.email.service.MailService

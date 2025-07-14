@@ -1,0 +1,2 @@
+com.jrmall.cloud.common.mybatis.config.MybatisPlusConfig
+com.jrmall.cloud.common.mybatis.handler.MyMetaObjectHandler

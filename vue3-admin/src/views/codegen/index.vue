@@ -121,7 +121,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="主包名" prop="packageName">
-                <el-input v-model="genConfigFormData.packageName" placeholder="com.jrmall.pilates" />
+                <el-input v-model="genConfigFormData.packageName" placeholder="com.jrmall.cloud" />
               </el-form-item>
             </el-col>
             <el-col :span="12">

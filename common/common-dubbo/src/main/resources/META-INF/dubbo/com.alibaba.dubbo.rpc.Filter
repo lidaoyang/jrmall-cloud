@@ -1,0 +1,3 @@
+providerRpcFilter=com.jrmall.cloud.common.dubbo.filter.ProviderRpcFilter
+consumerRpcFilter=com.jrmall.cloud.common.dubbo.filter.ConsumerRpcFilter
+dubboExceptionFilter=com.jrmall.cloud.common.dubbo.filter.DubboExceptionFilter

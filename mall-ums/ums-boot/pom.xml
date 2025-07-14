@@ -20,42 +20,42 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-job</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-dubbo</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-mybatis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-web</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-redis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-security</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-seata</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrmall.pilates</groupId>
+            <groupId>com.jrmall.cloud</groupId>
             <artifactId>common-apidoc</artifactId>
         </dependency>
 

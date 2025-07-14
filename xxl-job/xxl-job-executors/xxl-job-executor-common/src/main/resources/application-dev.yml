@@ -24,7 +24,7 @@ nacos:
   server-addr: 172.16.85.108:8848
   spring-cloud:
     config:
-      namespace: pilates-cloud-dev
+      namespace: jrmall-cloud-dev
 
 # log config
 logging:

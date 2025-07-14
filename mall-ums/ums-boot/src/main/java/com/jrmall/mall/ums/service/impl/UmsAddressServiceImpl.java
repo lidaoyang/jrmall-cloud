@@ -9,8 +9,8 @@ import com.jrmall.mall.ums.model.dto.MemberAddressDTO;
 import com.jrmall.mall.ums.model.entity.UmsAddress;
 import com.jrmall.mall.ums.model.form.AddressForm;
 import com.jrmall.mall.ums.service.UmsAddressService;
-import com.jrmall.pilates.common.constant.GlobalConstants;
-import com.jrmall.pilates.common.security.util.SecurityUtils;
+import com.jrmall.cloud.common.constant.GlobalConstants;
+import com.jrmall.cloud.common.security.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

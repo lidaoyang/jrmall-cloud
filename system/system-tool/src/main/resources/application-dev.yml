@@ -1,0 +1,42 @@
+server:
+  port: 8808
+  shutdown: graceful #graceful:开启优雅停机，默认IMMEDIATE是立即关机
+
+spring:
+  application:
+    name: system-tool
+  cloud:
+    nacos:
+      username: ${nacos.username}
+      password: ${nacos.password}
+      # 注册中心
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.discovery.namespace}
+      # 配置中心
+      config:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.config.namespace}
+  config:
+    import:
+      - nacos:mysql-config.yml?group=DEFAULT_GROUP
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
+      - nacos:aliyun-oss.yml?group=DEFAULT_GROUP
+      - nacos:swagger-config.yml?group=DEFAULT_GROUP
+      - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
+      - nacos:codegen-config.yml?group=DEFAULT_GROUP
+      - nacos:pilates-system-tool.yaml?group=DEFAULT_GROUP
+      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+nacos:
+  username: nacos
+  password: nacos
+  server-addr: 172.16.85.108:8848
+  spring-cloud:
+    config:
+      namespace: jrmall-cloud-dev
+    discovery:
+      namespace: springcloud-dev
+
+
+

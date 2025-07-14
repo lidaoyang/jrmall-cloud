@@ -2,7 +2,7 @@ package com.jrmall.mall.ums.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.jrmall.pilates.common.base.BaseEntity;
+import com.jrmall.cloud.common.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

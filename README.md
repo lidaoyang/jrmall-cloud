@@ -1,4 +1,4 @@
-# pilates-cloud-dev
+# jrmall-cloud
 
 #### 介绍
 面向 SpringBoot3，基于 Java17、Spring Cloud&Alibaba 2021、Spring Boot 2.7 、Spring Authorization Server 0.3.1 全新升级OAuth2授权+微服务+UPMS管理系统解决方案。

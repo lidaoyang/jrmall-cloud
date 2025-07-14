@@ -1,0 +1,31 @@
+server:
+  port: 8800
+  shutdown: graceful #graceful:开启优雅停机，默认IMMEDIATE是立即关机
+
+spring:
+  application:
+    name: system-provider
+  cloud:
+    nacos:
+      username: ${nacos.username}
+      password: ${nacos.password}
+      # 配置中心
+      config:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.spring-cloud.config.namespace}
+  config:
+    import:
+      - nacos:mysql-config.yml?group=DEFAULT_GROUP
+      - nacos:redis-config.yml?group=DEFAULT_GROUP
+      - nacos:dubbo-provider.yml?group=DEFAULT_GROUP
+      - nacos:email-config.yml?group=DEFAULT_GROUP
+      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+nacos:
+  username: nacos
+  password: nacos
+  server-addr: 172.16.85.108:8848
+  spring-cloud:
+    config:
+      namespace: jrmall-cloud-dev
+

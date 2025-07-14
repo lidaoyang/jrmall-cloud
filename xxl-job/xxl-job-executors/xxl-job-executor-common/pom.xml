@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.jrmall.pilates</groupId>
-        <artifactId>jrmall-pilates-cloud</artifactId>
+        <groupId>com.jrmall.cloud</groupId>
+        <artifactId>jrmall-cloud</artifactId>
         <version>0.0.1</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
