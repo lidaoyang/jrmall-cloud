@@ -25,8 +25,8 @@ spring:
       - nacos:swagger-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
       - nacos:codegen-config.yml?group=DEFAULT_GROUP
-      - nacos:pilates-system-tool.yaml?group=DEFAULT_GROUP
-      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:system-tool.yaml?group=DEFAULT_GROUP
+      - nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
   username: nacos

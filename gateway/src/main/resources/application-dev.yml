@@ -26,8 +26,8 @@ spring:
       - nacos:redis-config.yml?group=DEFAULT_GROUP
       - nacos:sentinel-config.yml?group=DEFAULT_GROUP&refreshEnabled=true
       - nacos:knife4j-gateway-config.yml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-gateway.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:gateway.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
   username: nacos

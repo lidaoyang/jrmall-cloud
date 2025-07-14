@@ -24,8 +24,8 @@ spring:
       - nacos:aliyun-sms.yml?group=DEFAULT_GROUP
       - nacos:swagger-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
-      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-auth.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:auth.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
   username: nacos

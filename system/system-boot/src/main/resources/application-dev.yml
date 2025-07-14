@@ -23,8 +23,8 @@ spring:
       - nacos:aliyun-oss.yml?group=DEFAULT_GROUP
       - nacos:swagger-config.yml?group=DEFAULT_GROUP
       - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
-      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - nacos:pilates-system-boot.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:system-boot.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
   username: nacos

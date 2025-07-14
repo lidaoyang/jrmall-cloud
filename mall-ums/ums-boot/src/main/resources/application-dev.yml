@@ -26,7 +26,7 @@ spring:
       - nacos:dubbo-consumer.yml?group=DEFAULT_GROUP
       - nacos:mall-ums.yaml?group=DEFAULT_GROUP
       - nacos:xxl-job-client.yml?group=DEFAULT_GROUP
-      - nacos:pilates-common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
 nacos:
   username: nacos
