@@ -368,7 +368,11 @@ function changeUserStatus(row: { [key: string]: any }) {
       .catch(() => {
         row.status = row.status === 1 ? 0 : 1;
       });
-  });
+  })
+    .catch(() => {
+      ElMessage.info("已取消" + text);
+      row.status = row.status === 1 ? 0 : 1;
+    });
 }
 
 // 重置密码
