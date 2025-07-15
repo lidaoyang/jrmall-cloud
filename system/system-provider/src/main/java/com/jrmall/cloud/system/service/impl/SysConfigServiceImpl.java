@@ -1,5 +1,6 @@
 package com.jrmall.cloud.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,7 +18,6 @@ import com.jrmall.cloud.system.model.vo.ConfigVO;
 import com.jrmall.cloud.system.service.SysConfigService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -58,7 +58,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         Page<SysConfig> page = new Page<>(configPageQuery.getPageNum(), configPageQuery.getPageSize());
         String keywords = configPageQuery.getKeywords();
         LambdaQueryWrapper<SysConfig> query = new LambdaQueryWrapper<SysConfig>()
-                .and(StringUtils.isNotBlank(keywords),
+                .and(StrUtil.isNotBlank(keywords),
                         q -> q.like(SysConfig::getConfigKey, keywords)
                                 .or()
                                 .like(SysConfig::getConfigName, keywords)
@@ -156,7 +156,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
      */
     @Override
     public Object getSystemConfig(String key) {
-        if (StringUtils.isNotBlank(key)) {
+        if (StrUtil.isNotBlank(key)) {
             return redisUtil.hGet(RedisConstants.System.CONFIG, key);
         }
         return null;
