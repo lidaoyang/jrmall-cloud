@@ -392,15 +392,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean sendMobileCode(String mobile) {
-        // 获取短信模板代码
-        String templateCode = aliyunSmsProperties.getTemplateCodes().get("register");
-
         // 生成随机4位数验证码
         String code = RandomUtil.randomNumbers(4);
-
+        // TODO 测试环境直接返回true
+        if (Objects.equals(System.getProperty("spring.profiles.active"), "dev")){
+            log.info("生成短信验证码: {}", code);
+            return true;
+        }
         // 短信模板: 您的验证码：${code}，该验证码5分钟内有效，请勿泄漏于他人。
         // 其中 ${code} 是模板参数，使用时需要替换为实际值。
         String templateParams = JSON.toJSONString(Collections.singletonMap("code", code));
+        // 获取短信模板代码
+        String templateCode = aliyunSmsProperties.getTemplateCodes().get("register");
 
         boolean result = smsService.sendSms(mobile, templateCode, templateParams);
         if (result) {
