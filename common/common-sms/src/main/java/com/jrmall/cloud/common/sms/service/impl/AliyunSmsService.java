@@ -1,16 +1,15 @@
 package com.jrmall.cloud.common.sms.service.impl;
 
-import com.aliyuncs.CommonRequest;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
-import com.aliyuncs.http.MethodType;
-import com.aliyuncs.profile.DefaultProfile;
+import com.aliyun.dysmsapi20170525.Client;
+import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
+import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
+import com.aliyun.teaopenapi.models.Config;
+import com.aliyun.teautil.models.RuntimeOptions;
 import com.jrmall.cloud.common.sms.property.AliyunSmsProperties;
 import com.jrmall.cloud.common.sms.service.SmsService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,12 +18,32 @@ import org.springframework.stereotype.Service;
  * @author haoxr
  * @since  3.1.0
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AliyunSmsService implements SmsService {
 
     private final AliyunSmsProperties aliyunSmsProperties;
 
+    private Client client;
+
+    /**
+     * 使用AK&SK初始化账号Client
+     *
+     * @return Client
+     * @throws Exception
+     */
+    @PostConstruct
+    public void initClient() throws Exception {
+        Config config = new Config()
+                // 您的 AccessKey ID
+                .setAccessKeyId(aliyunSmsProperties.getAccessKeyId())
+                // 您的 AccessKey Secret
+                .setAccessKeySecret(aliyunSmsProperties.getAccessKeySecret())
+                .setRegionId(aliyunSmsProperties.getRegionId())
+                .setEndpoint(aliyunSmsProperties.getDomain());
+        this.client = new Client(config);
+    }
 
     /**
      * 发送短信验证码
@@ -37,41 +56,32 @@ public class AliyunSmsService implements SmsService {
      */
     @Override
     public boolean sendSms(String mobile,String templateCode,String templateParam) {
-
-        DefaultProfile profile = DefaultProfile.getProfile(aliyunSmsProperties.getRegionId(),
-                aliyunSmsProperties.getAccessKeyId(), aliyunSmsProperties.getAccessKeySecret());
-        IAcsClient client = new DefaultAcsClient(profile);
-
-        // 创建通用的请求对象
-        CommonRequest request = new CommonRequest();
-        // 指定请求方式
-        request.setSysMethod(MethodType.POST);
-        // 短信api的请求地址(固定)
-        request.setSysDomain(aliyunSmsProperties.getDomain());
-        // 签名算法版(固定)
-        request.setSysVersion("2017-05-25");
-        // 请求 API 的名称(固定)
-        request.setSysAction("SendSms");
-        // 指定地域名称
-        request.putQueryParameter("RegionId", aliyunSmsProperties.getRegionId());
-        // 要给哪个手机号发送短信  指定手机号
-        request.putQueryParameter("PhoneNumbers", mobile);
-        // 您的申请签名
-        request.putQueryParameter("SignName", aliyunSmsProperties.getSignName());
-        // 您申请的模板 code
-        request.putQueryParameter("TemplateCode", templateCode);
-
-        request.putQueryParameter("TemplateParam", templateParam);
-
-        try {
-            CommonResponse response = client.getCommonResponse(request);
-            return response.getHttpResponse().isSuccess();
-        } catch (ServerException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
-            e.printStackTrace();
+        if(templateParam == null){
+            log.error("短信模板参数不能为空");
+            return false;
         }
-        return false;
+        SendSmsRequest sendSmsRequest = new SendSmsRequest()
+                .setPhoneNumbers(mobile)
+                .setSignName(aliyunSmsProperties.getSignName())
+                .setTemplateCode(templateCode)
+                .setTemplateParam(templateParam);
+        try {
+            RuntimeOptions runtime = new RuntimeOptions();
+            SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
+            if ("OK".equals(sendSmsResponse.getBody().getCode())) {
+                log.info("短信发送成功,phone:{},tempCode:{}", sendSmsRequest.getPhoneNumbers(), sendSmsRequest.getTemplateCode());
+                return true;
+            } else {
+                log.error("发送短信失败, phone:{},tempCode:{},params:{},sendSmsResponse:{}", sendSmsRequest.getPhoneNumbers(),
+                        sendSmsRequest.getTemplateCode(), sendSmsRequest.getTemplateParam(), sendSmsResponse.getBody());
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("发送短信异常, phone:{},tempCode:{},params:{}", sendSmsRequest.getPhoneNumbers(), sendSmsRequest.getTemplateCode(),
+                    sendSmsRequest.getTemplateParam());
+            log.error("发送短信异常", e);
+            return false;
+        }
     }
 
 

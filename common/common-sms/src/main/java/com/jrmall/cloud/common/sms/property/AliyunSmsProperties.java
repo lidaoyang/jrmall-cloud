@@ -45,5 +45,5 @@ public class AliyunSmsProperties {
     /**
      * 模板编码
      */
-    private Map<String, String> templateCodes;
+    private Map<String, String> templateCodes = new java.util.HashMap<>();
 }

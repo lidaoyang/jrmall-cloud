@@ -19,19 +19,13 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.jrmall.cloud</groupId>
-            <artifactId>common-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>${aliyun.java.sdk.core.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>${aliyun.java.sdk.dysmsapi.version}</version>
+            <artifactId>dysmsapi20170525</artifactId>
         </dependency>
 
         <dependency>

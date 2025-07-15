@@ -53,8 +53,7 @@
         <easyexcel.version>4.0.3</easyexcel.version>
 
         <!-- 阿里云短信 -->
-        <aliyun.java.sdk.core.version>4.7.3</aliyun.java.sdk.core.version>
-        <aliyun.java.sdk.dysmsapi.version>2.2.1</aliyun.java.sdk.dysmsapi.version>
+        <aliyun.sms.version>4.1.2</aliyun.sms.version>
 
         <!-- 阿里云OSS -->
         <aliyun-sdk-oss.version>3.17.4</aliyun-sdk-oss.version>
@@ -248,13 +247,8 @@
             <!--阿里云短信-->
             <dependency>
                 <groupId>com.aliyun</groupId>
-                <artifactId>aliyun-java-sdk-core</artifactId>
-                <version>${aliyun.java.sdk.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.aliyun</groupId>
-                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-                <version>${aliyun.java.sdk.dysmsapi.version}</version>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${aliyun.sms.version}</version>
             </dependency>
             <!--阿里云对象存储-->
             <dependency>
