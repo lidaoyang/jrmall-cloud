@@ -26,7 +26,7 @@
             v-hasPerm="['sys:menu:add']"
             type="success"
             icon="plus"
-            @click="handleOpenDialog('0')"
+            @click="handleOpenDialog(0)"
           >
             新增
           </el-button>
@@ -425,10 +425,10 @@ function handleRowClick(row: MenuVO) {
  * @param parentId 父菜单ID
  * @param menuId 菜单ID
  */
-function handleOpenDialog(parentId?: string, menuId?: string) {
+function handleOpenDialog(parentId?: number, menuId?: string) {
   MenuAPI.getOptions(true)
     .then((data) => {
-      menuOptions.value = [{ value: "0", label: "顶级菜单", children: data }];
+      menuOptions.value = [{ value: 0, label: "顶级菜单", children: data }];
     })
     .then(() => {
       dialog.visible = true;
@@ -440,7 +440,8 @@ function handleOpenDialog(parentId?: string, menuId?: string) {
         });
       } else {
         dialog.title = "新增菜单";
-        formData.value.parentId = parentId?.toString();
+
+        formData.value.parentId = parentId;
       }
     });
 }

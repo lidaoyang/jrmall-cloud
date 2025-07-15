@@ -246,6 +246,7 @@ function refreshSelectedTag(view: TagView) {
   tagsViewStore.delCachedView(view);
   const { fullPath } = view;
   nextTick(() => {
+    // console.log("refreshSelectedTag",fullPath,router);
     router.replace("/redirect" + fullPath);
   });
 }
@@ -289,6 +290,7 @@ function closeRightTags() {
  */
 function closeOtherTags() {
   router.push(selectedTag.value);
+  // console.log("closeOtherTags",selectedTag.value, router);
   tagsViewStore.delOtherViews(selectedTag.value).then(() => {
     moveToCurrentTag();
   });
