@@ -1,3 +1,5 @@
+use jr_system;
+
 create table gen_config
 (
     id             bigint auto_increment

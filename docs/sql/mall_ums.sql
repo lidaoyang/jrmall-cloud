@@ -1,3 +1,5 @@
+use mall_ums;
+
 create table ums_address
 (
     id               bigint auto_increment
